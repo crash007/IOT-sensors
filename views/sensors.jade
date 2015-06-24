@@ -1,0 +1,34 @@
+extends layout
+block append head
+//link(href="/stylesheets/c3.min.css", rel="stylesheet")
+
+block content
+	div(class="container")
+		div(class="page-header")
+		h1 Sensors
+
+		p.lead Data
+		.chart-container
+			//#chart
+			//#55815d0e9af81eae4edf60a3
+			//#55818237fcc740b0183c66a7
+
+<!-- h2 Add Sensor Data
+#addSensorData
+	fieldset
+		input#inputSensorId(type='text', placeholder='Sensor id')
+		br
+		input#inputSensorTime(type='text', placeholder='Tidpunkt')
+		br
+		input#inputSensorValue(type='text', placeholder='Värde')                                
+		br
+button#btnAddSensorData Add Sensor Data -->
+// /ADD USER
+        
+block scripts
+
+	//script(src="/javascripts/d3.min.js",charset="utf-8")
+	//script(src="/javascripts/c3.min.js")
+	script(src="/javascripts/highcharts.js")
+	script(src="/javascripts/sensor-charts.js")
+	

@@ -1,0 +1,57 @@
+extends layout
+
+block append head
+	link(href="/stylesheets/bootstrap-datetimepicker.min.css", rel="stylesheet",type="text/css", media="screen")
+
+block content
+	div(class="container")
+		div(class="page-header")
+			h1 Add or modify existing data 
+			//	Edit sensor data
+			p(class="lead") Select a sensor 	
+		
+			#sensorDropdown.btn-group
+				button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
+					span.caret
+				ul.dropdown-menu(role="menu")
+					li
+						a action1
+					li
+						a action2
+		.row
+			.col-md-4
+
+				h2 Add
+				#addSensorData
+					
+
+					//br
+					//br
+					
+					input.form-control#inputSensorValue(type='text', placeholder='Value')
+					br
+							
+					.form-group
+						.input-group.date#datetimepicker1
+							input.form-control( type='text')
+							span.input-group-addon
+								span.glyphicon.glyphicon-calendar
+					button.btn.btn-default#btnAddSensorData Add Sensor Data
+					
+			.col-md-8
+				h2 Edit
+				#sensorDataList
+					table.table
+						thead
+							th Time
+							th Value
+						
+						tbody
+
+    
+                
+block scripts
+	//script(src="/javascripts/moment.min.js")
+	script(src="/javascripts/moment-with-locales.js")
+	script(src="/javascripts/bootstrap-datetimepicker.min.js")
+	script(src="/javascripts/edit-sensor-data.js")                
