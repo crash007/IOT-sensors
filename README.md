@@ -12,13 +12,7 @@ node app.js
 
 
 ## Install
- npm install express
- npm install morgan
- npm install cookie-parser
- npm install body-parser
- npm install jquery
- npm install mongodb
- npm install monk
+ npm install express morgan cookie-parser body-parser jquery mongodb monk
 
 ### Tools
 
