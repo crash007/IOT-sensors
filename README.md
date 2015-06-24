@@ -12,9 +12,9 @@ node app.js
 
 
 ## Install
-Install nodejs and npm
- Run: 
-  npm install express jade morgan cookie-parser body-parser jquery mongodb monk
+Install nodejs and npm  
+Run:  
+npm install express jade morgan cookie-parser body-parser jquery mongodb monk  
 
 ### Tools
 
