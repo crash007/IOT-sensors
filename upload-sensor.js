@@ -31,8 +31,13 @@ function uploadSensor(id,value){
 
 	  res.on('end', function() {
 	    var resultObject = JSON.parse(responseString);
-	    console.log("Response: "+resultObject);
-	    console.log(resultObject);
+	    //console.log("Response: "+resultObject);
+	    if(resultObject.msg===''){
+	    	console.log('Successfully uploaded data\n');
+	    }else{
+	    	console.log("Error: "+resultObject.msg);
+	    }
+	    
 	  });
 	  
 	});
@@ -43,8 +48,7 @@ function uploadSensor(id,value){
 		console.log(e);
 		console.log("End of error");
 	});
-	console.log("Writing to request.");
-	console.log(sensorString);
+	console.log("Uploading: "+sensorString);	
 	req.write(sensorString);
 	req.end();
 	

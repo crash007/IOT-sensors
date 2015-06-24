@@ -17,8 +17,10 @@ exports.addData = function(req, res){
 	
 	collection.update({_id:id},
 		{$push: { 'data':data } }, {w:1}, function(err, result) {
-			console.log(err);
-			console.log(result);
+			if(err !==null){
+				console.log(err);
+			}
+			
 			res.send(
 		        (err === null) ? { msg: '' } : { msg: err }
 		    );
@@ -47,8 +49,9 @@ exports.editSensor = function(req, res){
 	delete params.sensorId;
 	
 	collection.update({_id:sensorId}, {$set: params }, {w:1}, function(err, result) {
-		console.log(err);
-		console.log(result);
+		if(err !== null){
+			console.log(err);
+		}
 		res.send(
 	        (err === null) ? { msg: '' } : { msg: err }
 	    );
@@ -81,8 +84,11 @@ exports.editData = function(req, res){
 			}, 
 			{w:1}, 
 			function(err, result) {
-				console.log(err);
-				console.log(result);
+				
+				if(err !== null){
+					console.log(err);
+				}
+				
 				res.send(
 				        (err === null) ? { msg: '' } : { msg: err }
 				    );
