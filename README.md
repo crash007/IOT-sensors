@@ -5,12 +5,20 @@
 
 
 ## Usage
-
+node app.js
 
 
 ## Developing
 
 
+## Install
+npm install express
+npm install morgan
+npm install cookie-parser
+npm install body-parser
+npm install jquery
+npm install mongodb
+npm install monk
 
 ### Tools
 
