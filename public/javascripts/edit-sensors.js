@@ -132,7 +132,7 @@ function addSensor(event){
 
 
 function editSensor(tr){
-	var sensor = {sensorId: $(tr).find('input[name="id"]').val(), name: $(tr).find('td.name input').val(), description: $(tr).find('td.description input').val(), unit: $(tr).find('td.unit input').val(),valueSuffix: $(tr).find('td.valueSuffix input').val()};
+	var sensor = {id: $(tr).find('input[name="id"]').val(), name: $(tr).find('td.name input').val(), description: $(tr).find('td.description input').val(), unit: $(tr).find('td.unit input').val(),valueSuffix: $(tr).find('td.valueSuffix input').val()};
 	console.log("Saving sensor to db: "+sensor.name);
 	console.log(sensor);
 	// Use AJAX to post the object to our adduser service

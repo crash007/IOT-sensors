@@ -10,8 +10,16 @@ res.render('edit-data', { title: 'Express' });
 exports.addData = function(req, res){
 	var db = req.db;
 	var collection = db.get('sensor-data');
-	var id = req.body['id'];
-	var data = {value: parseFloat(req.body['value']), time: new Date(req.body['time'])};
+	var id = req.body.id;
+	var time = req.body.time;
+	
+	if(typeof time === 'undefined'){
+		time = new Date();
+	}else{
+		time = new Date(time);
+	}
+	
+	var data = {value: parseFloat(req.body.value), time: time};
 	
 	console.log("Adding value to sensor: "+id+" , data: "+data.value+" "+data.time);
 	
@@ -43,7 +51,7 @@ exports.addSensor = function(req, res){
 exports.editSensor = function(req, res){
 	var db = req.db;
 	var collection = db.get('sensor-data');
-	var sensorId = req.body['sensorId'];
+	var sensorId = req.body.id;
 	var params = req.body;
 	//Update everything except _id
 	delete params.sensorId;
@@ -63,11 +71,11 @@ exports.editData = function(req, res){
 	var db = req.db;
 	var collection = db.get('sensor-data');
 	console.log(req.body);
-	var id = req.body['id'];
-	var prevValue = parseFloat(req.body['prevValue']);
-	var prevTime = new Date(req.body['prevTime']);
-	var value = req.body['value'];
-	var time = new Date(req.body['time']);
+	var id = req.body.id;
+	var prevValue = parseFloat(req.body.prevValue);
+	var prevTime = new Date(req.body.prevTime);
+	var value = req.body.value;
+	var time = new Date(req.body.time);
 	
 	collection.update(
 			{
@@ -100,7 +108,7 @@ exports.delSensor = function(req, res){
 	var db = req.db;
 	var collection = db.get('sensor-data');
 	
-	var id = req.body["id"];
+	var id = req.body.id;
 	console.log("Removing sensor with id: "+id);	
 	collection.remove(
 			{
@@ -122,9 +130,9 @@ exports.delData = function(req, res){
 	var db = req.db;
 	var collection = db.get('sensor-data');
 	
-	var id = req.body["id"];
-	var value = parseFloat(req.body["value"]);
-	var time = new Date(req.body["time"]);
+	var id = req.body.id;
+	var value = parseFloat(req.body.value);
+	var time = new Date(req.body.time);
 	
 	console.log("Removing data with id: "+id+" ,value: "+value+" , time: "+time);	
 	collection.update(
