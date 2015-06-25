@@ -6,7 +6,10 @@ function chart(sensor){
 	console.log(sensor);	
 	  //$('#chart').highcharts({
 		$('#'+sensor._id).highcharts({
-	      title: {
+			chart: {
+	            zoomType: 'x'
+	        },
+			title: {
 	          text: sensor.name,
 	          x: -20 //center
 	      },

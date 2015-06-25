@@ -13,6 +13,7 @@ var express = require('express')
   , path = require('path')
   , about = require('./routes/about')
   , sensors = require('./routes/sensors')
+  , charts = require('./routes/charts')
   , edit = require('./routes/edit')
   , $ = require('jquery')
   , jQuery = require('jquery');
@@ -50,7 +51,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/users/userlist', user.userlist);
 app.get('/about', about.about);
-app.get('/sensors', sensors.sensors);
+app.get('/charts', charts.charts);
 app.get('/sensors/data', sensors.sensordata);
 app.get('/sensors/sensor-list', sensors.sensorList);
 app.get('/edit/sensors', edit.sensors);
