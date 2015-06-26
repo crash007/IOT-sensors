@@ -11,6 +11,13 @@ block content
     p Read 
       a(href="about") about 
       this project
-
+      
+    if (!user)
+      a(href="/signin") Sign in
+      br
+      a(href="/register") Register
+    if (user)
+      p You are currently logged in as #{user.username}
+      a(href="/logout") Logout
 
   

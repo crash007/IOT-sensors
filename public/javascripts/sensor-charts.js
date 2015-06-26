@@ -1,6 +1,11 @@
 /**
  * New node file
  */
+ Highcharts.setOptions({
+        global: {
+            timezoneOffset: -2 * 60
+        }
+    });
 
 function chart(sensor){
 	console.log(sensor);	

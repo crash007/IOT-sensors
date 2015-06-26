@@ -1,9 +1,18 @@
 exports.sensors = function(req, res){
-res.render('edit-sensors', { title: 'Express' });
+	if(req.user !=null){
+		res.render('edit-sensors', { user : req.user });
+	}else{
+		res.render('signin');
+	}
 };
 
 exports.data = function(req, res){
-res.render('edit-data', { title: 'Express' });
+	//res.render('edit-data', { user : req.user });
+	if(req.user !=null){
+		res.render('edit-data', { user : req.user });
+	}else{
+		res.render('signin');
+	}
 };
 
 

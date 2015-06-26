@@ -37,16 +37,19 @@ html
               li
                 a(href="/") Hem
               li 
+                a(href="/profile") Profile  
+              li 
                 a(href="/charts") Charts
               li 
                 //a(href="/edit") Edit 
-                a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Edit 
-                  span(class="caret")
-                ul(class="dropdown-menu", role="menu")
-                  li
-                    a(href="/edit/sensors") Sensors
-                  li
-                    a(href="/edit/data") Sensor data  
+                if (user)
+                  a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Edit 
+                    span(class="caret")
+                  ul(class="dropdown-menu", role="menu")
+                    li
+                      a(href="/edit/sensors") Sensors
+                    li
+                      a(href="/edit/data") Sensor data  
               li
                 a(href="/about") About
   
