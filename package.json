@@ -6,18 +6,22 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.2.6",
-    "jade": "*",
+    "express": "~4.13.0",
+    "jade": "~1.11.0",
     "express-handlebars": "*",
-    "method-override": "*",
-    "express-session": "*",
+    "method-override": "~2.3.3",
+    "express-session": "~1.11.3",
     "passport": "*",
     "passport-local": "*",
     "passport-twitter": "*",
     "passport-google": "*",
     "passport-facebook": "*",
-    "connect-flash":"*",
-    "bcrypt-nodejs":"*"
-    
+    "connect-flash": "*",
+    "bcrypt-nodejs": "*",
+    "serve-favicon": "~2.3.0",
+    "morgan": "~1.6.0",
+    "errorhandler": "~1.4.0",
+    "body-parser": "~1.13.1",
+    "multer": "~0.1.8"
   }
 }

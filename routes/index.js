@@ -1,54 +1,59 @@
+var express = require('express');
+var router = express.Router();
 
-/*
- * GET home page.
- */
+var isAuthenticated = function (req, res, next) {
+	// if user is authenticated in the session, call the next() to call the next request handler 
+	// Passport adds this method to request object. A middleware is allowed to add properties to
+	// request and response objects
+	if (req.isAuthenticated())
+		return next();
+	// if the user is not authenticated then redirect him to the login page
+	res.redirect('/signin');
+}
 
-exports.index = function(req, res){
-  res.render('index', { user : req.user });
-};
+module.exports = function(passport){
 
-exports.signin = function(req, res){
-	 res.render('signin', { user : req.user, message: req.flash('error') });
-};
+	router.get('/', function(req, res) {
+	  res.render('index', { user : req.user });
+	});
+	
+	router.get('/signin', function(req, res){
+		 res.render('signin', { user : req.user, message: req.flash('error') });
+	});
+	
+	router.get('/profile', isAuthenticated, function(req, res){
+	  //res.render('profile', { title: 'Express' });
+		 res.render('profile', { user : req.user });
+	});
+	
+	router.get('/about',function(req, res){
+		res.render('about', { title: 'Express' });
+	});
+	
+	router.get('/charts',function(req, res){
+		res.render('charts', { title: 'Express' });
+	});
+	
+	router.get('/signout', function(req, res) {
+	  var name = req.user.username;
+	  console.log("LOGGIN OUT " + req.user.username)
+	  req.logout();
+	  res.redirect('/');
+	  req.session.notice = "You have successfully been logged out " + name + "!";
+	});
+	
+	router.post('/login', passport.authenticate('login', { 
+		  successRedirect: '/profile',
+		  failureRedirect: '/signin',
+		  failureFlash: true
+		  })
+		);
 
-exports.profile = function(req, res){
-  //res.render('profile', { title: 'Express' });
-	 res.render('profile', { user : req.user });
-};
-
-exports.logout= function(req, res){
-  var name = req.user.username;
-  console.log("LOGGIN OUT " + req.user.username)
-  req.logout();
-  res.redirect('/');
-  req.session.notice = "You have successfully been logged out " + name + "!";
-};
-
-
-
-
-/*exports.localReg = function(req, res){
-	  var username = req.body.username;
-	  var password = req.body.password;
-	  var email = req.body.email;
-	  var about = req.body.about;
-	  
-	  console.log(username);
-	  
-	  var db = req.db;
-	    var collection = db.get('users');
-	    collection.find({'username':username},{},function(e,existingUser){
-	    	if(existingUser === null){ //No user exists
-	    	 var newUser = {username: username, password:password, email:email, about:about};	
-	    	}else{
-	    		res.render('signin', { user : req.user, message: req.flash('User already exists.') });
-	    		
-	    	}
-	    	
-	    	
-	    	
-	    });
-	  
-};
-
-*/
+	router.post('/local-reg', passport.authenticate('signup', {
+		successRedirect: '/profile',
+		failureRedirect: '/signin',
+		failureFlash : true  
+	}));
+	
+	return router;
+}
