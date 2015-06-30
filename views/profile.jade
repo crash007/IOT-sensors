@@ -17,20 +17,36 @@ block content
             span.glyphicon.glyphicon-user
             |         Sign in!
     if (user)
-      .jumbotron
+      //.jumbotron
         h1 Orchestrate User Authentication
           |     
           p Below is your profile information!
         |   
-        .panel.panel-default
-          .panel-heading
-            h3.panel-title Profile Information
-          |     
-          .panel-body
-            p Username: #{user.username}
-            |       
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Profile Information
+        |     
+        .panel-body
+          p Username: #{user.username}
+          |       
+          //
             p
               | Avatar: 
               img(src='{user.avatar}')
+          p
+            | Full name: #{user.fullname}
+          p
+            | Epost: #{user.email}
+          p
+            | About: #{user.about}
+          table.table
+            thead
+              th sdfdsf
+          
+            tbody
+              tr
+                td sdfsdf
+                td dfsdf
+            
 
   

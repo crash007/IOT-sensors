@@ -35,23 +35,30 @@ html
         div(id="navbar", class="collapse navbar-collapse")
             ul(class="nav navbar-nav")
               li
-                a(href="/") Hem
-              li 
-                a(href="/profile") Profile  
+                a(href="/") Home 
               li 
                 a(href="/charts") Charts
-              li 
-                //a(href="/edit") Edit 
-                if (user)
+              
+              li
+                a(href="/about") About
+              li
+                a
+              if(user)
+                li
+                  a(href="/profile") My profile
+                li
                   a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Edit 
                     span(class="caret")
                   ul(class="dropdown-menu", role="menu")
                     li
                       a(href="/edit/sensors") Sensors
                     li
-                      a(href="/edit/data") Sensor data  
+                      a(href="/edit/data") Sensor data
               li
-                a(href="/about") About
+                if(user)
+                  a(href="/logout") Sign out
+                else
+                  a(href="/signin") Sign in
   
     block content
     

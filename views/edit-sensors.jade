@@ -8,7 +8,16 @@ block content
 		div(class="page-header")
 			h1 Edit
 			p(class="lead") Edit sensors and data	
-			
+		
+		.row
+			form.form-inline
+				.form-group
+					label.sr-only(for="exampleInputEmail3") Email address
+					input#exampleInputName2.form-control(type='text', placeholder='Name')
+				.form-group
+					label.sr-only(for="exampleInputE234mail3") address
+					input#exampleInputEmail2.form-control(type='email', placeholder='Description')
+					button.btn.btn-default(type='submit') Send invitation
 		.row
 			.col-md-4
 				h2 Add Sensor
@@ -21,7 +30,7 @@ block content
 					br
 					input.form-control#inputSensorValueSuffix(type='text', placeholder='Value suffix (%)')
 					br
-				button.btn.btn-default#btnAddSensor Add Sensor
+				button.btn.btn-default#btnAddSensor(style="float:right") Add Sensor
 				
 				
 			.col-md-8
@@ -37,8 +46,8 @@ block content
 							th Id
 						
 						tbody
-             
-                
+
+
 block scripts
 	//script(src="/javascripts/moment.min.js")
 	script(src="/javascripts/moment-with-locales.js")

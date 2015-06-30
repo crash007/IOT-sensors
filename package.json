@@ -15,6 +15,9 @@
     "passport-local": "*",
     "passport-twitter": "*",
     "passport-google": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "connect-flash":"*",
+    "bcrypt-nodejs":"*"
+    
   }
 }

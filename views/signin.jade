@@ -3,42 +3,11 @@ extends layout
 block content
 
 	div.container
-		//	
-			h1 Login Page
-			p.lead Say something worthwhile here.
-			br
-			form(role='form', action="/login",method="post", style='max-width: 300px;')
-				.form-group
-					input.form-control(type='text', name="username", placeholder='Enter Username')
-				.form-group
-					input.form-control(type='password', name="password", placeholder='Password')
-				button.btn.btn-default(type='submit') Submit
-				&nbsp;
-				a(href='/')
-					button.btn.btn-primary(type="button") Cancel
-				
-		//.jumbotron
+		
 		h1 Sign in
 		p
-			| We&apos;re using passport.js to demonstrate user authentication. Please sign-in with your Local, Twitter, Google, or Facebook account to view your profile.
-		p
-			a.btn.btn-warning.btn-lg(data-toggle='collapse', href='#local', role='button')
-				span.glyphicon.glyphicon-user
-				|  Sign in Locally
-			a.btn.btn-info.btn-lg(href='/auth/twitter', role='button')
-				span.glyphicon.glyphicon-user
-				|  Sign in with Twitter
-			a.btn.btn-danger.btn-lg(href='/auth/google', role='button')
-				span.glyphicon.glyphicon-user
-				|  Sign in with Google
-			a.btn.btn-primary.btn-lg(href='/auth/facebook', role='button')
-				span.glyphicon.glyphicon-user
-				|  Sign in with Facebook
-			#local.collapse
-				a.btn.btn-default.btn-md(data-toggle='collapse', href='#local-sign-in', role='button') I already have an account
-				a.btn.btn-default.btn-md(data-toggle='collapse', href='#local-reg', role='button') I need to make an account
-	
-			form#local-sign-in.collapse(action='/login', method='post')
+			| Please sign-in with to view your profile.
+		form#local-sign-in(action='/login', method='post')
 				div
 					p
 					label Username:
@@ -47,15 +16,72 @@ block content
 					label Password:
 					input(type='password', name='password')
 				div
-					input.btn.btn-primary.btn-sm(type='submit', value='Log In')
-			form#local-reg.collapse(action='/local-reg', method='post')
-				div
-					p
-					label New Username:
-					input(type='text', name='username')
-				div
-					label New Password:
-					input(type='password', name='password')
-				div
-					input.btn.btn-primary.btn-sm(type='submit', value='Register')
+					input.btn.btn-primary.btn-default(type='submit', value='Log In')
+				br
+	
+						
+		a.btn.btn-warning.btn-lg(data-toggle='collapse', href='#local-reg', role='button')
+			span.glyphicon.glyphicon-user
+			|  Sign up
+		p Register for an account	
+		form#local-reg.collapse(action='/local-reg', method='post')
+			div				
+				label New Username:
+				input(type='text', name='username')
+			div				
+				label Email: 
+				input(type='text', name='email')
+			div
+				label About:  
+				textarea.form-control(rows="3", placeholder="Tell us something about yourself.")
+									
+			div
+				label New Password:
+				input(type='password', name='password')
 				
+			div
+				input.btn.btn-primary.btn-sm(type='submit', value='Register')
+		
+		//
+			p
+				
+				a.btn.btn-warning.btn-lg(data-toggle='collapse', href='#local', role='button')
+					span.glyphicon.glyphicon-user
+					|  Sign in
+				
+				//
+					a.btn.btn-info.btn-lg(href='/auth/twitter', role='button')
+						span.glyphicon.glyphicon-user
+						|  Sign in with Twitter
+				a.btn.btn-danger.btn-lg(href='/auth/google', role='button')
+					span.glyphicon.glyphicon-user
+					|  Sign in with Google
+				a.btn.btn-primary.btn-lg(href='/auth/facebook', role='button')
+					span.glyphicon.glyphicon-user
+					|  Sign in with Facebook
+				#local.collapse
+					a.btn.btn-default.btn-md(data-toggle='collapse', href='#local-sign-in', role='button') I already have an account
+					a.btn.btn-default.btn-md(data-toggle='collapse', href='#local-reg', role='button') I need to make an account
+		
+				form#local-sign-in.collapse(action='/login', method='post')
+					div
+						p
+						label Username:
+						input(type='text', name='username')
+					div
+						label Password:
+						input(type='password', name='password')
+					div
+						input.btn.btn-primary.btn-sm(type='submit', value='Log In')
+				form#local-reg.collapse(action='/local-reg', method='post')
+					div
+						p
+						label New Username:
+						input(type='text', name='username')
+					div
+						label New Password:
+						input(type='password', name='password')
+					div
+						input.btn.btn-primary.btn-sm(type='submit', value='Register')
+		p
+			.error #{message}		

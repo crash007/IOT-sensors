@@ -16,14 +16,17 @@ var express = require('express')
   , charts = require('./routes/charts')
   , edit = require('./routes/edit')
   , $ = require('jquery')
-  , jQuery = require('jquery'),
+  , jQuery = require('jquery')
+  , bCrypt = require('bcrypt-nodejs'),
   methodOverride = require('method-override'),
   session = require('express-session'),
   passport = require('passport'),
   LocalStrategy = require('passport-local'),
   TwitterStrategy = require('passport-twitter'),
   GoogleStrategy = require('passport-google'),
-  FacebookStrategy = require('passport-facebook');
+  FacebookStrategy = require('passport-facebook'),
+  
+  flash = require('connect-flash');
 
 
 //Database
@@ -43,32 +46,92 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
+passport.use('login',new LocalStrategy({passReqToCallback:true},
+  function(req,username, password, done) {
    console.log("passport! username:"+username);
     process.nextTick(function () {
     	var collection = db.get('userlist');
-        collection.find({'username': username},{},function(e,docs){
-            if(typeof docs[0].password !== 'undefined' && docs[0].password === password){
-            	console.log("Returning user:");
-            	console.log(docs[0]);
-            	return done(null,docs[0]);
-            }else{
-            	return done(null,false);
+        collection.findOne({'username': username},{},function(e,user){
+        	if(e){
+        		return done(e);
+        	}
+        	// Username does not exist, log error & redirect back
+            if (!user){
+              console.log('User Not Found with username '+username);
+              return done(null, false, 
+                    req.flash('error', 'User Not found.'));                 
             }
-        	
-        	console.log(docs[0].password);
+            // User exists but wrong password, log the error 
+            if (!isValidPassword(user, password)){
+              console.log('Invalid Password');
+              return done(null, false, 
+                  req.flash('error', 'Invalid Password'));
+            }
+            // User and password both match, return user from 
+            // done method which will be treated like success
+            return done(null, user);
+        	        	
         });
-//	  UserDetails.findOne({'username':username},
-//		function(err, user) {
-//			if (err) { return done(err); }
-//			if (!user) { return done(null, false); }
-//			if (user.password != password) { return done(null, false); }
-//			return done(null, user);
-//		});
+        var isValidPassword = function(user, password){
+            return bCrypt.compareSync(password, user.password);
+        }
     });
-  }
-));
+}));
+
+passport.use('signup', new LocalStrategy({
+    passReqToCallback : true
+  },
+  function(req, username, password, done) {
+    findOrCreateUser = function(){
+    	var collection = db.get('userlist');
+      collection.findOne({'username':username},function(err, user) {
+        // In case of any error return
+        if (err){
+          console.log('Error in SignUp: '+err);
+          return done(err);
+        }
+        // already exists
+        if (user) {
+          console.log('User already exists');
+          return done(null, false, 
+             req.flash('error','User Already Exists'));
+        } else {
+          // if there is no user with that email
+          // create the user
+          console.log(req.param('email'));
+          console.log(req.param('fullname'));
+        	var newUser = {};
+          // set the user's local credentials
+          newUser.username = username;
+          newUser.password = createHash(password);
+          newUser.email = req.param('email');
+          newUser.fullName = req.param('fullName');
+          newUser.about = req.param('about');
+ 
+          	// save the user
+          
+          	collection.insert(newUser,function(err,result) {
+                if (err){
+                  console.log('Error in Saving user: '+err);  
+                  throw err;  
+                }
+                console.log('User Registration succesful');    
+                return done(null, newUser);
+              });
+        }
+      });
+    };
+     
+  //Generates hash using bCrypt
+	var createHash = function(password){
+	    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+	}
+    // Delay the execution of findOrCreateUser and execute 
+    // the method in the next tick of the event loop
+    process.nextTick(findOrCreateUser);
+  })
+	
+);
 
 
 // all environments
@@ -86,8 +149,10 @@ app.use(bodyParser.json());
 //app.use(express.methodOverride());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 
 app.use(function(req,res,next){
@@ -114,13 +179,22 @@ app.use(app.router);
 	
 app.get('/', routes.index);
 
-app.post('/login', passport.authenticate('local', { 
+app.post('/login', passport.authenticate('login', { 
   successRedirect: '/profile',
-  failureRedirect: '/signin'
+  failureRedirect: '/signin',
+  failureFlash: true
   })
 );
 
+app.post('/local-reg', passport.authenticate('signup', {
+	successRedirect: '/profile',
+	failureRedirect: '/signin',
+	failureFlash : true  
+}));
+
+
 app.get('/signin', routes.signin);
+app.get('/logout', routes.logout);
 app.get('/profile', routes.profile);
 app.get('/users', user.list);
 app.get('/users/userlist', user.userlist);
