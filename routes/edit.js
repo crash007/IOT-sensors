@@ -65,7 +65,9 @@ module.exports = function(){
 	router.post('/add-sensor', isAuthenticated, function(req, res){
 		var db = req.db;
 		var collection = db.get('sensor-data');
-		collection.insert(req.body, function(err, result){
+		var sensor = req.body;
+		sensor.data = [];
+		collection.insert(sensor, function(err, result){
 		    res.send(
 		        (err === null) ? { msg: '' } : { msg: err }
 		    );

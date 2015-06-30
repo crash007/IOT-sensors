@@ -13,9 +13,8 @@ block content
       this project
       
     if (!user)
-      a(href="/signin") Sign in
-      br
-      a(href="/register") Register
+      a(href="/signin") Sign in / Register
+      
     if (user)
       p You are currently logged in as #{user.username}
       a(href="/logout") Logout
