@@ -39,14 +39,22 @@ block content
             | Epost: #{user.email}
           p
             | About: #{user.about}
-          table.table
-            thead
-              th sdfdsf
           
-            tbody
-              tr
-                td sdfsdf
-                td dfsdf
-            
-
-  
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Sensors        
+        .panel-body
+          #sensorList
+            table.table
+              thead
+                th Name
+                th Description
+                th Unit
+                th valueSuffix
+                //th Values
+                th Id
+              tbody
+              
+block scripts
+  script(src="/javascripts/populateSensors.js")
+  script(src="/javascripts/profile.js")

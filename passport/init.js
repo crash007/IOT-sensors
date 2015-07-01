@@ -10,15 +10,11 @@ module.exports = function(passport,db){
     });
 
     passport.deserializeUser(function(id, done) {
-    	var collection = db.get('userlist');
+    	var collection = db.get('users');
     	collection.findOne({'_id': id},function(err, user) {
-          console.log('deserializing user:',user);
+          //console.log('deserializing user:',user);
           done(err, user);
       });
-//        User.findById(id, function(err, user) {
-//            console.log('deserializing user:',user);
-//            done(err, user);
-//        });
     });
 
     // Setting up Passport Strategies for Login and SignUp/Registration

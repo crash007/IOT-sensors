@@ -7,7 +7,7 @@ module.exports = function(passport){
 		  function(req,username, password, done) {
 		   console.log("passport! username:"+username);
 		    process.nextTick(function () {
-		    	var collection = req.db.get('userlist');
+		    	var collection = req.db.get('users');
 		        collection.findOne({'username': username},{},function(e,user){
 		        	if(e){
 		        		return done(e);

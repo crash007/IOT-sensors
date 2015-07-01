@@ -77,7 +77,7 @@ function populateDataTable() {
     
     
     // jQuery AJAX call for JSON
-    $.getJSON( '/sensors/data?_id='+$('input[name="id"]').val(), function( data ) {
+    $.getJSON( '/sensors/read?mySensors=true&_id='+$('input[name="id"]').val(), function( data ) {
     	console.log(data);
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data[0].data, function(){
@@ -100,7 +100,7 @@ function populateDataTable() {
 
 function populateDropdown(){
 	var dropDownContent='';
-	$.getJSON( '/sensors/sensor-list', function( data ) {
+	$.getJSON( '/sensors/read?mySensors=true', function( data ) {
 
 	        // For each item in our JSON, add a table row and cells to the content string
 	        $.each(data, function(){

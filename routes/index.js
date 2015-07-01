@@ -27,11 +27,11 @@ module.exports = function(passport){
 	});
 	
 	router.get('/about',function(req, res){
-		res.render('about', { title: 'Express' });
+		res.render('about', { title: 'Express' , user : req.user});
 	});
 	
 	router.get('/charts',function(req, res){
-		res.render('charts', { title: 'Express' });
+		res.render('charts', { title: 'Express' , user : req.user});
 	});
 	
 	router.get('/logout', function(req, res) {

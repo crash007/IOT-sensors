@@ -9,7 +9,7 @@ module.exports = function(passport){
 	  },
 	  function(req, username, password, done) {
 	    findOrCreateUser = function(){
-	    	var collection = req.db.get('userlist');
+	    	var collection = req.db.get('users');
 	      collection.findOne({'username':username},function(err, user) {
 	        // In case of any error return
 	        if (err){

@@ -15,7 +15,7 @@ var isAuthenticated = function (req, res, next) {
 module.exports = function(){
 
 	router.get('/sensors', isAuthenticated, function(req, res){
-		if(req.user !=null){
+		if(req.user !=null){			
 			res.render('edit-sensors', { user : req.user });
 		}else{
 			res.render('signin');
@@ -48,7 +48,7 @@ module.exports = function(){
 		
 		console.log("Adding value to sensor: "+id+" , data: "+data.value+" "+data.time);
 		
-		collection.update({_id:id},
+		collection.update({_id:id,userId: req.user._id},
 			{$push: { 'data':data } }, {w:1}, function(err, result) {
 				if(err !==null){
 					console.log(err);
@@ -67,6 +67,8 @@ module.exports = function(){
 		var collection = db.get('sensor-data');
 		var sensor = req.body;
 		sensor.data = [];
+		sensor.userId= req.user._id;
+		sensor.username=req.user.username;
 		collection.insert(sensor, function(err, result){
 		    res.send(
 		        (err === null) ? { msg: '' } : { msg: err }
@@ -83,7 +85,7 @@ module.exports = function(){
 		//Update everything except _id
 		delete params.sensorId;
 		
-		collection.update({_id:sensorId}, {$set: params }, {w:1}, function(err, result) {
+		collection.update({_id:sensorId, userId: req.user._id}, {$set: params }, {w:1}, function(err, result) {
 			if(err !== null){
 				console.log(err);
 			}
@@ -101,12 +103,14 @@ module.exports = function(){
 		var id = req.body.id;
 		var prevValue = parseFloat(req.body.prevValue);
 		var prevTime = new Date(req.body.prevTime);
-		var value = req.body.value;
+		var value = parseFloat(req.body.value);
 		var time = new Date(req.body.time);
 		
 		collection.update(
 				{
-					_id:id,
+					_id:id, 
+					userId: req.user._id,
+					
 					data: { $elemMatch: {value: prevValue, 
 						time: prevTime
 						}}
@@ -140,6 +144,7 @@ module.exports = function(){
 		collection.remove(
 				{
 					_id:id,
+					userId: req.user._id
 					
 				}, 			 
 				{w:1}, 
@@ -163,7 +168,7 @@ module.exports = function(){
 		
 		console.log("Removing data with id: "+id+" ,value: "+value+" , time: "+time);	
 		collection.update(
-		    {'_id': id}, 
+		    {'_id': id, userId: req.user._id }, 
 		    { $pull: { "data" : { value: value } } },
 		    {w:1},
 		    function(err, result) {
