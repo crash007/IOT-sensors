@@ -22,22 +22,43 @@ block content
 				if (user)
 					.panel.panel-default.profile-panel.collapse
 						.panel-heading
-							h3.panel-title Profile Information
-						|     
+							h3.panel-title(style="display:inline-block") Profile Information
+							a(href='#', style="float:right")
+								span.glyphicon.glyphicon-edit(aria-hidden='true')
 						.panel-body
 							p Username: #{user.username}
-							|       
-							//
-								p
-									| Avatar: 
-									img(src='{user.avatar}')
-							p
-								| Full name: #{user.fullname}
-							p
+
+							p.fullName
+								| Full name: #{user.fullName}
+							p.email
 								| Epost: #{user.email}
-							p
+							p.about
 								| About: #{user.about}
-							
+					.panel.panel-default.profile-edit-panel.collapse
+						.panel-heading
+							h3.panel-title(style="display:inline-block") Profile Information
+							a(href='#', style="float:right")
+								span.glyphicon.glyphicon-ok(aria-hidden='true')
+						.panel-body
+							form.form-horizontal#local-reg(action='/update-profile', method='post')								
+								.form-group
+									label.col-sm-2.control-label Email
+									.col-sm-10
+										input.form-control(placeholder='Email',name="email",type="email", value="#{user.email}")
+								.form-group
+									label.col-sm-2.control-label Full name
+									.col-sm-10
+										input.form-control(type='text', placeholder='Full name',name="fullName" , value="#{user.fullName}")
+								//
+									.form-group
+										label.col-sm-2.control-label Password
+										.col-sm-10
+											input.form-control(type='password', placeholder='Password',name="password")
+								.form-group
+									label.col-sm-2.control-label About
+									.col-sm-10
+										input.form-control(type='text', placeholder='Say something',name="about",value="#{user.about}")
+								
 					.panel.panel-default.sensor-panel.collapse.in
 						.panel-heading
 							h3.panel-title Sensors        
@@ -78,10 +99,7 @@ block content
 											button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
 												span.caret
 											ul.dropdown-menu(role="menu")
-												li
-													a action1
-												li
-													a action2
+
 							.row
 								.col-md-4
 					

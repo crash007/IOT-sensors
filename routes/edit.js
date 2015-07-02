@@ -13,24 +13,6 @@ var isAuthenticated = function (req, res, next) {
 }
 
 module.exports = function(){
-
-	router.get('/sensors', isAuthenticated, function(req, res){
-		if(req.user !=null){			
-			res.render('edit-sensors', { user : req.user });
-		}else{
-			res.render('signin');
-		}
-	});
-	
-	router.get('/data', isAuthenticated,function(req, res){
-		
-		if(req.user !=null){
-			res.render('edit-data', { user : req.user });
-		}else{
-			res.render('signin');
-		}
-	});
-	
 	
 	router.post('/add-data', isAuthenticated, function(req, res){
 		var db = req.db;

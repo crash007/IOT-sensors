@@ -63,5 +63,29 @@ module.exports = function(passport){
 		failureFlash : true  
 	}));
 	
+	router.post('/update-profile', isAuthenticated, function(req, res){
+		console.log(req.body);
+		var db = req.db;
+		var collection = db.get('users');
+		var profile = req.body;
+		collection.update({_id:req.user._id}, {$set: {email:profile.email, about: profile.about, fullName:profile.fullName} }, {w:1}, function(err, result) {
+			if(err !== null){
+				console.log(err);
+			}
+			
+			collection.findOne({'_id': req.user._id},{},function(e,user){
+	        	if(e){
+	        		return done(e);
+	        	}
+	        	req.user = user;
+	        	res.send(
+	    		        (err === null) ? { msg: req.user } : { msg: err }
+	    		    );	        	
+	        });
+			
+			
+		});
+	});
+	
 	return router;
 }

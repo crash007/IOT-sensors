@@ -7,81 +7,50 @@ block content
 		h1 Sign in
 		p
 			| Please sign-in with to view your profile.
-		form#local-sign-in(action='/login', method='post')
-				div
-					p
-					label Username:
-					input(type='text', name='username')
-				div
-					label Password:
-					input(type='password', name='password')
-				div
+
+		form.form-horizontal#local-sign-in(action='/login', method='post')
+			.form-group
+				label.col-sm-2.control-label Username
+				.col-sm-10
+					input.form-control(placeholder='Username',name="username")
+			.form-group
+				label.col-sm-2.control-label(for='inputPassword3') Password
+				.col-sm-10
+					input.form-control(type='password', placeholder='Password',name="password")
+			.form-group
+				.col-sm-offset-2.col-sm-10					
 					input.btn.btn-primary.btn-default(type='submit', value='Log In')
-				br
-	
 						
 		a.btn.btn-warning.btn-lg(data-toggle='collapse', href='#local-reg', role='button')
 			span.glyphicon.glyphicon-user
 			|  Sign up
-		p Register for an account	
-		form#local-reg.collapse(action='/local-reg', method='post')
-			div				
-				label New Username:
-				input(type='text', name='username')
-			div				
-				label Email: 
-				input(type='text', name='email')
-			div
-				label About:  
-				textarea.form-control(rows="3", placeholder="Tell us something about yourself.")
-									
-			div
-				label New Password:
-				input(type='password', name='password')
-				
-			div
-				input.btn.btn-primary.btn-sm(type='submit', value='Register')
+		p Register for an account
+		form.form-horizontal#local-reg.collapse(action='/local-reg', method='post')
+			.form-group
+				label.col-sm-2.control-label Username
+				.col-sm-10
+					input.form-control(placeholder='Username',name="username", type="text")
+			.form-group
+				label.col-sm-2.control-label Email
+				.col-sm-10
+					input.form-control(placeholder='Email',name="email",type="email")
+			.form-group
+				label.col-sm-2.control-label Full name
+				.col-sm-10
+					input.form-control(type='text', placeholder='Say something',name="fullName")
+			.form-group
+				label.col-sm-2.control-label Password
+				.col-sm-10
+					input.form-control(type='password', placeholder='Password',name="password")
+			.form-group
+				label.col-sm-2.control-label About
+				.col-sm-10
+					input.form-control(type='text', placeholder='Say something',name="about")
+			.form-group
+				.col-sm-offset-2.col-sm-10					
+					input.btn.btn-primary.btn-default(type='submit', value='Register')
+
 		
-		//
-			p
-				
-				a.btn.btn-warning.btn-lg(data-toggle='collapse', href='#local', role='button')
-					span.glyphicon.glyphicon-user
-					|  Sign in
-				
-				//
-					a.btn.btn-info.btn-lg(href='/auth/twitter', role='button')
-						span.glyphicon.glyphicon-user
-						|  Sign in with Twitter
-				a.btn.btn-danger.btn-lg(href='/auth/google', role='button')
-					span.glyphicon.glyphicon-user
-					|  Sign in with Google
-				a.btn.btn-primary.btn-lg(href='/auth/facebook', role='button')
-					span.glyphicon.glyphicon-user
-					|  Sign in with Facebook
-				#local.collapse
-					a.btn.btn-default.btn-md(data-toggle='collapse', href='#local-sign-in', role='button') I already have an account
-					a.btn.btn-default.btn-md(data-toggle='collapse', href='#local-reg', role='button') I need to make an account
 		
-				form#local-sign-in.collapse(action='/login', method='post')
-					div
-						p
-						label Username:
-						input(type='text', name='username')
-					div
-						label Password:
-						input(type='password', name='password')
-					div
-						input.btn.btn-primary.btn-sm(type='submit', value='Log In')
-				form#local-reg.collapse(action='/local-reg', method='post')
-					div
-						p
-						label New Username:
-						input(type='text', name='username')
-					div
-						label New Password:
-						input(type='password', name='password')
-					div
-						input.btn.btn-primary.btn-sm(type='submit', value='Register')
 		p
 			.error #{message}		

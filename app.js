@@ -91,22 +91,10 @@ initPassport(passport,db);
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
 
-//var users = require('./routes/user'); 
-//app.use('/', users);
 
 var sensors = require('./routes/sensors');
 app.use('/sensors', sensors);
-//app.get('/charts', charts.charts);
-//app.get('/sensors/data', sensors.sensordata);
-//app.get('/sensors/sensor-list', sensors.sensorList);
-//app.get('/edit/sensors', edit.sensors);
-//app.get('/edit/data', edit.data);
-//app.post('/edit/add-sensor', edit.addSensor);
-//app.post('/edit/edit-sensor', edit.editSensor);
-//app.post('/edit/add-data', edit.addData);
-//app.post('/edit/edit-data', edit.editData);
-//app.post('/edit/del-sensor', edit.delSensor);
-//app.post('/edit/del-data', edit.delData);
+
 
 var edit = require('./routes/edit');
 app.use('/edit', edit);

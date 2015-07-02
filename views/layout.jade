@@ -45,15 +45,7 @@ html
                 a
               if(user)
                 li
-                  a(href="/user") #{user.username}
-                li
-                  a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Edit 
-                    span(class="caret")
-                  ul(class="dropdown-menu", role="menu")
-                    li
-                      a(href="/edit/sensors") Sensors
-                    li
-                      a(href="/edit/data") Sensor data
+                  a(href="/user") #{user.username}                
               li
                 if(user)
                   a(href="/logout") Sign out
