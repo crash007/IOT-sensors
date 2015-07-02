@@ -1,60 +1,125 @@
 extends layout
 
+block append head
+	link(href="/stylesheets/bootstrap-datetimepicker.min.css", rel="stylesheet",type="text/css", media="screen")
+	
 block content
-  
-  <!-- Begin page content -->
-  div.container
-    div(class="page-header")
+	div.container
+		.row.row-offcanvas.row-offcanvas-right
+			.col-xs-12.col-sm-9
+				p.pull-right.visible-xs
+					button.btn.btn-primary.btn-xs(type='button', data-toggle='offcanvas') Toggle nav
 
-      
-    if (!user)
-      h1 Orchestrate User Authentication
-        |     
-        p Sign in and view your profile!
-        |     
-        p
-          a.btn.btn-primary.btn-lg(href='/signin', role='button')
-            span.glyphicon.glyphicon-user
-            |         Sign in!
-    if (user)
-      //.jumbotron
-        h1 Orchestrate User Authentication
-          |     
-          p Below is your profile information!
-        |   
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title Profile Information
-        |     
-        .panel-body
-          p Username: #{user.username}
-          |       
-          //
-            p
-              | Avatar: 
-              img(src='{user.avatar}')
-          p
-            | Full name: #{user.fullname}
-          p
-            | Epost: #{user.email}
-          p
-            | About: #{user.about}
-          
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title Sensors        
-        .panel-body
-          #sensorList
-            table.table
-              thead
-                th Name
-                th Description
-                th Unit
-                th valueSuffix
-                //th Values
-                th Id
-              tbody
-              
+				if (!user)
+					h1 Orchestrate User Authentication
+						|     
+						p Sign in and view your profile!
+						|     
+						p
+							a.btn.btn-primary.btn-lg(href='/signin', role='button')
+								span.glyphicon.glyphicon-user
+								|         Sign in!
+				if (user)
+					.panel.panel-default.profile-panel.collapse
+						.panel-heading
+							h3.panel-title Profile Information
+						|     
+						.panel-body
+							p Username: #{user.username}
+							|       
+							//
+								p
+									| Avatar: 
+									img(src='{user.avatar}')
+							p
+								| Full name: #{user.fullname}
+							p
+								| Epost: #{user.email}
+							p
+								| About: #{user.about}
+							
+					.panel.panel-default.sensor-panel.collapse.in
+						.panel-heading
+							h3.panel-title Sensors        
+						.panel-body
+							#sensorList
+								table.table
+									thead
+										th Name
+										th Description
+										th Unit
+										th valueSuffix                
+										th Id
+									tbody
+									
+					.panel.panel-default.add-sensor-panel.collapse
+						.panel-heading
+							h3.panel-title Add Sensor
+						.panel-body
+							.row
+								.col-md-4
+									//h2 Add Sensor
+									#addSensor
+										input.form-control#inputSensorName(type='text', placeholder='Name')
+										br
+										input.form-control#inputSensorDesc(type='text', placeholder='Description')
+										br
+										input.form-control#inputSensorUnit(type='text', placeholder='Unit')
+										br
+										input.form-control#inputSensorValueSuffix(type='text', placeholder='Value suffix (%)')
+										br
+									button.btn.btn-default#btnAddSensor(style="float:right") Add Sensor
+
+					.panel.panel-default.data-panel.collapse
+						.panel-heading
+							h3.panel-title Edit sensor data
+						.panel-body
+							#sensorDropdown.btn-group
+											button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
+												span.caret
+											ul.dropdown-menu(role="menu")
+												li
+													a action1
+												li
+													a action2
+							.row
+								.col-md-4
+					
+									h2 Add
+									#addSensorData
+					
+										input.form-control#inputSensorValue(type='text', placeholder='Value')
+										br
+												
+										.form-group
+											.input-group.date#datetimepicker1
+												input.form-control( type='text')
+												span.input-group-addon
+													span.glyphicon.glyphicon-calendar
+										button.btn.btn-default#btnAddSensorData(style="float:right") Add Sensor Data
+										
+								.col-md-8
+									h2 Edit
+									#sensorDataList
+										table.table
+											thead
+												th Time
+												th Value
+											
+											tbody
+									
+						
+			#sidebar.col-xs-6.col-sm-3.sidebar-offcanvas
+				.list-group
+					a.list-group-item.active(data-link='sensor-panel',href='#') Sensors
+					a.list-group-item(data-link='data-panel',href='#') Data
+					a.list-group-item(href='#',data-link='profile-panel') Profile
+					
+
 block scripts
-  script(src="/javascripts/populateSensors.js")
-  script(src="/javascripts/profile.js")
+	script(src="/javascripts/moment-with-locales.js")
+	script(src="/javascripts/bootstrap-datetimepicker.min.js")
+	script(src="/javascripts/populateSensors.js")
+	script(src="/javascripts/edit-sensors.js")
+	script(src="/javascripts/edit-sensor-data.js")
+	script(src="/javascripts/profile.js")

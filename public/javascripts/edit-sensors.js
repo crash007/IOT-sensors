@@ -1,15 +1,14 @@
 /**
  * New node file
  */
-// Userlist data array for filling in info box
+// Data array for filling in info box
 var sensorData = [];
 var sensorDate = '';
 
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-    // Populate the user table on initial page load
-    populateSensorTable();
+
     $('#btnAddSensor').on('click', addSensor);
 
     
@@ -113,8 +112,8 @@ function editSensor(tr){
 
         // Check for successful (blank) response
         if (response.msg === '') {
-            // Update the table and dropdown
-           populateSensorTable();
+            // Update the table
+           populateSensorTable('mySensors=true');
 
         }
         else {

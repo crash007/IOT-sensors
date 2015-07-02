@@ -21,10 +21,18 @@ module.exports = function(passport){
 		 res.render('signin', { user : req.user, message: req.flash('error') });
 	});
 	
-	router.get('/profile', isAuthenticated, function(req, res){
-	  //res.render('profile', { title: 'Express' });
-		 res.render('profile', { user : req.user });
+	router.get('/user', isAuthenticated, function(req, res){
+		 res.render('profile', { user : req.user });			
 	});
+		
+//	router.get('/users/:name',  function(req, res){
+//	  
+//		if(req.isAuthenticated() && req.params.name === req.user.username){
+//		 res.render('profile', { user : req.user });
+//		}else{
+//			res.render('charts');
+//		}
+//	});
 	
 	router.get('/about',function(req, res){
 		res.render('about', { title: 'Express' , user : req.user});
@@ -43,14 +51,14 @@ module.exports = function(passport){
 	});
 	
 	router.post('/login', passport.authenticate('login', { 
-		  successRedirect: '/profile',
+		  successRedirect: '/user',
 		  failureRedirect: '/signin',
 		  failureFlash: true
 		  })
 		);
 
 	router.post('/local-reg', passport.authenticate('signup', {
-		successRedirect: '/profile',
+		successRedirect: '/user',
 		failureRedirect: '/signin',
 		failureFlash : true  
 	}));

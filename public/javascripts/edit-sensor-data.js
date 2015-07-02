@@ -11,7 +11,8 @@ $(document).ready(function() {
 	$('#datetimepicker1').datetimepicker({
 
 		locale:'sv',
-		format: 'YYYY-MM-DD LTS'				
+		format: 'YYYY-MM-DD LTS',
+		 defaultDate: new Date(),
     });
 	
 	$("#datetimepicker1").on("dp.change", function (e) {		  
