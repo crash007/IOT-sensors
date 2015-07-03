@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	populateSensorTable('mySensors=true');
+	populateMySensorsTable();
 	
 	  $('.list-group-item').on('click',function(e){
 		  console.log(e);

@@ -148,10 +148,10 @@ module.exports = function(){
 		var value = parseFloat(req.body.value);
 		var time = new Date(req.body.time);
 		
-		console.log("Removing data with id: "+id+" ,value: "+value+" , time: "+time);	
+		console.log("Removing data with id: "+id+" ,value: "+value+" , time: "+time+", userId"+req.user._id);	
 		collection.update(
-		    {'_id': id, userId: req.user._id }, 
-		    { $pull: { "data" : { value: value } } },
+		    {'_id': id}, 
+		    { $pull: { "data" : { value: value} } },
 		    {w:1},
 		    function(err, result) {
 				console.log(err);

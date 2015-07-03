@@ -43,7 +43,7 @@ function sensorEditTableRow(tr){
     tableContent += '<td class="description"><input type="text" class="form-control" value="'+$(tr).find('.description').text()+'"></td>';
     tableContent += '<td class="unit"><input type="text" class="form-control" value="'+ $(tr).find('.unit').text() + '"></td>';
     tableContent += '<td class="valueSuffix"><input type="text" class="form-control" value="'+ $(tr).find('.valueSuffix').text() + '"></td>';
-    tableContent += '<td class="values">' + $(tr).find('.values').text() + '</td>';
+    tableContent += '<td class="latLng"><input type="text" class="form-control" value="' + $(tr).find('.latLng').text() + '"></td>';
     tableContent += '<td> <a href="#"> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> <a href="#"><span class="glyphicon glyphicon-remove undo" aria-hidden="true"></span></a> </td>'; 
     tableContent += '<input type="hidden" name="id" value="'+$(tr).find('input[name="id"]').val() +'" />';
     tableContent += '</tr>';
@@ -65,6 +65,7 @@ function addSensor(event){
 				"description": $('#inputSensorDesc').val(),
 				"unit": $('#inputSensorUnit').val(),
 				"valueSuffix": $('#inputSensorValueSuffix').val(),
+				"latLng":$('#inputSensorLatLng').val(),
 				"data":[]};
 		
 		// Use AJAX to post the object to our adduser service
@@ -82,7 +83,7 @@ function addSensor(event){
                 $('#addSensor input').val('');
 
                 // Update the table
-               populateSensorTable();
+               populateMySensorsTable();
 
             }
             else {
@@ -99,7 +100,8 @@ function addSensor(event){
 
 
 function editSensor(tr){
-	var sensor = {id: $(tr).find('input[name="id"]').val(), name: $(tr).find('td.name input').val(), description: $(tr).find('td.description input').val(), unit: $(tr).find('td.unit input').val(),valueSuffix: $(tr).find('td.valueSuffix input').val()};
+	var sensor = {id: $(tr).find('input[name="id"]').val(), name: $(tr).find('td.name input').val(), description: $(tr).find('td.description input').val(), unit: $(tr).find('td.unit input').val(),valueSuffix: $(tr).find('td.valueSuffix input').val(),
+			latLng: $(tr).find('td.latLng input').val()};
 	console.log("Saving sensor to db: "+sensor.name);
 	console.log(sensor);
 	// Use AJAX to post the object to our adduser service
@@ -113,7 +115,7 @@ function editSensor(tr){
         // Check for successful (blank) response
         if (response.msg === '') {
             // Update the table
-           populateSensorTable('mySensors=true');
+           populateMySensorsTable();
 
         }
         else {
@@ -138,7 +140,7 @@ function delSensor(id){
         // Check for successful (blank) response
         if (response.msg === '') {
             // Update the table and dropdown
-           populateSensorTable();
+           populateMySensorsTable();
 
         }
         else {

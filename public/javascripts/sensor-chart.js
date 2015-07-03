@@ -41,7 +41,6 @@ function chart(sensor){
 	          }]
 	      },
 	      tooltip: {
-//	          valueSuffix: '°C'
 	    	  valueSuffix: sensor.valueSuffix
 	      },
 	      legend: {
@@ -59,33 +58,33 @@ function chart(sensor){
 
 
 $( document ).ready(function() {
-	loadGraphs();
-	updateGraphs();
+	console.log(chartName);
+	loadGraph();
+	updateGraph();
 	
 });
 
-function loadGraphs(){
-	$.getJSON( '/sensors/json', function( data ) {
-        $.each(data, function(index,item){
-        	//console.log(item._id);        
-        	$('.chart-container').append('<div id="'+item._id+'"></div');
-        	chart(item);           
-        });        
+function loadGraph(){
+	$.getJSON( '/sensors/json/'+chartName, function( sensor){
+    	$('.chart-container').append('<div id="'+sensor._id+'"></div');
+    	chart(sensor);           
+        console.log(sensor);
+		
+		google.maps.event.addDomListener(window, 'load', initialize(sensor.latLng));
     });
 }
 
 
 // Use a named immediately-invoked function expression.
-function updateGraphs() {
-	$.getJSON( '/sensors/json', function( data ) {
-        $.each(data, function(index,item){
-        	console.log($('#'+item._id).highcharts());
-        	
-        	var chart = $('#'+item._id).highcharts();
-            chart.series[0].setData(timeValueArray(item.data));
-          
-        });    
-        setTimeout(updateGraphs, 2000);
+function updateGraph() {	
+	$.getJSON( '/sensors/json/'+chartName, function( sensor ) {
+        
+    	console.log($('#'+sensor._id).highcharts());
+    	
+    	var chart = $('#'+sensor._id).highcharts();
+        chart.series[0].setData(timeValueArray(sensor.data));
+            
+        setTimeout(updateGraph, 2000);
     });
 	
 }	
@@ -94,6 +93,7 @@ function updateGraphs() {
 function timeValueArray(data){
 	var result =[];
 	data.forEach(function(item){
+
 		result.push([new Date(item.time).getTime(), parseFloat(item.value)]);
 	});
 	result.sort(sortByDate);
@@ -104,3 +104,24 @@ function timeValueArray(data){
 function sortByDate(a,b){	
 	return ((a[0] < b[0]) ? -1 : ((a[0] > b[0]) ? 1 : 0));
 }
+
+
+function initialize(latLng) {
+	console.log(latLng);
+	var lat = latLng.split(',')[0];
+	var lng = latLng.split(',')[1];
+	lat = parseFloat(lat);
+	lng = parseFloat(lng);
+	  var myLatlng = new google.maps.LatLng(lat,lng);
+	  var mapOptions = {
+	    zoom: 15,
+	    center: myLatlng
+	  }
+	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+	  var marker = new google.maps.Marker({
+	      position: myLatlng,
+	      map: map,
+	      //title: ''
+	  });
+	}

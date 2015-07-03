@@ -3,7 +3,7 @@
  */
 // Userlist data array for filling in info box
 var sensorData = [];
-var sensorDate = '';
+var sensorDate = new Date();
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -76,9 +76,9 @@ function populateDataTable() {
     // Empty content string
     var tableContent = '';
     
-    
+    var id =$('#sensorDropdown .dropdown-toggle input[name="id"]').val();;
     // jQuery AJAX call for JSON
-    $.getJSON( '/sensors/read?mySensors=true&_id='+$('input[name="id"]').val(), function( data ) {
+    $.getJSON( '/sensors/json?mySensors=true&_id='+id, function( data ) {
     	console.log(data);
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data[0].data, function(){
@@ -101,7 +101,7 @@ function populateDataTable() {
 
 function populateDropdown(){
 	var dropDownContent='';
-	$.getJSON( '/sensors/read?mySensors=true', function( data ) {
+	$.getJSON( '/sensors/json?mySensors=true', function( data ) {
 
 	        // For each item in our JSON, add a table row and cells to the content string
 	        $.each(data, function(){
@@ -123,7 +123,7 @@ function addSensorData(event){
 	
 	if(errorCount === 0){
 		//var name = $('#sensorDropdown .dropdown-toggle').text().trim();
-		var id = $('#sensorDropdown .dropdown-toggle input[name="id"]').val().trim()
+		var id = $('#sensorDropdown .dropdown-toggle input[name="id"]').val().trim();
 		var data = {"id": id,				
 				"time": sensorDate,
 				"value": $('#inputSensorValue').val()};

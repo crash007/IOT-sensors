@@ -15,11 +15,26 @@ var isAuthenticated = function (req, res, next) {
 module.exports = function(){
 	
 	router.get('/',function(req, res){
-		res.render('sensors', { title: 'Express' });
+		res.render('sensors', { user: req.user, title: 'Express' });
+	});
+	
+	router.get('/chart/:chartName',function(req, res){
+		res.render('chart',{  user: req.user, chartName : req.params.chartName}
+		);
 	});
 	
 	
-	router.get('/read',function(req, res){			
+	router.get('/json/:name',function(req, res){			
+		var db = req.db;
+	    var collection = db.get('sensor-data');	    
+	    var projection = {};
+	   	    
+	    collection.findOne({'name' : req.params.name} ,  {fields :{userId:0, _id:0} } , function(e,docs){        
+	    	res.json(docs);
+	    });
+	});
+	
+	router.get('/json',function(req, res){			
 		var db = req.db;
 	    var collection = db.get('sensor-data');
 	    var query = req.query;
@@ -29,8 +44,7 @@ module.exports = function(){
 	    	console.log("Excluding data");
 	    	projection.data=0;	    	
 	    }
-	    
-	    
+	    	    
 	    if (query.mySensors === 'true'){
 	    	if(req.isAuthenticated()){    	
 	    		query.userId = req.user._id;

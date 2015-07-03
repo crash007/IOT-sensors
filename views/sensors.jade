@@ -1,0 +1,28 @@
+extends layout
+block append head
+//link(href="/stylesheets/c3.min.css", rel="stylesheet")
+
+block content
+	div(class="container")
+		.panel.panel-default.sensor-panel.collapse.in
+		.panel-heading
+			h3.panel-title Sensors        
+		.panel-body
+			#sensorList
+				table.table
+					thead
+						th Name
+						th Description
+						th User
+						th Chart                
+						th Json
+					tbody
+
+		
+        
+block scripts
+	script(src="/javascripts/populateSensors.js")
+	script.
+		$(document).ready(function(e){
+			populateSensorsPageTable();
+		});

@@ -1,0 +1,34 @@
+extends layout
+block append head
+
+block content
+	script.
+		 chartName = "#{chartName}"
+	div(class="container")
+		.chart-container
+		#map-canvas(style="height: 20em; margin: 0px; padding: 0px; width:40em")
+        
+block scripts
+
+	script(src="/javascripts/highcharts.js")
+	script(src="/javascripts/sensor-chart.js")
+	script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true")
+	//
+		script.
+			function initialize() {
+			  var myLatlng = new google.maps.LatLng(62.385103, 17.334268);
+			  var mapOptions = {
+			    zoom: 15,
+			    center: myLatlng
+			  }
+			  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			
+			  var marker = new google.maps.Marker({
+			      position: myLatlng,
+			      map: map,
+			      //title: ''
+			  });
+			}
+			
+			google.maps.event.addDomListener(window, 'load', initialize);
+	
