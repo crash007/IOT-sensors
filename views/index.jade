@@ -7,16 +7,17 @@ block content
     div(class="page-header")
       h1 IOT Sensors
       
-    p(class="lead") Upload and display your sensor data.
+    p(class="lead") Connect the things around you.
+    p Upload and display your sensor data.
     p Read 
       a(href="about") about 
       this project
       
     if (!user)
       a(href="/signin") Sign in / Register
-      
-    if (user)
-      p You are currently logged in as #{user.username}
-      a(href="/logout") Logout
+    //  
+      if (user)
+        p You are currently logged in as #{user.username}
+        a(href="/logout") Logout
 
   

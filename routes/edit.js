@@ -150,7 +150,7 @@ module.exports = function(){
 		
 		console.log("Removing data with id: "+id+" ,value: "+value+" , time: "+time+", userId"+req.user._id);	
 		collection.update(
-		    {'_id': id}, 
+		    {'_id': id,userId: req.user._id}, 
 		    { $pull: { "data" : { value: value} } },
 		    {w:1},
 		    function(err, result) {
