@@ -19,8 +19,11 @@ serialPort.open(function (error) {
   } else {
     console.log('open');
     serialPort.on('data', function(data) {
-      console.log(data);
-      if (data.indexOf("Temperature") >= 0){
+      console.log("Date: "+new Date()+" , Message: "+data);
+	if(data.indexOf("c")>=0){
+		console.log("");     
+	} 
+if (data.indexOf("Temperature") >= 0){
     	  
     	  uploadSensor.uploadSensor("558a6d697e97b3d558847bdc",data.split(':')[1]);  
       }
