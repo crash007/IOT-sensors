@@ -11,7 +11,7 @@ var express = require('express')
   , path = require('path')
   
   , sensors = require('./routes/sensors')
-  
+  , sensor = require('./routes/sensor')
   , edit = require('./routes/edit')
   , $ = require('jquery')
   , jQuery = require('jquery')
@@ -95,6 +95,8 @@ app.use('/', routes);
 var sensors = require('./routes/sensors');
 app.use('/sensors', sensors);
 
+var sensor = require('./routes/sensor');
+app.use('/sensor', sensor);
 
 var edit = require('./routes/edit');
 app.use('/edit', edit);

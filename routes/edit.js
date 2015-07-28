@@ -1,6 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
+var ObjectID = require('mongodb').ObjectID;
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -12,35 +13,41 @@ var isAuthenticated = function (req, res, next) {
 	res.redirect('/signin');
 }
 
+function add(db,sensorId,value,time,res){
+	
+	var collection = db.get('sensor-data');
+	
+	if(typeof time === 'undefined'){
+		time = new Date();
+	}else{
+		time = new Date(time);
+	}
+	
+	var data = {value: parseFloat(value), time: time};
+	
+	console.log("Adding value to sensor: "+sensorId+" , data: "+data.value+" "+data.time);
+	
+	collection.update({_id:sensorId},
+		{$push: { 'data':data } }, {w:1}, function(err, result) {
+			if(err !==null){
+				console.log(err);
+			}
+			
+			res.send(
+		        (err === null) ? { msg: result } : { msg: err }
+		    );
+		}
+	);
+}
+
 module.exports = function(){
 	
-	router.post('/add-data', isAuthenticated, function(req, res){
-		var db = req.db;
-		var collection = db.get('sensor-data');
-		var id = req.body.id;
-		var time = req.body.time;
-		
-		if(typeof time === 'undefined'){
-			time = new Date();
-		}else{
-			time = new Date(time);
-		}
-		
-		var data = {value: parseFloat(req.body.value), time: time};
-		
-		console.log("Adding value to sensor: "+id+" , data: "+data.value+" "+data.time);
-		
-		collection.update({_id:id,userId: req.user._id},
-			{$push: { 'data':data } }, {w:1}, function(err, result) {
-				if(err !==null){
-					console.log(err);
-				}
-				
-				res.send(
-			        (err === null) ? { msg: '' } : { msg: err }
-			    );
-			}
-		);
+	router.post('/add-data',  function(req, res){				
+		add(req.db, req.body.sensorId, req.body.value, req.body.time, res);
+	});
+	
+	router.get('/add-data',  function(req, res){
+		add(req.db, req.query.sensorId, req.query.value, req.query.time, res);
 	});
 	
 	
@@ -157,7 +164,7 @@ module.exports = function(){
 				console.log(err);
 				console.log(result);
 				res.send(
-				        (err === null) ? { msg: '' } : { msg: err }
+						(err === null) ? { msg: '' } : { msg: err }
 			    );
 		    } 
 		);

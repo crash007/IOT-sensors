@@ -65,7 +65,7 @@ $( document ).ready(function() {
 });
 
 function loadGraph(){
-	$.getJSON( '/sensors/json/'+chartName, function( sensor){
+	$.getJSON( '/sensor/'+chartName+'/json/', function( sensor){
     	$('.chart-container').append('<div id="'+sensor._id+'"></div');
     	chart(sensor);           
         console.log(sensor);
@@ -77,7 +77,7 @@ function loadGraph(){
 
 // Use a named immediately-invoked function expression.
 function updateGraph() {	
-	$.getJSON( '/sensors/json/'+chartName, function( sensor ) {
+	$.getJSON( '/sensor/'+chartName+'/json/', function( sensor ) {
         
     	console.log($('#'+sensor._id).highcharts());
     	

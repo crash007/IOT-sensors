@@ -4,9 +4,10 @@ block append head
 
 block content
 	div(class="container")
+		script.
+			var query = !{JSON.stringify(query)};
 		.panel.panel-default.sensor-panel.collapse.in
-		.panel-heading
-			h3.panel-title Sensors        
+
 		.panel-body
 			#sensorList
 				table.table
@@ -24,5 +25,6 @@ block scripts
 	script(src="/javascripts/populateSensors.js")
 	script.
 		$(document).ready(function(e){
-			populateSensorsPageTable();
+		console.log(query);
+			populateSensorsPageTable(query);
 		});

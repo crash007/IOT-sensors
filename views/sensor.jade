@@ -6,6 +6,8 @@ block content
 		 chartName = "#{chartName}"
 	div(class="container")
 		.chart-container
+		p
+			a(href="/sensor/#{chartName}/json") View json
 		#map-canvas(style="height: 20em; margin: 0px; padding: 0px; width:40em")
         
 block scripts
