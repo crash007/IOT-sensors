@@ -5,65 +5,16 @@ block content
 		div(class="page-header")
 		h1 About the project
 
-		p(class="lead") Read more on 
-			a(href="https://github.com/crash007/IOT-sensors/blob/master/README.md") github 
-
 		h2 Upload data
-		p To upload sensor data just post id and value (to override servertime also post parameter time) to /edit/add-data. See below for a nodejs module example.
+		p To upload sensor data you can use http get or post. Required parameters are sensorId and value (if you want to override servertime you can add parameter time) to /edit/add-data. Keep your sensorId private.
+		p Examle
 		.highlight
 			pre.
-				var http = require('http');
+				/edit/add-data?sensorId=55954a00f061e4ad6bbde8f6&value=52
 				
-				function uploadSensor(id,value){
-					var sensor = {"id":id, "value":value, "time":new Date()};
-					var sensorString = JSON.stringify(sensor);
-					
-					var headers = {
-						'Content-Type': 'application/json',
-						'Content-Length': sensorString.length
-					};
-				
-					var options = {
-						host: 'localhost',
-						port: 3000,
-						path: '/edit/add-data',
-						method: 'POST',
-						headers: headers
-					};
-					
-					var req = http.request(options, function(res) {
-						res.setEncoding('utf-8');
-						var responseString = '';
-						
-						res.on('data', function(data) {
-					    responseString += data;
-					  });
-				
-					  res.on('end', function() {
-					    var resultObject = JSON.parse(responseString);
-					    console.log("Response: "+resultObject);
-					    console.log(resultObject);
-					  });
-					  
-					});
-				
-					req.on('error', function(e) {
-					  // TODO: handle error.
-						console.log("Error when posting data");
-						console.log(e);
-						console.log("End of error");
-					});
-					console.log("Writing to request.");
-					console.log(sensorString);
-					req.write(sensorString);
-					req.end();
-					
-				}
-				
-				module.exports.uploadSensor = uploadSensor;
-		
-		h2 View data as JSON
-		p You can retreive all sensor data in JSON by calling /sensors/data. It's possible to filter by the parameters.
-		p Example
-		pre
-			/sensors/data?_id=558a734c7e97b3d558847bde	 
+		p For an examle of using Node to post values look at 
+			a(href="https://github.com/crash007/IOT-sensors/blob/develop/upload-sensor.js") upload-sensor.js
+		p For listening on a serial-device and upload values look at 
+			a(href="https://github.com/crash007/IOT-sensors/blob/develop/serialport-reader.js") serialport-reader.js
+		p(class="lead") Read more on 
+			a(href="https://github.com/crash007/IOT-sensors/blob/master/README.md") github		
