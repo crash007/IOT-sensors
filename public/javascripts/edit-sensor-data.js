@@ -124,7 +124,7 @@ function addSensorData(event){
 	if(errorCount === 0){
 		//var name = $('#sensorDropdown .dropdown-toggle').text().trim();
 		var id = $('#sensorDropdown .dropdown-toggle input[name="id"]').val().trim();
-		var data = {"id": id,				
+		var data = {"sensorId": id,				
 				"time": sensorDate,
 				"value": $('#inputSensorValue').val()};
 		

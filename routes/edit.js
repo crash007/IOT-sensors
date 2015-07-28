@@ -34,7 +34,7 @@ function add(db,sensorId,value,time,res){
 			}
 			
 			res.send(
-		        (err === null) ? { msg: result } : { msg: err }
+		        (err === null) ? { msg: '' } : { msg: err }
 		    );
 		}
 	);
