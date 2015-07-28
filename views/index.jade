@@ -3,6 +3,43 @@ extends layout
 block content
   
   <!-- Begin page content -->
+  #myCarousel.carousel.slide(data-ride='carousel')
+      // Indicators
+      ol.carousel-indicators
+        li.active(data-target='#myCarousel', data-slide-to='0')
+        li(data-target='#myCarousel', data-slide-to='1')
+        li(data-target='#myCarousel', data-slide-to='2')
+        
+      // Wrapper for slides
+      .carousel-inner(role='listbox')
+        .item.active
+          img(src='/img/sensor1.jpg', alt='Sensor')
+          .container
+            .carousel-caption
+              h1 Internet of things opensource platform
+              p Share your sensor data with the world
+        .item
+          img(src='/img/sensor2.jpg', alt='Sensor')
+          .container
+            .carousel-caption
+              p Upload your sensor data easily
+              p View as graph or in JSON
+              p Free to use
+              
+        .item
+          img(src='/img/sensor3.jpg', alt='Sensor')
+          .container
+            .carousel-caption
+              p Sign up to get started
+              
+          
+      // Left and right controls
+      a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+        span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+        span.sr-only Previous
+      a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+        span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+        span.sr-only Next  
   div.container
     div(class="page-header")
       h1 IOT Sensors

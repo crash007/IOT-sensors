@@ -10,7 +10,7 @@ html
       <!-- link(rel='stylesheet', href='/stylesheets/style.css') -->    
       link(href="/stylesheets/bootstrap.css", rel="stylesheet")
       link(href="/stylesheets/bootstrap-theme.min.css", rel="stylesheet")
-      link(href="/stylesheets/sticky-footer-navbar.css", rel="stylesheet")  
+      link(href="/stylesheets/carousel.css", rel="stylesheet")  
       <!-- Placed at the end of the document so the pages load faster -->
       script(src="/javascripts/jquery-2.1.4.min.js")
       script(src="/javascripts/bootstrap.min.js")
@@ -19,39 +19,39 @@ html
     
     
   body
-    <!-- Fixed navbar -->
-    nav(class="navbar navbar-default navbar-fixed-top")
-      //div(class="container")
-      div.container
-        div.navbar-header
-          button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
-            span(class="sr-only") Toggle navigation
-            span(class="icon-bar")
-            span(class="icon-bar")
-            span(class="icon-bar")
+    .navbar-wrapper
+      .container
+        nav(class="navbar navbar-inverse navbar-static-top")      
+          div.container
+            div.navbar-header
+              button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+                span(class="sr-only") Toggle navigation
+                span(class="icon-bar")
+                span(class="icon-bar")
+                span(class="icon-bar")
           
-          a(class="navbar-brand", href="/") IOT Sensors
+              a(class="navbar-brand", href="/") IOT Sensors
         
-        div(id="navbar", class="collapse navbar-collapse")
-            ul(class="nav navbar-nav")
-              li
-                a(href="/") Home 
-              li 
-                a(href="/charts") Charts
-              li 
-                a(href="/sensors") Sensors
-              li
-                a(href="/about") About
-              li
-                a
-              if(user)
-                li
-                  a(href="/user") #{user.username}                
-              li
-                if(user)
-                  a(href="/logout") Sign out
-                else
-                  a(href="/signin") Sign in
+            div(id="navbar", class="collapse navbar-collapse")
+                ul(class="nav navbar-nav")
+                  li
+                    a(href="/") Home 
+                  li 
+                    a(href="/charts") Charts
+                  li 
+                    a(href="/sensors") Sensors
+                  li
+                    a(href="/about") About
+                  li
+                    a
+                  if(user)
+                    li
+                      a(href="/user") #{user.username}                
+                  li
+                    if(user)
+                      a(href="/logout") Sign out
+                    else
+                      a(href="/signin") Sign in
   
     block content
     
@@ -59,11 +59,5 @@ html
       div(class="container")
         p(class="text-muted") IOT Sensors collection
       
-
-    <!-- Placed at the end of the document so the pages load faster -->
-    //script(src="/javascripts/jquery-2.1.4.min.js")
-    //script(src="/javascripts/bootstrap.min.js")
     
-    block scripts
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <!-- script src="../../assets/js/ie10-viewport-bug-workaround.js"></script -->
+    block scripts    
