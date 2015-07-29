@@ -1,0 +1,45 @@
+extends layout
+block append head
+//link(href="/stylesheets/c3.min.css", rel="stylesheet")
+
+block content
+	div(class="container")
+		if(selectedUser!=null)
+			.panel.panel-default.profile-panel
+				.panel-heading
+					h3.panel-title Profile Information
+					
+				.panel-body
+					p Username: #{selectedUser.username}
+		
+					p.fullName
+						| Full name: #{selectedUser.fullName}
+					p.email
+						| Epost: #{selectedUser.email}
+					p.about
+						| About: #{selectedUser.about}
+						
+			.panel.panel-default.sensor-panel.collapse.in
+				.panel-heading
+					h3.panel-title sensors
+				.panel-body
+					#sensorList
+						table.table
+							thead
+								th Name
+								th Description							
+								
+							tbody
+								tr
+									each s in selectedUser.sensors
+										tr
+											td
+												a(href="/sensor/"+s.name) #{s.name}
+											td=s.description
+											
+		if(selectedUser==null)
+			p No such user
+											
+
+block scripts
+

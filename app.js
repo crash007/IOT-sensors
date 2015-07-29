@@ -13,6 +13,7 @@ var express = require('express')
   , sensors = require('./routes/sensors')
   , sensor = require('./routes/sensor')
   , edit = require('./routes/edit')
+  , users = require('./routes/users')
   , $ = require('jquery')
   , jQuery = require('jquery')
   , bCrypt = require('bcrypt-nodejs'),
@@ -90,16 +91,10 @@ var initPassport = require('./passport/init');
 initPassport(passport,db);
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
-
-
-var sensors = require('./routes/sensors');
 app.use('/sensors', sensors);
-
-var sensor = require('./routes/sensor');
 app.use('/sensor', sensor);
-
-var edit = require('./routes/edit');
 app.use('/edit', edit);
+app.use('/users', users);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

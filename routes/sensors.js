@@ -15,13 +15,13 @@ module.exports = function(){
 	    var collection = db.get('sensor-data');
 	    var query = req.query;
 	    var projection = {};
-	    //console.log(query);
+
 	    if(query.excludeData==='true'){
 	    	console.log("Excluding data");
 	    	projection.data=0;	    	
 	    }
 	    	    
-	    /*if (query.mySensors === 'true'){
+	    if (query.mySensors === 'true'){
 	    	if(req.isAuthenticated()){    	
 	    		query.userId = req.user._id;
 	    	} 
@@ -30,7 +30,7 @@ module.exports = function(){
 		    	return;
 		    }
 	    }
-	    */
+	    
 	    delete query.excludeData;
 	    delete query.mySensors;
 	    collection.find(query ,  {fields : projection} , function(e,docs){        
