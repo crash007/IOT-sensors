@@ -5,10 +5,19 @@ block content
 	script.
 		 chartName = "#{chartName}"
 	div(class="container")
-		.chart-container
-		p
-			a(href="/sensor/#{chartName}/json") View json
-		#map-canvas(style="height: 20em; margin: 0px; padding: 0px; width:40em")
+		.panel.panel-default
+			.panel-heading
+				h3.panel-title Chart
+			.panel-body
+				.chart-container
+		
+				p
+					a(href="/sensor/#{chartName}/json") View json
+		.panel.panel-default
+			.panel-heading
+				h3.panel-title Location
+			.panel-body
+				#map-canvas(style="height: 20em; margin: 0px; padding: 0px; width:40em")
         
 block scripts
 
