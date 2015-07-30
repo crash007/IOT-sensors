@@ -35,35 +35,3 @@ function populateMySensorsTable() {
         
     });
 };
-
-//Fill table with sensors
-function populateSensorsPageTable(query) {
-
-	var url = '/sensors/json';
-	
-    // Empty content string
-    var tableContent = '';
-    
-    
-    // jQuery AJAX call for JSON    
-    $.getJSON( url, query,function( data ) {    	
-        // For each item in our JSON, add a table row and cells to the content string
-        $.each(data, function(){
-            tableContent += '<tr>';
-            tableContent += '<td class="name"><a href="/sensor/'+this.name+'">'+this.name+'</a></td>';
-            //tableContent += '<td class="name">'+this.name+'</td>';
-            tableContent += '<td class="description">'+this.description+'</td>';
-            tableContent += '<td class="user"><a href="/sensors?username='+this.username+'">'+this.username+'</a></td>';
-            tableContent += '<td class="chart"><a href="/sensor/'+this.name+'/chart/">chart</a></td>';
-            tableContent += '<td class="json"><a href="/sensor/'+this.name+'/json/">json</a></td>';
-            tableContent += '</tr>';
-          
-            
-        });
-
-        // Inject the whole content string into our existing HTML table
-        $('#sensorList table tbody').html(tableContent);
-        
-        
-    });
-};

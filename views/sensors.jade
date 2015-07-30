@@ -6,7 +6,7 @@ block content
 	div(class="container")
 		script.
 			var query = !{JSON.stringify(query)};
-		.panel.panel-default.sensor-panel.collapse.in
+		.panel.panel-default.sensor-panel
 			.panel-heading
 				h3.panel-title All sensors
 			.panel-body
@@ -16,16 +16,18 @@ block content
 							th Name
 							th Description
 							th User
-							th Chart                
 							th Json
 						tbody
+							tr
+								each s in sensors
+									tr
+										td
+											a(href="/sensor/"+s.name) #{s.name}
+										td #{s.description}
+										td
+											a(href="/sensors?username="+s.username) #{s.username}
+										td
+											a(href="/sensor/"+s.name+"/json") json
 
-		
         
 block scripts
-	script(src="/javascripts/populateSensors.js")
-	script.
-		$(document).ready(function(e){
-		console.log(query);
-			populateSensorsPageTable(query);
-		});

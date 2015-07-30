@@ -6,8 +6,14 @@ var router = express.Router();
 module.exports = function(){
 	
 	router.get('/',function(req, res){
-		console.log(req.query);
-		res.render('sensors', { user: req.user, query: req.query });
+		
+		var collection = req.db.get('sensor-data');
+		collection.find({}, {fields: {_id:0}},function(e,result){
+			res.render('sensors', { user: req.user, sensors: result });
+		});
+			
+		
+		
 	});
 	
 	router.get('/json',function(req, res){			
