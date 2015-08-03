@@ -5,7 +5,7 @@ var http = require('http');
 
 function uploadSensor(id,value){
 	//var sensor = {"id":id, "value":value, "time":new Date()};
-	var sensor = {"id":id, "value":value};
+	var sensor = {"sensorId":id, "value":value};
 	var sensorString = JSON.stringify(sensor);
 	
 	var headers = {
