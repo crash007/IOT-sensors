@@ -44,12 +44,6 @@ function chart(sensor){
 //	          valueSuffix: '°C'
 	    	  valueSuffix: sensor.valueSuffix
 	      },
-	      legend: {
-	          layout: 'vertical',
-	          align: 'right',
-	          verticalAlign: 'middle',
-	          borderWidth: 0
-	      },
 	      series: [{
 	          name: sensor.name,
 	          data: timeValueArray(sensor.data)
