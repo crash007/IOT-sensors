@@ -77,6 +77,14 @@ module.exports = function(){
 		  		    });
 		  		   
 		  		    read_stream.pipe(writestream);
+		  		    writestream.on('close', function (file) {
+		  	        //delete file from temp folder
+		  	        fs.unlink(path, function() {
+		  	          //res.json(200, file);
+		  	          console.log("Deleting file: "+path);
+		  	        });
+		  	      });
+		  		    
 	  	    	});   	    
 		       
 	  	    	res.json({status:'success'});
