@@ -24,7 +24,7 @@ $(document).ready(function() {
 		console.log(filename);
 		
 		$.getJSON( '/photos/del/'+filename, function( data ) {
-			var sensorId = $(document).find('input[name="id"]').val();
+			var sensorId = $(document).find('#photo-post-form input[name="sensorId"]').val();
 			loadPhotos(sensorId);
 		});		
 	});
@@ -78,7 +78,7 @@ function uploadPhotos(formData){
 
             // Check for successful (blank) response
             if (response.status === 'success') {
-            	var sensorId = $(document).find('input[name="id"]').val();
+            	var sensorId = $(document).find('#photo-post-form input[name="sensorId"]').val();
     			loadPhotos(sensorId);
             }
             else {

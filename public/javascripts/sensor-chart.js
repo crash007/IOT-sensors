@@ -55,6 +55,7 @@ $( document ).ready(function() {
 	console.log(chartName);
 	loadGraph();
 	updateGraph();
+	loadPhotosByName(chartName);
 	
 });
 
@@ -118,4 +119,17 @@ function initialize(latLng) {
 	      map: map,
 	      //title: ''
 	  });
-	}
+}
+
+function loadPhotosByName(sensorName){
+	console.log("Loading photos for sensor: "+sensorName);
+	$.getJSON( '/photos/sensor/name/'+sensorName, function( data ) {
+		$('.photos-container').html('');
+		data.forEach(function(filename){
+			console.log(filename);
+			$('.photos-container').append('<div class="img-thumbnail"><li><img style="height:225px;" src="/photos/photo/'+filename+'"/></li></div>');
+			
+		})
+
+	});
+}

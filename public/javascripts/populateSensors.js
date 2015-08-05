@@ -19,7 +19,8 @@ function populateMySensorsTable() {
             tableContent += '<td class="unit">' + this.unit + '</td>';
             tableContent += '<td class="valueSuffix">' + this.valueSuffix + '</td>';                   
             tableContent += '<td class="latLng">' + this.latLng + '</td>';
-            tableContent += '<td class="id">' + this._id + '</td>';            
+            tableContent += '<td class="id">' + this._id + '</td>';   
+            //tableContent += '<td class="key">'+this.key+'</td>';
             tableContent += '<td> <a href="#"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> </td>'; 
             tableContent += '<input type="hidden" name="id" value="'+this._id +'" />';
             tableContent += '</tr>';

@@ -16,6 +16,31 @@ var isAuthenticated = function (req, res, next) {
 	res.redirect('/signin');
 }
 
+function getPhotosBySensorId(res,sensorId){	
+	var db = new mongo.Db('my-node-project', new mongo.Server("localhost", 27017));
+	
+	db.open(function (err) {
+		  if (err)  {
+			  console.log("Cannot open db");
+			  return handleError(err);
+		  }
+		  var gfs = Grid(db, mongo);		  
+		  gfs.files.find({"metadata.sensorId":sensorId}).toArray(function (err, files) {
+		 
+	        if (err) {
+	            res.json(err);
+	        }
+	        
+	        var result = [];
+	        files.forEach(function(e,i,l){		  	        	
+	            result.push(e.filename);
+	        });
+	        res.json(result);
+		  });	    	    
+	});
+}
+
+
 module.exports = function(){
 	router.post('/upload', upload.array('photos', 12), isAuthenticated, function (req, res) {
 		  // req.files is array of `photos` files
@@ -90,32 +115,27 @@ module.exports = function(){
 		});
 		
 		router.get('/sensor/:id',function(req,res){
-		      var sensorId = req.param('id');
-		
-		      var db = new mongo.Db('my-node-project', new mongo.Server("localhost", 27017));
-		
-		      db.open(function (err) {
-		    	  if (err)  {
-		    		  console.log("Cannot open db");
-		    		  return handleError(err);
-		    	  }
-		    	  var gfs = Grid(db, mongo);
-		    	
-		    	  gfs.files.find({"metadata.sensorId": sensorId}).toArray(function (err, files) {
-		    	 
-		  	        if (err) {
-		  	            res.json(err);
-		  	        }
-		  	        console.log(files);
-		  	        var result = [];
-		  	        files.forEach(function(e,i,l){		  	        	
-		  	            result.push(e.filename);
-		  	        });
-		  	        res.json(result);
-		    	  });	    	    
-		      });
+			var sensorId = req.param('id');		
+			getPhotosBySensorId(res,sensorId);
 		});
-		
+
+		router.get('/sensor/name/:name',function(req,res){
+		    var sensorName = req.param('name');
+		    var db = req.db;
+		    var collection = db.get('sensor-data');	    		   
+		   	    
+		    collection.findOne({'name' : sensorName} ,  {fields :{_id:1} } , function(e,docs){        
+		    	console.log("Retriving sensor id for sensor:"+sensorName)
+		    	
+		    	if(docs === null){
+		    		res.json({status: 'failure', message: 'No sensor with name: '+sensorName});
+		    	}else{
+		    	
+			    	var sensorId = docs._id.toString();		    	
+			    	getPhotosBySensorId(res,sensorId);
+		    	}
+		    });
+		});
 		
 		router.get('/del/:filename',isAuthenticated, function(req,res){
 		      var filename = req.param('filename');
