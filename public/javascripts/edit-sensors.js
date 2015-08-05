@@ -26,10 +26,15 @@ $(document).ready(function() {
     	//populateSensorTable();
     });
     
-    $(document).on('click','#sensorList .glyphicon-remove',function(){    	
+    $(document).on('click','#sensorList .glyphicon-remove .delete-sensor',function(){    	
     	var tr = $(this).parents('tr');
     	var id = $(tr).find('input[name="id"]').val();
     	delSensor(id);
+    });
+    
+    $(document).on('click','#sensorList .glyphicon-remove.abort',function(){ 
+    	console.log('click on abort');
+    	populateMySensorsTable();
     });
 
 });
@@ -44,7 +49,7 @@ function sensorEditTableRow(tr){
     tableContent += '<td class="unit"><input type="text" class="form-control" value="'+ $(tr).find('.unit').text() + '"></td>';
     tableContent += '<td class="valueSuffix"><input type="text" class="form-control" value="'+ $(tr).find('.valueSuffix').text() + '"></td>';
     tableContent += '<td class="latLng"><input type="text" class="form-control" value="' + $(tr).find('.latLng').text() + '"></td>';
-    tableContent += '<td> <a href="#"> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> <a href="#"><span class="glyphicon glyphicon-remove undo" aria-hidden="true"></span></a> </td>'; 
+    tableContent += '<td> <a href="#"> <span title="Commit" class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> <a href="#"><span title="Abort" class="glyphicon glyphicon-remove abort" aria-hidden="true"></span></a> </td>'; 
     tableContent += '<input type="hidden" name="id" value="'+$(tr).find('input[name="id"]').val() +'" />';
     tableContent += '</tr>';
     
