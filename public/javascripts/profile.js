@@ -30,7 +30,7 @@ $(document).ready(function() {
 			  data: profile,			  
 			  dataType: 'JSON',			  
 		 }).done(function(response){
-			var profile = response.msg;	
+			var profile = response.profile;	
 			
 			$('p.email').html("E-mail: "+profile.email);
 			$('p.about').html("About: "+profile.about);

@@ -33,7 +33,7 @@ function add(db,sensorId,value,time,res){
 			}
 			
 			res.send(
-		        (err === null) ? { msg: '' } : { msg: err }
+		        (err === null) ? { status: 'success' } : { status: 'error', message: err }
 		    );
 		}
 	);
@@ -59,7 +59,7 @@ module.exports = function(){
 		sensor.username=req.user.username;
 		collection.insert(sensor, function(err, result){
 		    res.send(
-		        (err === null) ? { msg: '' } : { msg: err }
+		        (err === null) ? { status: 'success' } : { status: 'error', message: err }
 		    );
 		});
 	});
@@ -78,7 +78,7 @@ module.exports = function(){
 				console.log(err);
 			}
 			res.send(
-		        (err === null) ? { msg: '' } : { msg: err }
+		        (err === null) ? { status: 'success' } : { status: 'error', message: err }
 		    );
 		});
 	});
@@ -117,7 +117,7 @@ module.exports = function(){
 					}
 					
 					res.send(
-					        (err === null) ? { msg: '' } : { msg: err }
+					        (err === null) ? { status: 'success' } : { status: 'error', message: err }
 					    );
 				});
 	});
@@ -140,7 +140,7 @@ module.exports = function(){
 					console.log(err);
 					console.log(result);
 					res.send(
-				        (err === null) ? { msg: '' } : { msg: err }
+				        (err === null) ? { status: 'success' } : { status: 'error', message: err }
 				    );
 				});
 	});
@@ -163,7 +163,7 @@ module.exports = function(){
 				console.log(err);
 				console.log(result);
 				res.send(
-						(err === null) ? { msg: '' } : { msg: err }
+						(err === null) ? { status: 'success' } : { status: 'error',message: err }
 			    );
 		    } 
 		);

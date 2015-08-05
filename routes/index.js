@@ -79,7 +79,7 @@ module.exports = function(passport){
 	        	}
 	        	req.user = user;
 	        	res.send(
-	    		        (err === null) ? { msg: req.user } : { msg: err }
+	    		        (err === null) ? { status: 'success', profile:req.user } : { status: 'error', message: err }
 	    		    );	        	
 	        });
 			

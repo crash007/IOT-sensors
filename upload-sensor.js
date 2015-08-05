@@ -33,10 +33,10 @@ function uploadSensor(id,value){
 	  res.on('end', function() {
 	    var resultObject = JSON.parse(responseString);
 	    //console.log("Response: "+resultObject);
-	    if(resultObject.msg===''){
+	    if(resultObject.status==='success'){
 	    	console.log('Successfully uploaded data\n');
 	    }else{
-	    	console.log("Error: "+resultObject.msg);
+	    	console.log("Error: "+resultObject.message);
 	    }
 	    
 	  });

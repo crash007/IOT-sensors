@@ -138,7 +138,7 @@ function addSensorData(event){
         }).done(function( response ) {
 
             // Check for successful (blank) response
-            if (response.msg === '') {
+            if (response.status === 'success') {
 
                 // Clear the form inputs
                 $('#addSensorData fieldset input').val('');
@@ -149,7 +149,7 @@ function addSensorData(event){
             }
             else {
                 // If something goes wrong, alert the error message that our service returned
-                alert('Error: ' + response.msg);
+                alert('Error: ' + response.message);
             }
         });
 	}else{
@@ -179,12 +179,12 @@ function saveDataChange(tr){
         dataType: 'JSON'
     }).done(function( response ) {
         // Check for successful (blank) response
-        if (response.msg === '') {
+        if (response.status === 'success') {
            populateDataTable();
         }
         else {
             // If something goes wrong, alert the error message that our service returned
-            alert('Error: ' + response.msg);
+            alert('Error: ' + response.message);
         }
     });	
 }
@@ -207,13 +207,13 @@ function delData(tr){
     }).done(function( response ) {
 
         // Check for successful (blank) response
-        if (response.msg === '') {
+        if (response.status === 'success') {
             // Update the table and dropdown
         	populateDataTable();
         }
         else {
             // If something goes wrong, alert the error message that our service returned
-            alert('Error: ' + response.msg);
+            alert('Error: ' + response.message);
         }
     });	
 }

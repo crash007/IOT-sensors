@@ -77,7 +77,7 @@ function addSensor(event){
         }).done(function( response ) {
 
             // Check for successful (blank) response
-            if (response.msg === '') {
+            if (response.status === 'success') {
 
                 // Clear the form inputs
                 $('#addSensor input').val('');
@@ -88,7 +88,7 @@ function addSensor(event){
             }
             else {
                 // If something goes wrong, alert the error message that our service returned
-                alert('Error: ' + response.msg);
+                alert('Error: ' + response.message);
             }
         });
 	}else{
@@ -113,14 +113,14 @@ function editSensor(tr){
     }).done(function( response ) {
 
         // Check for successful (blank) response
-        if (response.msg === '') {
+        if (response.status === 'success') {
             // Update the table
            populateMySensorsTable();
 
         }
         else {
             // If something goes wrong, alert the error message that our service returned
-            alert('Error: ' + response.msg);
+            alert('Error: ' + response.message);
         }
     });	
 }
@@ -138,14 +138,14 @@ function delSensor(id){
     }).done(function( response ) {
 
         // Check for successful (blank) response
-        if (response.msg === '') {
+        if (response.status === 'success') {
             // Update the table and dropdown
            populateMySensorsTable();
 
         }
         else {
             // If something goes wrong, alert the error message that our service returned
-            alert('Error: ' + response.msg);
+            alert('Error: ' + response.message);
         }
     });	
 }
