@@ -14,6 +14,7 @@ var express = require('express')
   , sensor = require('./routes/sensor')
   , edit = require('./routes/edit')
   , users = require('./routes/users')
+  , photos = require('./routes/photos')
   , $ = require('jquery')
   , jQuery = require('jquery')
   , bCrypt = require('bcrypt-nodejs'),
@@ -24,26 +25,14 @@ var express = require('express')
   TwitterStrategy = require('passport-twitter'),
   GoogleStrategy = require('passport-google'),
   FacebookStrategy = require('passport-facebook'),
-  
   flash = require('connect-flash');
-
-	var favicon = require('serve-favicon');
-
+  
 //Database
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/my-node-project');
 
 var app = express();
-
-
-//passport.serializeUser(function(user, done) {
-//  done(null, user);
-//});
-//
-//passport.deserializeUser(function(user, done) {
-//  done(null, user);
-//});
 
 
 // all environments
@@ -64,8 +53,6 @@ app.use(session({secret: '5upernovaMAN54321', saveUninitialized: true, resave: t
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 app.use(function(req,res,next){
     req.db = db;
@@ -95,6 +82,7 @@ app.use('/sensors', sensors);
 app.use('/sensor', sensor);
 app.use('/edit', edit);
 app.use('/users', users);
+app.use('/photos',photos)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

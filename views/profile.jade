@@ -2,13 +2,23 @@ extends layout
 
 block append head
 	link(href="/stylesheets/bootstrap-datetimepicker.min.css", rel="stylesheet",type="text/css", media="screen")
+	link(href="/stylesheets/edit-photos.css", rel="stylesheet",type="text/css", media="screen")
 	
 block content
-	div.container
-		.row.row-offcanvas.row-offcanvas-right
-			.col-xs-12.col-sm-9
-				p.pull-right.visible-xs
-					button.btn.btn-primary.btn-xs(type='button', data-toggle='offcanvas') Toggle nav
+	.container
+		.row
+			.col-xs-16.col-sm-12
+				ul.nav.nav-tabs
+					li(role='presentation')
+						a.list-group-item(data-link='sensor-panel',href='#') Sensors
+					li(role='presentation')
+						a.list-group-item(data-link='add-sensor-panel',href='#') Add Sensor
+					li(role='presentation')
+						a.list-group-item(data-link='data-panel',href='#') Data
+					li(role='presentation')
+						a.list-group-item(data-link='photo-panel',href='#') Photos	
+					li(role='presentation')
+						a.list-group-item(href='#',data-link='profile-panel') Profile
 
 				if (!user)
 					h1 Orchestrate User Authentication
@@ -101,19 +111,17 @@ block content
 							h3.panel-title Edit sensor data
 						.panel-body
 							#sensorDropdown.btn-group
-											button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
-												span.caret
-											ul.dropdown-menu(role="menu")
+								button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
+									span.caret
+								ul.dropdown-menu(role="menu")
 
 							.row
 								.col-md-4
 					
 									h2 Add
 									#addSensorData
-					
 										input.form-control#inputSensorValue(type='text', placeholder='Value')
 										br
-												
 										.form-group
 											.input-group.date#datetimepicker1
 												input.form-control( type='text')
@@ -130,16 +138,41 @@ block content
 												th Value
 											
 											tbody
-									
+											
+					.row.photo-panel.collapse
+						.col-md-2
+							.panel.panel-default
+								.panel-heading
+									h3.panel-title Select sensor
+								.panel-body								
+									#photoSensorDropdown.btn-group
+										button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
+											span.caret
+										ul.dropdown-menu(role="menu")
 						
-			#sidebar.col-xs-6.col-sm-3.sidebar-offcanvas
-				.list-group
-					a.list-group-item.active(data-link='sensor-panel',href='#') Sensors
-					a.list-group-item(data-link='add-sensor-panel',href='#') Add Sensor
-					a.list-group-item(data-link='data-panel',href='#') Add Data
-					a.list-group-item(href='#',data-link='profile-panel') Profile
-					
-
+							
+						.col-md-6
+							.panel.panel-default
+								.panel-heading
+									h3.panel-title Upload images
+								.panel-body
+									form#photo-post-form.form-inline(action='/photos/upload',method="post",enctype="multipart/form-data")
+										.form-group
+											
+											label(for="photos-select") Select images:
+											input(type='file', id="photos-select" name='photos',multiple="multiple")
+										input(type='hidden',name='sensorId',value='')
+										.form-group
+											button.btn.btn-default(type='submit') Upload
+												
+						.row
+							.col-md-12
+								.panel.panel-default
+									.panel-heading
+										h3.panel-title Photos
+									.panel-body
+										.photos-container
+										
 block scripts
 	script(src="/javascripts/moment-with-locales.js")
 	script(src="/javascripts/bootstrap-datetimepicker.min.js")
@@ -147,3 +180,5 @@ block scripts
 	script(src="/javascripts/edit-sensors.js")
 	script(src="/javascripts/edit-sensor-data.js")
 	script(src="/javascripts/profile.js")
+	script(src="/javascripts/edit-photos.js")
+	

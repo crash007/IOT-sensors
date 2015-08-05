@@ -1,0 +1,21 @@
+extends layout
+block append head
+//link(href="/stylesheets/c3.min.css", rel="stylesheet")
+
+block content
+	div(class="container")		
+		.panel.panel-default
+			.panel-heading
+				h3.panel-title Photos
+			.panel-body
+				form(action='/photos/upload',method="post",enctype="multipart/form-data")
+					| Select images:
+					input(type='file', name='photos',multiple="multiple")
+					input(type='submit')
+											
+
+		
+		
+
+block scripts
+

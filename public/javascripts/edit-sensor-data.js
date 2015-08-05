@@ -26,7 +26,7 @@ $(document).ready(function() {
 	
     $('#btnAddSensorData').on('click', addSensorData);    
     
-    $(document).on('click','.dropdown-menu li',function(e){
+    $(document).on('click','#sensorDropdown .dropdown-menu li',function(e){
     	var selSensor = $(this).text().trim();
     	var id = $(this).find('input').val();
     	console.log(selSensor);

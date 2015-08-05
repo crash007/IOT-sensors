@@ -32,6 +32,7 @@ function populateMySensorsTable() {
         $('#sensorList table tbody').html(tableContent);
         console.log("Populating dropdown");
         $('#sensorDropdown ul').html(dropDownContent);
+        $('#photoSensorDropdown ul').html(dropDownContent);
         
     });
 };
