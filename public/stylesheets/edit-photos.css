@@ -1,0 +1,9 @@
+.photos-container .img-thumbnail img {
+    float: left;
+}
+
+.photos-container{
+    list-style: none;
+}
+
+
