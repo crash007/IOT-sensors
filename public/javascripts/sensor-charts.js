@@ -62,7 +62,7 @@ function loadGraphs(){
 	$.getJSON( '/sensors/json', function( data ) {
         $.each(data, function(index,item){
         	//console.log(item._id);        
-        	$('.chart-container').append('<div id="'+item._id+'"></div');
+        	$('.chart-container').append('<div class="panel panel-default sensor-panel"><div class="panel-body"><div id="'+item._id+'"></div></div></div>');
         	chart(item);           
         });        
     });
