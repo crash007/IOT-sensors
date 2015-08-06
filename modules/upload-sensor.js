@@ -2,9 +2,12 @@
  * 
  */
 var http = require('http');
+var url = require('url');
 
-function uploadSensor(id,value){
-	//var sensor = {"id":id, "value":value, "time":new Date()};
+function uploadSensor(uploadUrl,id,value){
+	
+	var u = url.parse(uploadUrl);
+	console.log(u);
 	var sensor = {"sensorId":id, "value":value};
 	var sensorString = JSON.stringify(sensor);
 	
@@ -14,9 +17,9 @@ function uploadSensor(id,value){
 	};
 
 	var options = {
-	  host: 'localhost',
-	  port: 3000,
-	  path: '/edit/add-data',
+	  host: u.hostname,
+	  port: u.port,
+	  path: u.path,
 	  method: 'POST',
 	  headers: headers
 	};

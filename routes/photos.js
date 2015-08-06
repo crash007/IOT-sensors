@@ -5,16 +5,7 @@ var upload = multer({ dest: 'uploads/' });
 var mongo = require('mongodb');
 var Grid = require('gridfs-stream'); 
 var fs = require('fs');
-
-var isAuthenticated = function (req, res, next) {
-	// if user is authenticated in the session, call the next() to call the next request handler 
-	// Passport adds this method to request object. A middleware is allowed to add properties to
-	// request and response objects
-	if (req.isAuthenticated())
-		return next();
-	// if the user is not authenticated then redirect him to the login page
-	res.redirect('/signin');
-}
+var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
 
 function getPhotosBySensorId(res,sensorId){	
 	var db = new mongo.Db('my-node-project', new mongo.Server("localhost", 27017));

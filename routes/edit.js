@@ -1,16 +1,9 @@
 
 var express = require('express');
 var router = express.Router();
+var jsonResponseHandler = require('../modules/json-response-handler.js');
+var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
 
-var isAuthenticated = function (req, res, next) {
-	// if user is authenticated in the session, call the next() to call the next request handler 
-	// Passport adds this method to request object. A middleware is allowed to add properties to
-	// request and response objects
-	if (req.isAuthenticated())
-		return next();
-	// if the user is not authenticated then redirect him to the login page
-	res.redirect('/signin');
-}
 
 function add(db,sensorId,value,time,res){
 	
@@ -27,14 +20,8 @@ function add(db,sensorId,value,time,res){
 	console.log("Adding value to sensor: "+sensorId+" , data: "+data.value+" "+data.time);
 	
 	collection.update({_id:sensorId},
-		{$push: { 'data':data } }, {w:1}, function(err, result) {
-			if(err !==null){
-				console.log(err);
-			}
-			
-			res.send(
-		        (err === null) ? { status: 'success' } : { status: 'error', message: err }
-		    );
+		{$push: { 'data':data } }, {w:1}, function(err, result) {			
+			jsonResponseHandler.sendResponse(res,err,result,"Wrong sensor id.");						
 		}
 	);
 }
@@ -74,12 +61,7 @@ module.exports = function(){
 		delete params.sensorId;
 		
 		collection.update({_id:sensorId, userId: req.user._id}, {$set: params }, {w:1}, function(err, result) {
-			if(err !== null){
-				console.log(err);
-			}
-			res.send(
-		        (err === null) ? { status: 'success' } : { status: 'error', message: err }
-		    );
+			jsonResponseHandler.sendResponse(res,err,result,"Wrong sensor id or userId.");
 		});
 	});
 	
@@ -111,14 +93,7 @@ module.exports = function(){
 				}, 
 				{w:1}, 
 				function(err, result) {
-					
-					if(err !== null){
-						console.log(err);
-					}
-					
-					res.send(
-					        (err === null) ? { status: 'success' } : { status: 'error', message: err }
-					    );
+					jsonResponseHandler.sendResponse(res,err,result,"Unable to update. No matching record found.");
 				});
 	});
 	
@@ -137,11 +112,7 @@ module.exports = function(){
 				}, 			 
 				{w:1}, 
 				function(err, result) {
-					console.log(err);
-					console.log(result);
-					res.send(
-				        (err === null) ? { status: 'success' } : { status: 'error', message: err }
-				    );
+					jsonResponseHandler.sendResponse(res,err,result,"Unable to remove sensor. Wrong sensor id or userId");
 				});
 	});
 	
@@ -160,11 +131,7 @@ module.exports = function(){
 		    { $pull: { "data" : { value: value, time: time} } },
 		    {w:1},
 		    function(err, result) {
-				console.log(err);
-				console.log(result);
-				res.send(
-						(err === null) ? { status: 'success' } : { status: 'error',message: err }
-			    );
+		    	jsonResponseHandler.sendResponse(res,err,result,"Unable to remove data. Wrong sensor id or user id.");
 		    } 
 		);
 	});
