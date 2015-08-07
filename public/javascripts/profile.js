@@ -2,16 +2,15 @@ $(document).ready(function() {
 	populateMySensorsTable();
 	
 	  $('.list-group-item').on('click',function(e){
-//		  console.log(e);
-//		  e.preventDefault();
-//		    var previous = $(this).closest(".list-group").children(".active");
-//		    previous.removeClass('active'); // previous list-item
-//		    $(e.target).addClass('active'); // activated list-item
 		    var link = $(e.target).data('link');
 		    $('.collapse').removeClass('in');
-//		   
+	   
 		     $('.'+link).addClass('in');
-		  });
+		     if(link ==='add-sensor-panel'){
+		    	 console.log('add-sensor');
+		    	 getCurrentLocation();
+		     }     
+	  });
 	  
 	  $('.profile-panel .glyphicon-edit').click(function(e){
 		 console.log('click edit'); 

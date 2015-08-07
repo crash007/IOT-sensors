@@ -17,17 +17,16 @@ block content
 							th Description
 							th User
 							th Json
-						tbody
-							tr
-								each s in sensors
-									tr
-										td
-											a(href="/sensor/"+s.name) #{s.name}
-										td #{s.description}
-										td
-											a(href="/sensors?username="+s.username) #{s.username}
-										td
-											a(href="/sensor/"+s.name+"/json") json
+						tbody						
+							each s in sensors
+								tr
+									td
+										a(href="/sensor/"+s.name) #{s.name}
+									td #{s.description}
+									td
+										a(href="/sensors?username="+s.username) #{s.username}
+									td
+										a(href="/sensor/"+s.name+"/json") json
 
         
 block scripts

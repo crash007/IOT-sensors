@@ -26,7 +26,7 @@ $(document).ready(function() {
     	//populateSensorTable();
     });
     
-    $(document).on('click','#sensorList .glyphicon-remove .delete-sensor',function(){    	
+    $(document).on('click','#sensorList .glyphicon-remove.delete-sensor',function(){    	
     	var tr = $(this).parents('tr');
     	var id = $(tr).find('input[name="id"]').val();
     	delSensor(id);
@@ -36,6 +36,8 @@ $(document).ready(function() {
     	console.log('click on abort');
     	populateMySensorsTable();
     });
+    
+    
 
 });
 

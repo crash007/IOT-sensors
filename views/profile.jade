@@ -84,7 +84,7 @@ block content
 											th valueSuffix                
 											th Lat,Lng
 											th Id
-																						
+
 										tbody
 									
 					.panel.panel-default.add-sensor-panel.collapse
@@ -92,20 +92,25 @@ block content
 							h3.panel-title Add Sensor
 						.panel-body
 							.row
-								.col-md-4
-									//h2 Add Sensor
-									#addSensor
-										input.form-control#inputSensorName(type='text', placeholder='Name')
-										br
-										input.form-control#inputSensorDesc(type='text', placeholder='Description')
-										br
-										input.form-control#inputSensorUnit(type='text', placeholder='Unit')
-										br
-										input.form-control#inputSensorValueSuffix(type='text', placeholder='Value suffix (%)')
-										br
-										input.form-control#inputSensorLatLng(type='text', placeholder='Latitude,Longitude')
-										br
-									button.btn.btn-default#btnAddSensor(style="float:right") Add Sensor
+								.col-xs-8.col-sm-6.col-md-5
+									.panel.panel-default
+										.panel-body
+											#addSensor
+												input.form-control#inputSensorName(type='text', placeholder='Name')
+												br
+												input.form-control#inputSensorDesc(type='text', placeholder='Description')
+												br
+												input.form-control#inputSensorUnit(type='text', placeholder='Unit')
+												br
+												input.form-control#inputSensorValueSuffix(type='text', placeholder='Value suffix (%)')
+												br
+												input.form-control#inputSensorLatLng(type='text', placeholder='Latitude,Longitude')
+												br
+												button.btn.btn-default#btnAddSensor Add Sensor
+								.col-xs-12.col-sm-6.col-md-7
+									.panel.panel-default
+										.panel-body
+											#map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")
 
 					.panel.panel-default.data-panel.collapse
 						.panel-heading
@@ -182,4 +187,6 @@ block scripts
 	script(src="/javascripts/edit-sensor-data.js")
 	script(src="/javascripts/profile.js")
 	script(src="/javascripts/edit-photos.js")
+	script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=true')
+	script(src="/javascripts/location.js")
 	
