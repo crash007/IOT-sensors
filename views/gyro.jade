@@ -1,0 +1,24 @@
+extends layout
+block append head
+	link(href="/stylesheets/sensor-photos.css", rel="stylesheet",type="text/css", media="screen")
+
+block content
+	div(class="container")
+		.panel.panel-default
+			.panel-heading
+				h3.panel-title Gyro readings
+			.panel-body
+				.chart-container
+					#gyro-chart
+				
+		
+block scripts
+
+	#script(src="/javascripts/highcharts.js")
+	script(src="/javascripts/canvasjs.js")
+	script(src="/javascripts/jquery.canvasjs.js")
+	script(src='/socket.io/socket.io.js')
+	script(src="/javascripts/gyro-canvas-chart.js")
+
+
+	

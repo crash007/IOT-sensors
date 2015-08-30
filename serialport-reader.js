@@ -2,7 +2,7 @@
  * New node file
  */
 
-var uploadSensor = require("./upload-sensor");
+var uploadSensor = require("./modules/upload-sensor");
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 

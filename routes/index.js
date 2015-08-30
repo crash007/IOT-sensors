@@ -16,14 +16,6 @@ module.exports = function(passport){
 		 res.render('profile', { user : req.user });			
 	});
 		
-//	router.get('/users/:name',  function(req, res){
-//	  
-//		if(req.isAuthenticated() && req.params.name === req.user.username){
-//		 res.render('profile', { user : req.user });
-//		}else{
-//			res.render('charts');
-//		}
-//	});
 	
 	router.get('/about',function(req, res){
 		res.render('about', { title: 'Express' , user : req.user});
@@ -31,6 +23,10 @@ module.exports = function(passport){
 	
 	router.get('/charts',function(req, res){
 		res.render('charts', { title: 'Express' , user : req.user});
+	});
+	
+	router.get('/gyro',function(req, res){
+		res.render('gyro', { title: 'gyro' , user : req.user});
 	});
 	
 	router.get('/logout', function(req, res) {
