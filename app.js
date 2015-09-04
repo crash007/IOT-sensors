@@ -85,9 +85,7 @@ app.io.route('ready', function(req) {
 		  parser: require("serialport").parsers.readline("\n")
 	}); // replace this address with your port address
 	
-	  // Now server is connected to Arduino
-	  console.log('Serial Port Opend');
-	  
+	 	  
 		serialport.on('open', function(){
 		  // Now server is connected to Arduino
 		  console.log('Serial Port Opend');
