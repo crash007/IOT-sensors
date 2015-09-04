@@ -80,7 +80,7 @@ app.io.route('ready', function(req) {
 	        message: 'io event from an io route on the server'
 	    })
 
-	var serialport = new SerialPort("/dev/ttyUSB1",{
+	var serialport = new SerialPort("/dev/ttyUSB0",{
 		  baudrate: 115200,
 		  parser: require("serialport").parsers.readline("\n")
 	}); // replace this address with your port address
@@ -93,7 +93,7 @@ app.io.route('ready', function(req) {
 		  console.log('Serial Port Opend');
 	
 		      serialport.on('data', function(data){
-		    	  console.log(data);
+		    	  //console.log(data);
 		    	  
 		              req.io.emit('data', parseFloat(data.split(/\s+/)[0]));
 		      });

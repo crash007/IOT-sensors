@@ -63,7 +63,7 @@ $( document ).ready(function() {
 	     chart.options.data[0].dataPoints.push({ y: data,x:i });
 	     chart.options.data[1].dataPoints.push({ y: yv[2],x:i });
 
-	     if(len > 100){
+	     if(len > 500){
 		 //console.log(chart.options.data[0].dataPoints);
 		 chart.options.data[0].dataPoints.shift();
 		 chart.options.data[1].dataPoints.shift();
