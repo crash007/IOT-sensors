@@ -75,30 +75,30 @@ app.use(function(req,res,next){
     next();
 });
 
-app.io.route('ready', function(req) {
-	req.io.emit('talk', {
-	        message: 'io event from an io route on the server'
-	    })
 
-	var serialport = new SerialPort("/dev/ttyUSB0",{
+
+app.io.route('ready', function(req) {
+	console.log('ready event received');
+	 var serialport = new SerialPort("/dev/ttyUSB0",{
 		  baudrate: 115200,
 		  parser: require("serialport").parsers.readline("\n")
 	}); // replace this address with your port address
-	
-	 	  
-		serialport.on('open', function(){
+
+	 
+	serialport.on('open', function(){
 		  // Now server is connected to Arduino
 		  console.log('Serial Port Opend');
-	
-		      serialport.on('data', function(data){
-		    	  //console.log(data);
-		    	  
-		              req.io.emit('data', parseFloat(data.split(/\s+/)[0]));
-		      });
-		  
-		});
 
-	
+	      serialport.on('data', function(data){
+	    	  var values = data.split(/\s+/);
+	    	  var result=[];
+	    	  	    
+	    	  //console.log(result);
+	              req.io.emit('data', values);
+	      });
+		  
+	});
+
 });
 
 var initPassport = require('./passport/init');
