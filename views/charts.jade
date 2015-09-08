@@ -3,12 +3,20 @@ block append head
 //link(href="/stylesheets/c3.min.css", rel="stylesheet")
 
 block content
+	script.
+		timeSpan = "#{timeSpan}"
 	div(class="container")
+		a.btn.btn-default(href='/charts/all', role='button') All
+		a.btn.btn-default(href='/charts/latest/day', role='button') Day
+		a.btn.btn-default(href='/charts/latest/hour', role='button') Hour
+		a.btn.btn-default(href='/charts/latest/minute', role='button') Minute					
 		.chart-container
+		
 
         
 block scripts
 
-	script(src="/javascripts/highcharts.js")
-	script(src="/javascripts/sensor-charts.js")
+	script(src="/javascripts/libs/highcharts.js")
+	script(src="/javascripts/chart.js")
+	script(src="/javascripts/charts.js")
 	

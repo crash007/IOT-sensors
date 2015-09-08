@@ -28,11 +28,7 @@ module.exports = function(passport){
 	router.get('/about',function(req, res){
 		res.render('about', { title: 'Express' , user : req.user});
 	});
-	
-	router.get('/charts',function(req, res){
-		res.render('charts', { title: 'Express' , user : req.user});
-	});
-	
+
 	router.get('/logout', function(req, res) {
 	  var name = req.user.username;
 	  console.log("LOGGIN OUT " + req.user.username)

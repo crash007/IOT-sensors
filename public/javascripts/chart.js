@@ -41,7 +41,6 @@ function chart(sensor){
 	          }]
 	      },
 	      tooltip: {
-//	          valueSuffix: '°C'
 	    	  valueSuffix: sensor.valueSuffix
 	      },
 	      series: [{
@@ -52,34 +51,27 @@ function chart(sensor){
 }
 
 
-$( document ).ready(function() {
-	loadGraphs();
-	updateGraphs();
-	
-});
-
-function loadGraphs(){
-	$.getJSON( '/sensors/json', function( data ) {
-        $.each(data, function(index,item){
-        	//console.log(item._id);        
-        	$('.chart-container').append('<div class="panel panel-default sensor-panel"><div class="panel-body"><div id="'+item._id+'"></div></div></div>');
-        	chart(item);           
-        });        
+function loadGraph(){
+	$.getJSON( '/sensor/'+chartName+'/json/', function( sensor){
+    	$('.chart-container').append('<div id="'+sensor._id+'"></div');
+    	chart(sensor);           
+        console.log(sensor);
+		
+		google.maps.event.addDomListener(window, 'load', initialize(sensor.latLng));
     });
 }
 
 
 // Use a named immediately-invoked function expression.
-function updateGraphs() {
-	$.getJSON( '/sensors/json', function( data ) {
-        $.each(data, function(index,item){
-        	console.log($('#'+item._id).highcharts());
-        	
-        	var chart = $('#'+item._id).highcharts();
-            chart.series[0].setData(timeValueArray(item.data));
-          
-        });    
-        setTimeout(updateGraphs, 2000);
+function updateGraph() {	
+	$.getJSON( '/sensor/'+chartName+'/json/', function( sensor ) {
+        
+    	console.log($('#'+sensor._id).highcharts());
+    	
+    	var chart = $('#'+sensor._id).highcharts();
+        chart.series[0].setData(timeValueArray(sensor.data));
+            
+        setTimeout(updateGraph, 2000);
     });
 	
 }	
@@ -88,6 +80,7 @@ function updateGraphs() {
 function timeValueArray(data){
 	var result =[];
 	data.forEach(function(item){
+
 		result.push([new Date(item.time).getTime(), parseFloat(item.value)]);
 	});
 	result.sort(sortByDate);
@@ -98,3 +91,5 @@ function timeValueArray(data){
 function sortByDate(a,b){	
 	return ((a[0] < b[0]) ? -1 : ((a[0] > b[0]) ? 1 : 0));
 }
+
+

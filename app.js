@@ -9,7 +9,7 @@ var express = require('express')
   , bodyParser = require('body-parser') 
   , http = require('http')
   , path = require('path')
-  
+  , charts = require('./routes/charts')
   , sensors = require('./routes/sensors')
   , sensor = require('./routes/sensor')
   , edit = require('./routes/edit')
@@ -82,7 +82,8 @@ app.use('/sensors', sensors);
 app.use('/sensor', sensor);
 app.use('/edit', edit);
 app.use('/users', users);
-app.use('/photos',photos)
+app.use('/photos',photos);
+app.use('/charts',charts);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
