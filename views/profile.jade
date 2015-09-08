@@ -5,7 +5,7 @@ block append head
 	link(href="/stylesheets/sensor-photos.css", rel="stylesheet",type="text/css", media="screen")
 	
 block content
-	.container
+	.container.body
 		.row
 			.col-xs-16.col-sm-12
 				ul.nav.nav-tabs
@@ -19,7 +19,7 @@ block content
 						a.list-group-item(data-link='photo-panel',href='#') Photos	
 					li(role='presentation')
 						a.list-group-item(href='#',data-link='profile-panel') Profile
-
+	
 				if (!user)
 					h1 Orchestrate User Authentication
 						|     
@@ -37,7 +37,7 @@ block content
 								span.glyphicon.glyphicon-edit(aria-hidden='true')
 						.panel-body
 							p Username: #{user.username}
-
+	
 							p.fullName
 								| Full name: #{user.fullName}
 							p.email
@@ -84,7 +84,7 @@ block content
 											th valueSuffix                
 											th Lat,Lng
 											th Id
-
+	
 										tbody
 									
 					.panel.panel-default.add-sensor-panel.collapse
@@ -111,7 +111,7 @@ block content
 									.panel.panel-default
 										.panel-body
 											#map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")
-
+	
 					.panel.panel-default.data-panel.collapse
 						.panel-heading
 							h3.panel-title Edit sensor data
@@ -120,7 +120,7 @@ block content
 								button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Sensor 	
 									span.caret
 								ul.dropdown-menu(role="menu")
-
+	
 							.row
 								.col-md-4
 					
@@ -178,7 +178,7 @@ block content
 									h3.panel-title Photos
 								.panel-body
 									.photos-container
-										
+									
 block scripts
 	script(src="/javascripts/libs/moment/moment-with-locales.js")
 	script(src="/javascripts/libs/bootstrap-datetimepicker.min.js")

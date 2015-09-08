@@ -3,7 +3,7 @@ block append head
 //link(href="/stylesheets/c3.min.css", rel="stylesheet")
 
 block content
-	div(class="container")		
+	.container.body
 		.panel.panel-default.users-panel
 			.panel-heading
 				h3.panel-title Users
@@ -19,10 +19,6 @@ block content
 									tr
 										td
 											a(href="/users/"+u.username) #{u.username}
-											
-
-		
-		
 
 block scripts
 

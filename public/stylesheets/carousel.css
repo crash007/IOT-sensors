@@ -13,7 +13,7 @@ body {
 
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
 .navbar-wrapper {
-  //position: absolute;
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
@@ -39,7 +39,7 @@ body {
 
 /* Carousel base class */
 .carousel {
-  height: 400px;
+  height: 500px;
   margin-bottom: 60px;
 }
 /* Since positioning the image, we need to help out the caption */
@@ -49,10 +49,11 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 400px;
+  height: 500px;
   background-color: #777;
 }
 .carousel-inner > .item > img {
+	margin-top:1em;
   //position: absolute;
   top: 0;
   left: 0;

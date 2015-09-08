@@ -3,9 +3,9 @@ block append head
 	link(href="/stylesheets/sensor-photos.css", rel="stylesheet",type="text/css", media="screen")
 
 block content
-	script.
-		 chartName = "#{chartName}"
-	div(class="container")
+	.container.body
+		script.
+			 chartName = "#{chartName}"	
 		.panel.panel-default
 			.panel-heading
 				h3.panel-title Chart
@@ -32,7 +32,6 @@ block content
 				h3.panel-title Photos
 			.panel-body
 				.photos-container		
-        
 block scripts
 
 	script(src="/javascripts/libs/highcharts.js")

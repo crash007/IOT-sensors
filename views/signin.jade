@@ -1,13 +1,11 @@
 extends layout
 
 block content
-
-	div.container
-		
+	.container.body
 		h1 Sign in
 		p
 			| Please sign-in with to view your profile.
-
+	
 		form.form-horizontal#local-sign-in(action='/login', method='post')
 			.form-group
 				label.col-sm-2.control-label Username
@@ -49,7 +47,7 @@ block content
 			.form-group
 				.col-sm-offset-2.col-sm-10					
 					input.btn.btn-primary.btn-default(type='submit', value='Register')
-
+	
 		
 		
 		p
