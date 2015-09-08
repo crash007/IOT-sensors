@@ -51,40 +51,34 @@ function chart(sensor){
 }
 
 
-function loadGraph(){
-	$.getJSON( '/sensor/'+chartName+'/json/', function( sensor){
-    	$('.chart-container').append('<div id="'+sensor._id+'"></div');
-    	chart(sensor);           
-        console.log(sensor);
-		
-		google.maps.event.addDomListener(window, 'load', initialize(sensor.latLng));
-    });
-}
-
 
 // Use a named immediately-invoked function expression.
-function updateGraph() {	
-	$.getJSON( '/sensor/'+chartName+'/json/', function( sensor ) {
-        
-    	console.log($('#'+sensor._id).highcharts());
-    	
-    	var chart = $('#'+sensor._id).highcharts();
-        chart.series[0].setData(timeValueArray(sensor.data));
-            
-        setTimeout(updateGraph, 2000);
-    });
-	
+function updateGraph(chartName,timeSpan) {	
+	var url = '/sensor/'+chartName+'/json/'+timeSpan;
+	$.getJSON( url, function( sensor ) {
+        if(typeof sensor._id !=='undefined'){
+	    	console.log($('#'+sensor._id).highcharts());
+	    	
+	    	var chart = $('#'+sensor._id).highcharts();
+	        chart.series[0].setData(timeValueArray(sensor.data));
+        }else{
+        	alert('No data found');
+        }
+//        setTimeout(updateGraph, 2000);
+    });	
 }	
-  
-
+//  
+//
 function timeValueArray(data){
 	var result =[];
-	data.forEach(function(item){
-
-		result.push([new Date(item.time).getTime(), parseFloat(item.value)]);
-	});
-	result.sort(sortByDate);
-
+	console.log(data);
+	if(typeof data!== 'undefined'){
+		data.forEach(function(item){
+	
+			result.push([new Date(item.time).getTime(), item.value]);
+		});
+		result.sort(sortByDate);
+	}
 	return result;
 }
 

@@ -21,7 +21,7 @@ $(document).ready(function() {
     });
 	
     // Populate the user table on initial page load
-	populateDropdown();
+	//populateDropdown();
 	// populateDataTable();
 	
     $('#btnAddSensorData').on('click', addSensorData);    
@@ -78,7 +78,7 @@ function populateDataTable() {
     
     var id =$('#sensorDropdown .dropdown-toggle input[name="id"]').val();;
     // jQuery AJAX call for JSON
-    $.getJSON( '/sensors/json?mySensors=true&_id='+id, function( data ) {
+    $.getJSON( '/sensors/json/all?mySensors=true&_id='+id, function( data ) {
     	console.log(data);
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data[0].data, function(){
@@ -99,20 +99,20 @@ function populateDataTable() {
 };
 
 
-function populateDropdown(){
-	var dropDownContent='';
-	$.getJSON( '/sensors/json?mySensors=true', function( data ) {
-
-	        // For each item in our JSON, add a table row and cells to the content string
-	        $.each(data, function(){
-	            dropDownContent += '<li><a href="#">'+this.name+'</a><input type="hidden" name="id" value="'+this._id +'" /></li> ';
-	        });
-
-	        // Inject the whole content string into our existing HTML table	        
-	        $('#sensorDropdown ul').html(dropDownContent);
-	        
-	    });
-}
+//function populateDropdown(){
+//	var dropDownContent='';
+//	$.getJSON( '/sensors/json/all?mySensors=true&excludeData=true', function( data ) {
+//
+//	        // For each item in our JSON, add a table row and cells to the content string
+//	        $.each(data, function(){
+//	            dropDownContent += '<li><a href="#">'+this.name+'</a><input type="hidden" name="id" value="'+this._id +'" /></li> ';
+//	        });
+//
+//	        // Inject the whole content string into our existing HTML table	        
+//	        $('#sensorDropdown ul').html(dropDownContent);
+//	        
+//	    });
+//}
 
 function addSensorData(event){
 	

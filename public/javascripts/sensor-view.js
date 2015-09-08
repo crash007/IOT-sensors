@@ -1,8 +1,22 @@
 $( document ).ready(function() {
 	console.log(chartName);
-	loadGraph();
-	updateGraph();
+	
+	$.getJSON( '/sensor/'+chartName+'/json/latest/day', function( sensor){
+    	$('.chart-container').append('<div id="'+sensor._id+'"></div');
+    	console.log(sensor);
+    	chart(sensor);           
+    	google.maps.event.addDomListener(window, 'load', initialize(sensor.latLng));    
+				
+    });
+	
+	$('a[name="latest/day"]').addClass('active');
 	loadPhotosByName(chartName);
+	$('a.timeSpan').click(function(e){
+		var timeSpan = this.name; 
+		updateGraph(chartName,timeSpan);
+		$('a.timeSpan').removeClass('active');
+		$('a[name="'+timeSpan+'"]').addClass('active');
+	});
 	
 });
 

@@ -2,7 +2,7 @@
 // Fill table with sensors
 function populateMySensorsTable() {
 
-	var url = '/sensors/json?mySensors=true';
+	var url = '/sensors/json/all?mySensors=true&excludeData=true';
 	
     // Empty content string
     var tableContent = '';
