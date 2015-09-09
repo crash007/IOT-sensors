@@ -46,7 +46,7 @@ function loadPhotosByName(sensorName){
 		$('.photos-container').html('');
 		data.forEach(function(filename){
 			console.log(filename);
-			$('.photos-container').append('<div class="img-thumbnail"><li><img style="height:225px;" src="/photos/photo/'+filename+'"/></li></div>');
+			$('.photos-container').append('<div class="img-thumbnail"><li><img style="height:25em;" src="/photos/photo/'+filename+'"/></li></div>');
 			
 		})
 
