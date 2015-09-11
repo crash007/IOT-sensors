@@ -111,7 +111,7 @@ function editSensor(tr){
 			latLng: $(tr).find('td.latLng input').val()};
 	console.log("Saving sensor to db: "+sensor.name);
 	console.log(sensor);
-	// Use AJAX to post the object to our adduser service
+
     $.ajax({
         type: 'POST',
         data: sensor,

@@ -15,6 +15,10 @@ module.exports = function(passport){
 	router.get('/user', isAuthenticated, function(req, res){
 		 res.render('profile', { user : req.user });			
 	});
+	
+	router.get('/user/sensors', isAuthenticated, function(req, res){
+		 res.render('profile/sensors', { user : req.user });			
+	});
 		
 //	router.get('/users/:name',  function(req, res){
 //	  

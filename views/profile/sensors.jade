@@ -1,0 +1,169 @@
+extends ../layout
+
+block append head
+	link(href="/stylesheets/bootstrap-datetimepicker.min.css", rel="stylesheet",type="text/css", media="screen")
+	link(href="/stylesheets/sensor-photos.css", rel="stylesheet",type="text/css", media="screen")
+	
+block content
+	.container.body
+		.row
+			.col-xs-16.col-sm-12
+				ul.nav.nav-tabs#mainTabs
+					li.active
+						a.list-group-item(data-toggle='tab',href='#sensors-container') Sensors
+					li
+						a.list-group-item(data-toggle='tab',href='#add-sensor-panel')#add-sensor-tab Add Sensor
+					li
+						a.list-group-item(href='#profile',data-toggle='tab') Profile
+	
+
+		.container
+			.tab-content
+				.tab-pane.active(role="tabpanel")#sensors-container
+				.tab-pane(role="tabpanel")#add-sensor-panel
+					h3 Add sensor
+					#sensor-added-succefully.alert.alert-success(role="alert", style="display:none;")
+						strong Sensor added successfully
+
+					.row
+						.col-xs-8.col-sm-6.col-md-5
+							.panel.panel-default
+								.panel-body
+									#addSensor
+										.form-group
+											label(for="inputSensorName") Name
+											input.form-control#inputSensorName(type='text', placeholder='Name')
+										.form-group
+											label(for="inputSensorDesc") Description
+											input.form-control#inputSensorDesc(type='text', placeholder='Description')
+										.form-group
+											label(for="inputSensorUnit") Unit
+											input.form-control#inputSensorUnit(type='text', placeholder='Unit')
+										.form-group
+											label(for="inputSensorValueSuffix") Value suffix (%)
+											input.form-control#inputSensorValueSuffix(type='text', placeholder='Value suffix (%)')
+										.form-group
+											label(for="inputSensorLatLng") Latitude,Longitude
+											input.form-control#inputSensorLatLng(type='text', placeholder='Latitude,Longitude')
+										
+										button.btn.btn-default#btnAddSensor Add Sensor
+						.col-xs-12.col-sm-6.col-md-7
+							.panel.panel-default
+								.panel-body
+									#map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")
+				
+				.tab-pane(role="tabpanel")#profile
+					.panel.panel-default.profile-panel.collapse.in
+						.panel-heading
+							h3.panel-title(style="display:inline-block") Profile Information
+							a(href='#', style="float:right")
+								span.glyphicon.glyphicon-edit(aria-hidden='true')
+						.panel-body
+							p Username: #{user.username}
+	
+							p.fullName
+								| Full name: #{user.fullName}
+							p.email
+								| Epost: #{user.email}
+							p.about
+								| About: #{user.about}
+					
+					.panel.panel-default.profile-edit-panel.collapse
+						.panel-heading
+							h3.panel-title(style="display:inline-block") Profile Information
+							a(href='#', style="float:right")
+								span.glyphicon.glyphicon-ok(aria-hidden='true')
+						.panel-body
+							form.form-horizontal#local-reg(action='/update-profile', method='post')								
+								.form-group
+									label.col-sm-2.control-label Email
+									.col-sm-10
+										input.form-control(placeholder='Email',name="email",type="email", value="#{user.email}")
+								.form-group
+									label.col-sm-2.control-label Full name
+									.col-sm-10
+										input.form-control(type='text', placeholder='Full name',name="fullName" , value="#{user.fullName}")
+								//
+									.form-group
+										label.col-sm-2.control-label Password
+										.col-sm-10
+											input.form-control(type='password', placeholder='Password',name="password")
+								.form-group
+									label.col-sm-2.control-label About
+									.col-sm-10
+										textarea.form-control(rows='4', placeholder='Say something',name="about",value="#{user.about}") #{user.about}
+		
+			
+						
+	//Template is copied and appended to #sensors-container
+									
+	#sensor-template.collapse
+		
+		.row.sensor
+			.container
+				ul.nav.nav-tabs.sensor-tabs
+					li.active
+						a.list-group-item(href='',name='sensor-info-tab') Info					
+					li
+						a.list-group-item(href='#',name='sensor-alarms-tab') Alarms
+					li
+						a.list-group-item(href='#',name='sensor-remove-tab') Remove sensor
+						//
+							a(href='#').edit.collapse.in
+								span.glyphicon.glyphicon-edit(title='Edit', aria-hidden='true')
+							a(href='#').save.collapse
+								span.glyphicon.glyphicon-ok(title='Save', aria-hidden='true')
+							
+								
+									
+				.tab-content
+					.tab-pane.active(role="tabpanel").sensor-info-tab
+						.col-xs-8.col-sm-6.col-md-5
+							.form-horizontal.sensor-form												
+								input(type="hidden",value="",name="sensor-id")
+								.form-group
+									label.col-sm-4.control-label Name
+									.col-sm-8
+										.form-control-static.sensor-name sensor
+								.form-group
+									label.col-sm-4.control-label Description
+									.col-sm-8
+										.form-control-static.sensor-description
+								.form-group
+										label.col-sm-4.control-label Unit
+										.col-sm-8
+											.form-control-static.sensor-unit
+								.form-group
+										label.col-sm-4.control-label Value suffix (%)
+										.col-sm-8
+											.form-control-static.sensor-value-suffix													
+								.form-group
+										label.col-sm-4.control-label Latitude,Longitude
+										.col-sm-8
+											.form-control-static.sensor-lat-lng
+								.form-group
+										label.col-sm-4.control-label Edit
+										.col-sm-8
+											.form-control-static
+												a(href='#').edit.collapse.in
+													span.glyphicon.glyphicon-edit(title='Edit', aria-hidden='true')
+												a(href='#').save.collapse
+													span.glyphicon.glyphicon-ok(title='Save', aria-hidden='true')
+			
+						.col-xs-12.col-sm-6.col-md-7
+							.map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")						
+					
+					.tab-pane(role="tabpanel").sensor-alarms-tab
+						h3 Alarms
+					.tab-pane(role="tabpanel").sensor-remove-tab
+						h3 Remove sensor
+						p Click to remove this sensor
+						button(type="button").btn.btn-danger.delete-sensor Remove
+					
+								
+block scripts	
+	script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=true')
+	script(src="/javascripts/profile-edit-sensors.js")
+	script(src="/javascripts/edit-profile.js")
+	script(src="/javascripts/location.js")
+	

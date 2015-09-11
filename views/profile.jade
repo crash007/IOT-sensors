@@ -68,7 +68,7 @@ block content
 								.form-group
 									label.col-sm-2.control-label About
 									.col-sm-10
-										input.form-control(type='text', placeholder='Say something',name="about",value="#{user.about}")
+										textarea.form-control(rows='4', placeholder='Say something',name="about",value="#{user.about}") #{user.about}
 								
 					.panel.panel-default.sensor-panel.collapse.in
 						.panel-heading
@@ -185,7 +185,7 @@ block scripts
 	script(src="/javascripts/populateSensors.js")
 	script(src="/javascripts/edit-sensors.js")
 	script(src="/javascripts/edit-sensor-data.js")
-	script(src="/javascripts/profile.js")
+	script(src="/javascripts/edit-profile.js")
 	script(src="/javascripts/edit-photos.js")
 	script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=true')
 	script(src="/javascripts/location.js")

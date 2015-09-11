@@ -10,3 +10,12 @@ a {
 .container.body{
 	margin-top:8em;
 }
+
+.sensor {
+	padding-top:1em;
+	height:25em;
+}
+
+#mainTabs,.sensor-tabs{
+	padding-bottom:0.1em;
+}

@@ -9,8 +9,7 @@ function populateMySensorsTable() {
     var dropDownContent='';
     
     // jQuery AJAX call for JSON    
-    $.getJSON( url, function( data ) {
-    
+    $.getJSON( url, function( data ) {    
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
             tableContent += '<tr>';          
