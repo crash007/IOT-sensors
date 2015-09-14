@@ -40,7 +40,8 @@ module.exports = function(){
 			//console.log(req.body) // form fields
 			console.log("req.files");
 		    console.log(req.files) // form files
-		   	   
+		   
+		   	 console.log("Sensor id: "+req.body.sensorId);  
 		    //var filename = req.files.file.name;
 
 		    // create or use an existing mongodb-native db instance

@@ -19,3 +19,7 @@ a {
 #mainTabs,.sensor-tabs{
 	padding-bottom:0.1em;
 }
+
+.photo-container .img-thumbnail img{
+	display: block;
+}

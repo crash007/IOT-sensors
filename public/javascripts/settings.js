@@ -74,7 +74,8 @@ function getSensorList(){
 	    	sensorElem.find('input[name="sensor-id"]').val(this._id);
 	    	
 	    	initialize(this.latLng,sensorElem.find('.map-canvas')[0]);
-	    	initSensorTab(sensorElem);
+	    	initSensorDataTab(sensorElem);
+	    	initSensorPhotoTab(sensorElem);
 	    	sensorElem.appendTo('#sensors-container');
 	    	      	        
 	    });		    

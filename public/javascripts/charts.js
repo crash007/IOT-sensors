@@ -22,16 +22,3 @@ function loadGraphs(){
         });        
     });
 }
-
-
-// Use a named immediately-invoked function expression.
-//function updateGraphs() {
-//	$.getJSON( '/sensors/json/'+timeSpan, function( data ) {
-//        $.each(data, function(index,item){
-//            var chart = $('#'+item._id).highcharts();
-//            chart.series[0].setData(timeValueArray(item.data));          
-//        });    
-//       // setTimeout(updateGraphs, 2000);
-//    });
-//	
-//}	

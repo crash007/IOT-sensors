@@ -2,7 +2,7 @@
  * New node file
  */
 
-function initSensorTab(sensor){
+function initSensorDataTab(sensor){
 	$(sensor).find('.datetimepicker').datetimepicker({
 
 		locale:'sv',

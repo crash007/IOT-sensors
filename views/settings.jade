@@ -187,6 +187,11 @@ block content
 					//Photo tab					
 					.tab-pane(role="tabpanel").sensor-photo-tab
 						h3 Photos
+						form.photo-upload-form
+							| Select images:
+							input(type='file', name='photos',multiple="multiple")
+							button(type="button").btn.btn-default.upload-photo Upload
+						.photo-container
 					//Remove sensor tab
 					.tab-pane(role="tabpanel").sensor-remove-tab
 						h3 Remove sensor
@@ -200,6 +205,7 @@ block scripts
 	script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=true')
 	script(src="/javascripts/settings-sensor-data.js")
 	script(src="/javascripts/settings-add-sensor.js")
+	script(src="/javascripts/edit-photos.js")
 	script(src="/javascripts/settings.js")
 	script(src="/javascripts/edit-profile.js")
 	script(src="/javascripts/location.js")
