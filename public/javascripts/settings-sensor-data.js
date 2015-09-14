@@ -1,57 +1,49 @@
 /**
  * New node file
  */
-// Userlist data array for filling in info box
-var sensorData = [];
-var sensorDate = new Date();
 
-// DOM Ready =============================================================
-$(document).ready(function() {
-
-	$('#datetimepicker1').datetimepicker({
+function initSensorTab(sensor){
+	$(sensor).find('.datetimepicker').datetimepicker({
 
 		locale:'sv',
 		format: 'YYYY-MM-DD LTS',
 		 defaultDate: new Date(),
     });
 	
-	$("#datetimepicker1").on("dp.change", function (e) {		  
+	$(sensor).find('.datetimepicker').on("dp.change", function (e) {		  
 		console.log(e.date.toDate());
 		sensorDate = e.date.toDate();		
     });
 	
-    // Populate the user table on initial page load
-	//populateDropdown();
-	// populateDataTable();
-	
-    $('#btnAddSensorData').on('click', addSensorData);    
-    
-    $(document).on('click','#sensorDropdown .dropdown-menu li',function(e){
-    	var selSensor = $(this).text().trim();
-    	var id = $(this).find('input').val();
-    	console.log(selSensor);
-    	console.log($(this).find('input[name="id"]')[0] );
-    	$(this).parents('.btn-group').find('.dropdown-toggle').html(selSensor+' <span class="caret"></span>'+$(this).find('input[name="id"]')[0].outerHTML);
-    	populateDataTable();
-    });
-    
-    $(document).on('click','#sensorDataList .glyphicon-edit',function(e){    	    	
-    	var tr = $(this).parents('tr');
-    	editDataRow(tr);
-    });
-    
-    $(document).on('click','#sensorDataList .glyphicon-ok',function(e){   
-    	var tr = $(this).parents('tr');    	
-    	saveDataChange(tr)
-    	//populateDataTable();
-    });
-    
-    $(document).on('click','#sensorDataList .glyphicon-remove',function(e){   
-    	var tr = $(this).parents('tr');    	
-    	delData(tr);
-    	
-    });
+	var sensorId = $(sensor).find('input[name="sensor-id"]').val();
+	var tbody = $(sensor).find('.sensorDataList tbody');
+	populateDataTable(sensorId,tbody);
+};
 
+$(document).on('click','.btnAddSensorData',addSensorData);
+
+$(document).on('click','.sensorDataList .glyphicon-edit',function(e){    	    	
+	var tr = $(this).parents('tr');
+	editDataRow(tr);
+});
+
+
+$(document).on('click','.sensorDataList .glyphicon-ok',function(e){   
+	var tr = $(this).parents('tr');    	
+	var id = $(this).parents('.sensor').find('input[name="sensor-id"]').val();
+	var tbody = $(this).parents('tbody');
+	saveDataChange(id,tr,tbody)
+	
+});
+
+$(document).on('click','.sensorDataList .glyphicon-remove',function(e){   
+	var tr = $(this).parents('tr');
+	var id = $(this).parents('.sensor').find('input[name="sensor-id"]').val();
+	var value = $(tr).find('.value').text();
+	var time = $(tr).find('.time').text()
+	var tbody = $(this).parents('tbody');
+	
+	delData(id,time,value,tbody);     	
 });
 
 // Functions =============================================================
@@ -71,14 +63,14 @@ function editDataRow(tr){
 }
 
 // Fill table with sensors
-function populateDataTable() {
+function populateDataTable(sensorId,tbody) {
 
     // Empty content string
     var tableContent = '';
     
-    var id =$('#sensorDropdown .dropdown-toggle input[name="id"]').val();;
+    
     // jQuery AJAX call for JSON
-    $.getJSON( '/sensors/json/all?mySensors=true&_id='+id, function( data ) {
+    $.getJSON( '/sensors/json/all?mySensors=true&_id='+sensorId, function( data ) {
     	console.log(data);
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data[0].data, function(){
@@ -86,47 +78,39 @@ function populateDataTable() {
             tableContent += '<tr>';          
             tableContent += '<td class="time">'+this.time+'</td>';
             tableContent += '<td class="value">'+this.value+'</td>';                        
-            tableContent += '<td> <a href="#"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> </td>'; 
-            //tableContent += '<input type="hidden" name="id" value="'+this._id +'" />';
+            tableContent += '<td> <a href="#"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> </td>';     
             tableContent += '</tr>';
             
         });
 
         // Inject the whole content string into our existing HTML table
-        $('#sensorDataList table tbody').html(tableContent);        
+        $(tbody).html(tableContent);        
         
     });
 };
 
 
-//function populateDropdown(){
-//	var dropDownContent='';
-//	$.getJSON( '/sensors/json/all?mySensors=true&excludeData=true', function( data ) {
-//
-//	        // For each item in our JSON, add a table row and cells to the content string
-//	        $.each(data, function(){
-//	            dropDownContent += '<li><a href="#">'+this.name+'</a><input type="hidden" name="id" value="'+this._id +'" /></li> ';
-//	        });
-//
-//	        // Inject the whole content string into our existing HTML table	        
-//	        $('#sensorDropdown ul').html(dropDownContent);
-//	        
-//	    });
-//}
-
-function addSensorData(event){
+function addSensorData(){
+	
+	
+	var form = $(this).parent();
+	
 	
 	var errorCount = 0;
-	$('#addSensorData input').each(function(index, val) {
+	$(form).find('input').each(function(index, val) {
         if($(this).val() === '') { errorCount++; }
     });
 	
 	if(errorCount === 0){
-		//var name = $('#sensorDropdown .dropdown-toggle').text().trim();
-		var id = $('#sensorDropdown .dropdown-toggle input[name="id"]').val().trim();
-		var data = {"sensorId": id,				
-				"time": sensorDate,
-				"value": $('#inputSensorValue').val()};
+
+		var sensorId = $(this).parents('.sensor').find('input[name="sensor-id"]').val();
+		var value = parseFloat(form.find('input[name="inputSensorValue"]').val());
+		var date = form.find('input[name="inputSensorDate"]').val();
+		var tbody = $(this).parents('.sensor').find('.sensorDataList tbody');
+		
+		var data = {"sensorId": sensorId,				
+				"time": date,
+				"value": value};
 		
 		console.log(data);
 		// Use AJAX to post the object to our adduser service
@@ -141,10 +125,11 @@ function addSensorData(event){
             if (response.status === 'success') {
 
                 // Clear the form inputs
-                $('#addSensorData fieldset input').val('');
+                //$('#addSensorData fieldset input').val('');
+            	form.find('input[name="inputSensorValue"]').val('');
 
                 // Update the table               
-                populateDataTable();
+                populateDataTable(sensorId,tbody);
 
             }
             else {
@@ -160,15 +145,15 @@ function addSensorData(event){
 }
 
 
-function saveDataChange(tr){
+function saveDataChange(sensorId,dataRow,tbody){
 	console.log("Saving data change to db.");
 	
 	var data = {};
-	data.id = $('#sensorDropdown .dropdown-toggle input[name="id"]').val();
-	data.value = $(tr).find('td.value input').val();
-	data.time = $(tr).find('td.time input').val();
-	data.prevValue = $(tr).find('input[name="prevValue"]').val();
-	data.prevTime = $(tr).find('input[name="prevTime"]').val();
+	data.id = sensorId;
+	data.value = $(dataRow).find('td.value input').val();
+	data.time = $(dataRow).find('td.time input').val();
+	data.prevValue = $(dataRow).find('input[name="prevValue"]').val();
+	data.prevTime = $(dataRow).find('input[name="prevTime"]').val();
 	
 	console.log(data);
 	
@@ -180,7 +165,7 @@ function saveDataChange(tr){
     }).done(function( response ) {
         // Check for successful (blank) response
         if (response.status === 'success') {
-           populateDataTable();
+           populateDataTable(sensorId,tbody);
         }
         else {
             // If something goes wrong, alert the error message that our service returned
@@ -190,11 +175,13 @@ function saveDataChange(tr){
 }
 
 
-function delData(tr){
+function delData(sensorId,time,value,tbody){
 	var data = {};
-	data.id = $('#sensorDropdown .dropdown-toggle input[name="id"]').val();
-	data.value = $(tr).find('.value').text();
-	data.time = $(tr).find('.time').text()
+	
+	data.id =sensorId;
+	data.value=value;
+	data.time=time;
+	
 	
 	console.log("Deleting data");
 	console.log(data);
@@ -209,7 +196,8 @@ function delData(tr){
         // Check for successful (blank) response
         if (response.status === 'success') {
             // Update the table and dropdown
-        	populateDataTable();
+        	console.log($('input[name="sensor-id"][value="'+sensorId+'"]'));
+        	populateDataTable(sensorId, tbody);
         }
         else {
             // If something goes wrong, alert the error message that our service returned

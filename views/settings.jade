@@ -1,4 +1,4 @@
-extends ../layout
+extends layout
 
 block append head
 	link(href="/stylesheets/bootstrap-datetimepicker.min.css", rel="stylesheet",type="text/css", media="screen")
@@ -16,7 +16,6 @@ block content
 					li
 						a.list-group-item(href='#profile',data-toggle='tab') Profile
 	
-
 		.container
 			.tab-content
 				.tab-pane.active(role="tabpanel")#sensors-container
@@ -94,9 +93,7 @@ block content
 										textarea.form-control(rows='4', placeholder='Say something',name="about",value="#{user.about}") #{user.about}
 		
 			
-						
-	//Template is copied and appended to #sensors-container
-									
+	//Template is copied and appended to #sensors-container									
 	#sensor-template.collapse
 		
 		.row.sensor
@@ -107,6 +104,10 @@ block content
 					li
 						a.list-group-item(href='#',name='sensor-alarms-tab') Alarms
 					li
+						a.list-group-item(href='#',name='sensor-data-tab') Data
+					li
+						a.list-group-item(href='#',name='sensor-photo-tab') Photos
+					li
 						a.list-group-item(href='#',name='sensor-remove-tab') Remove sensor
 						//
 							a(href='#').edit.collapse.in
@@ -115,11 +116,11 @@ block content
 								span.glyphicon.glyphicon-ok(title='Save', aria-hidden='true')
 							
 								
-									
+				//Sensor info tab
 				.tab-content
 					.tab-pane.active(role="tabpanel").sensor-info-tab
 						.col-xs-8.col-sm-6.col-md-5
-							.form-horizontal.sensor-form												
+							.form-horizontal.sensor-info-form												
 								input(type="hidden",value="",name="sensor-id")
 								.form-group
 									label.col-sm-4.control-label Name
@@ -153,17 +154,55 @@ block content
 						.col-xs-12.col-sm-6.col-md-7
 							.map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")						
 					
+					//Alarm tab
 					.tab-pane(role="tabpanel").sensor-alarms-tab
 						h3 Alarms
+					//Sensor data tab	
+					.tab-pane(role="tabpanel").sensor-data-tab
+						.panel.panel-default.data-panel
+							.panel-heading
+								h3.panel-title Edit sensor data
+							.panel-body
+								.row
+									.col-md-4						
+										h3 Add
+										.addSensorData
+											input.form-control(type='text', placeholder='Value', name='inputSensorValue')
+											br
+											.form-group
+												.input-group.date.datetimepicker
+													input.form-control( type='text', name='inputSensorDate')
+													span.input-group-addon
+														span.glyphicon.glyphicon-calendar
+											button.btn.btn-default.btnAddSensorData(style="float:right") Add Sensor Data
+											
+									.col-md-8
+										h3 Edit
+										.sensorDataList
+											table.table
+												thead
+													th Time
+													th Value
+												tbody
+					//Photo tab					
+					.tab-pane(role="tabpanel").sensor-photo-tab
+						h3 Photos
+					//Remove sensor tab
 					.tab-pane(role="tabpanel").sensor-remove-tab
 						h3 Remove sensor
 						p Click to remove this sensor
 						button(type="button").btn.btn-danger.delete-sensor Remove
 					
 								
-block scripts	
+block scripts
+	script(src="/javascripts/libs/moment/moment-with-locales.js")
+	script(src="/javascripts/libs/bootstrap-datetimepicker.min.js")
 	script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=true')
-	script(src="/javascripts/profile-edit-sensors.js")
+	script(src="/javascripts/settings-sensor-data.js")
+	script(src="/javascripts/settings-add-sensor.js")
+	script(src="/javascripts/settings.js")
 	script(src="/javascripts/edit-profile.js")
 	script(src="/javascripts/location.js")
+	
+	
 	

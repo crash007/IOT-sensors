@@ -16,19 +16,16 @@ $(document).ready(function() {
     	console.log(tabName);
   	  	$(this).parent().parent().find('.active').removeClass('active');
   	  	$(this).parent().toggleClass('active');
-  	  	$(this).parentsUntil('.sensor').find('.tab-pane').removeClass('active');
-  	  	$(this).parentsUntil('.sensor').find('.'+tabName).addClass('active');
+  	  	$(this).parents('.sensor').find('.tab-pane').removeClass('active');
+  	  	$(this).parents('.sensor').find('.'+tabName).addClass('active');
   	  	
   	  
   });
     
-   $('#add-sensor-tab').click(function(){
-	   console.log('add-sensor-tab clicked');
-	   getCurrentLocation(); 
-   }) ;
+   
     
     
-    $(document).on('click','.sensor .glyphicon-edit',function(e){ 
+    $(document).on('click','.sensor-info-form .glyphicon-edit',function(e){ 
     	e.preventDefault();
    	 	var sensor = $(this).parentsUntil('.sensor-info-tab');
    	 	sensor.find('.sensor-form').addClass('edit-mode');
@@ -39,7 +36,7 @@ $(document).ready(function() {
     });
     
     
-    $(document).on('click','.sensor .glyphicon-ok',function(e){  
+    $(document).on('click','.sensor-info-form .glyphicon-ok',function(e){  
     	e.preventDefault();
    	 	var sensorElem = $(this).parentsUntil('.sensor-info-tab');
    	 	sensorElem.find('.collapse').toggleClass('in');
@@ -47,7 +44,7 @@ $(document).ready(function() {
 	 	saveSensor(sensorElem);
     });
     
-    $('#btnAddSensor').on('click', addSensor);
+   
     
     $(document).on('click','.delete-sensor',function(e){   
     	e.preventDefault();
@@ -58,7 +55,7 @@ $(document).ready(function() {
 });
 
 
-// Functions =============================================================
+// Functions ============================================================= 
 function getSensorList(){
 
 	var url = '/sensors/json/all?mySensors=true&excludeData=true';
@@ -77,6 +74,7 @@ function getSensorList(){
 	    	sensorElem.find('input[name="sensor-id"]').val(this._id);
 	    	
 	    	initialize(this.latLng,sensorElem.find('.map-canvas')[0]);
+	    	initSensorTab(sensorElem);
 	    	sensorElem.appendTo('#sensors-container');
 	    	      	        
 	    });		    
@@ -219,53 +217,7 @@ function setInputCoords(cords){
 }
 
 
-function addSensor(event){
-	
-	var errorCount = 0;
-	$('#addSensor input').each(function(index, val) {
-        if($(this).val() === '') { errorCount++; }
-    });
-	
-	if(errorCount === 0){		
-		var data = {"name": $('#inputSensorName').val(),				
-				"description": $('#inputSensorDesc').val(),
-				"unit": $('#inputSensorUnit').val(),
-				"valueSuffix": $('#inputSensorValueSuffix').val(),
-				"latLng":$('#inputSensorLatLng').val(),
-				"data":[]};
-		
-		// Use AJAX to post the object to our adduser service
-        $.ajax({
-            type: 'POST',
-            data: data,
-            url: '/edit/add-sensor',
-            dataType: 'JSON'
-        }).done(function( response ) {
 
-            // Check for successful (blank) response
-            if (response.status === 'success') {
-            	//$('#sensor-added-succefully').addClass('in');
-            	$('#sensor-added-succefully').fadeIn(600);
-            	$('#sensor-added-succefully').fadeOut(2000);
-                // Clear the form inputs
-                $('#addSensor input').val('');
-
-                //Update list of sensors
-                $('#sensors-container').children().remove();
-                //get sensors and and them to sensors-container                
-                getSensorList();
-            }
-            else {
-                // If something goes wrong, alert the error message that our service returned
-                alert('Error: ' + response.message);
-            }
-        });
-	}else{
-		// If errorCount is more than 0, error out
-        alert('Please fill in all fields');
-        return false;
-	}
-}
 
 function delSensor(sensor){
 	
