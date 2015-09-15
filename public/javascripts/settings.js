@@ -90,11 +90,10 @@ function saveSensor(sensorElem){
  	var unit = sensorElem.find('.sensor-unit').val();
  	var valueSuffix = sensorElem.find('.sensor-value-suffix').val();
  	var latLng= sensorElem.find('.sensor-lat-lng').val();
- 	var id =sensorElem.find('input[name="sensor-id"]').val();
+ 	var sensorId =sensorElem.find('input[name="sensor-id"]').val();
  	
-	var sensor = {id: id, name: name, description: description, unit: unit, valueSuffix: valueSuffix,
+	var sensor = {sensorId: sensorId, name: name, description: description, unit: unit, valueSuffix: valueSuffix,
 			latLng: latLng};
-	//console.log("Saving sensor to db: "+sensor.name);
 	console.log(sensor);
 
     $.ajax({

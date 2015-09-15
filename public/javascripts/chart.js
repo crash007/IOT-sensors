@@ -57,10 +57,11 @@ function updateGraph(chartName,timeSpan) {
 	var url = '/sensor/'+chartName+'/json/'+timeSpan;
 	$.getJSON( url, function( sensor ) {
         if(typeof sensor._id !=='undefined'){
-	    	console.log($('#'+sensor._id).highcharts());
-	    	
+	    	//console.log($('#'+sensor._id).highcharts());	    	
 	    	var chart = $('#'+sensor._id).highcharts();
 	        chart.series[0].setData(timeValueArray(sensor.data));
+	        $('a.timeSpan').removeClass('active');
+	    	$('a[name="'+timeSpan+'"]').addClass('active');
         }else{
         	alert('No data found');
         }

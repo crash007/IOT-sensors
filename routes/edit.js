@@ -55,10 +55,11 @@ module.exports = function(){
 	router.post('/edit-sensor', isAuthenticated,function(req, res){
 		var db = req.db;
 		var collection = db.get('sensor-data');
-		var sensorId = req.body.id;
+		var sensorId = req.body.sensorId;
 		var params = req.body;
 		//Update everything except _id
 		delete params.sensorId;
+		
 		
 		collection.update({_id:sensorId, userId: req.user._id}, {$set: params }, {w:1}, function(err, result) {
 			jsonResponseHandler.sendResponse(res,err,result,"Wrong sensor id or userId.");
