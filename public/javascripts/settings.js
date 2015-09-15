@@ -28,9 +28,7 @@ $(document).ready(function() {
     $(document).on('click','.sensor-info-form .glyphicon-edit',function(e){ 
     	e.preventDefault();
    	 	var sensor = $(this).parentsUntil('.sensor-info-tab');
-   	 	sensor.find('.sensor-form').addClass('edit-mode');
-   	 	console.log(sensor);
-   	 	sensor.find('.collapse').toggleClass('in');
+   	 	
    	 	sensorEditMode(sensor);
    	 	
     });
@@ -122,6 +120,9 @@ function saveSensor(sensorElem){
 
 function sensorEditMode(sensor){
 
+	sensor.find('.sensor-info-form').addClass('edit-mode'); 	
+ 	sensor.find('.collapse').toggleClass('in');
+   	 	
 	var name = sensor.find('.sensor-name').text();	   	 	
  	var description = sensor.find('.sensor-description').text();
  	var unit = sensor.find('.sensor-unit').text();
@@ -168,7 +169,7 @@ function sensorStaticMode(sensorElem){
 }
 
 function initialize(latLng,element) {
-	var sensorForm = $(element).parentsUntil('tab-content').find('.sensor-form');
+	var sensorForm = $(element).parentsUntil('tab-content').find('.sensor-info-form');
 	console.log(sensorForm);
 	console.log(latLng);
 	var lat = latLng.split(',')[0];
