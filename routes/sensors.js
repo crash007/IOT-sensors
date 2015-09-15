@@ -69,6 +69,22 @@ module.exports = function(){
 	    queryLatestFromDb(req,res,d)
   
 	});
+	
+	router.get('/json/latest/week',function(req, res){			
+
+	    var d = new Date();
+	    d.setDate(d.getDate()-7);
+	    queryLatestFromDb(req,res,d)
+  
+	});
+	
+	router.get('/json/latest/month',function(req, res){			
+
+	    var d = new Date();
+	    d.setMonth(d.getMonth()-1);
+	    queryLatestFromDb(req,res,d)
+  
+	});
 		
 	return router;
 }();

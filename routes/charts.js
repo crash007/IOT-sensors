@@ -21,6 +21,14 @@ module.exports = function(){
 		res.render('charts', { title: 'Express' , user : req.user, timeSpan: 'latest/day'});
 	});
 	
+	router.get('/latest/week',function(req, res){
+		res.render('charts', { title: 'Express' , user : req.user, timeSpan: 'latest/week'});
+	});
+	
+	router.get('/latest/month',function(req, res){
+		res.render('charts', { title: 'Express' , user : req.user, timeSpan: 'latest/month'});
+	});
+	
 	router.get('/all',function(req, res){
 		res.render('charts', { title: 'Express' , user : req.user, timeSpan: 'all'});
 	});

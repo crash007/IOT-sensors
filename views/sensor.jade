@@ -15,9 +15,7 @@ block content
 				a.btn.btn-default.timeSpan(href="#",name='latest/hour', role='button') Hour
 				a.btn.btn-default.timeSpan(href="#",name='latest/minute', role='button') Minute
 				.chart-container
-		
-				p
-					a(href="/sensor/#{chartName}/json") View json
+					
 		.row
 			.col-md-6
 				.panel.panel-default
@@ -25,6 +23,24 @@ block content
 						h3.panel-title Location
 					.panel-body
 						#map-canvas(style="height: 15em; margin: 0px; padding: 0px; ")
+			.col-md-6
+				.panel.panel-default
+					.panel-heading
+						h3.panel-title JSON
+					.panel-body
+						ul
+							li
+								a(href="/sensor/#{chartName}/json/all") All
+							li
+								a(href="/sensor/#{chartName}/json/latest/month") Last month
+							li
+								a(href="/sensor/#{chartName}/json/latest/week") Last week
+							li
+								a(href="/sensor/#{chartName}/json/latest/day") Last 24h
+							li
+								a(href="/sensor/#{chartName}/json/latest/hour") Last hour
+							li
+								a(href="/sensor/#{chartName}/json/latest/minute") Last minute
 						
 		//Photo panel
 		.panel.panel-default
