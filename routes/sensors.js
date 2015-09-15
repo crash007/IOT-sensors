@@ -18,7 +18,10 @@ module.exports = function(){
 	    var collection = db.get('sensor-data');
 	    var query = req.query;
 	    var projection = {};
-
+	    
+	    //Hide apiKey
+	    projection.apiKey =0;
+	    
 	    if(query.excludeData==='true'){
 	    	console.log("Excluding data");
 	    	projection.data=0;	    	

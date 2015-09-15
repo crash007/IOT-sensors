@@ -20,7 +20,7 @@ module.exports = function(){
 	    var collection = db.get('sensor-data');	    
 	    var projection = {};
 	   	    
-	    collection.findOne({'name' : req.params.name} ,  {fields :{userId:0} } , function(e,docs){        
+	    collection.findOne({'name' : req.params.name} ,  {fields :{userId:0,apiKey:0} } , function(e,docs){        
 	    	res.json(docs);
 	    });
 	});
