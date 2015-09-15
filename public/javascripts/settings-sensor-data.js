@@ -36,7 +36,8 @@ $(document).on('click','.sensorDataList .glyphicon-ok',function(e){
 	
 });
 
-$(document).on('click','.sensorDataList .glyphicon-remove',function(e){   
+$(document).on('click','.sensorDataList .glyphicon-remove',function(e){ 
+	e.preventDefault();
 	var tr = $(this).parents('tr');
 	var id = $(this).parents('.sensor').find('input[name="sensor-id"]').val();
 	var value = $(tr).find('.value').text();
@@ -104,13 +105,15 @@ function addSensorData(){
 	if(errorCount === 0){
 
 		var sensorId = $(this).parents('.sensor').find('input[name="sensor-id"]').val();
+		var apiKey = $(this).parents('.sensor').find('.sensor-api-key').text();
 		var value = parseFloat(form.find('input[name="inputSensorValue"]').val());
 		var date = form.find('input[name="inputSensorDate"]').val();
 		var tbody = $(this).parents('.sensor').find('.sensorDataList tbody');
 		
 		var data = {"sensorId": sensorId,				
 				"time": date,
-				"value": value};
+				"value": value,
+				"apiKey":apiKey};
 		
 		console.log(data);
 		// Use AJAX to post the object to our adduser service

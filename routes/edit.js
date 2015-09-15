@@ -3,9 +3,9 @@ var express = require('express');
 var router = express.Router();
 var jsonResponseHandler = require('../modules/json-response-handler.js');
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
+var ObjectId = require('mongodb').ObjectID;
 
-
-function add(db,sensorId,value,time,res){
+function add(db,sensorId,apiKey,value,time,res){
 	
 	var collection = db.get('sensor-data');
 	
@@ -16,12 +16,21 @@ function add(db,sensorId,value,time,res){
 	}
 	
 	var data = {value: parseFloat(value), time: time};
+	if(data.value===null){
+		jsonResponseHandler.sendResponse(res,null,0,"value: Value must be a number");
+		return;
+	}
 	
-	console.log("Adding value to sensor: "+sensorId+" , data: "+data.value+" "+data.time);
+	if(!ObjectId.isValid(apiKey)){
+		jsonResponseHandler.sendResponse(res,null,0,"apiKey: apiKey is not valid ");
+		return;
+	}
 	
-	collection.update({_id:sensorId},
+	console.log("Adding value to sensor: "+sensorId+", apiKey: "+apiKey+" , data: "+data.value+" "+data.time);
+	
+	collection.update({_id:sensorId,apiKey: new ObjectId(apiKey)},
 		{$push: { 'data':data } }, {w:1}, function(err, result) {			
-			jsonResponseHandler.sendResponse(res,err,result,"Wrong sensor id.");						
+			jsonResponseHandler.sendResponse(res,err,result,"Failure when adding data.");						
 		}
 	);
 }
@@ -29,11 +38,11 @@ function add(db,sensorId,value,time,res){
 module.exports = function(){
 	
 	router.post('/add-data',  function(req, res){				
-		add(req.db, req.body.sensorId, req.body.value, req.body.time, res);
+		add(req.db, req.body.sensorId,req.body.apiKey, req.body.value, req.body.time, res);
 	});
 	
 	router.get('/add-data',  function(req, res){
-		add(req.db, req.query.sensorId, req.query.value, req.query.time, res);
+		add(req.db, req.query.sensorId, req.query.apiKey,req.query.value, req.query.time, res);
 	});
 	
 	
@@ -44,6 +53,7 @@ module.exports = function(){
 		sensor.data = [];
 		sensor.userId= req.user._id;
 		sensor.username=req.user.username;
+		sensor.apiKey= new ObjectId();
 		collection.insert(sensor, function(err, result){
 		    res.send(
 		        (err === null) ? { status: 'success' } : { status: 'error', message: err }

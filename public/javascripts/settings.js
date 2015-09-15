@@ -65,6 +65,8 @@ function getSensorList(){
 	    	console.log(this);
 	    	var sensorElem = $('#sensor-template .sensor').clone();
 	    	sensorElem.find('.sensor-name').text(this.name);
+	    	sensorElem.find('.sensor-id').text(this._id);
+	    	sensorElem.find('.sensor-api-key').text(this.apiKey);
 	    	sensorElem.find('.sensor-description').text(this.description);
 	    	sensorElem.find('.sensor-unit').text(this.unit);
 	    	sensorElem.find('.sensor-value-suffix').text(this.valueSuffix);
