@@ -18,9 +18,7 @@ module.exports = function(){
 	    var collection = db.get('sensor-data');
 	    var query = req.query;
 	    var projection = {};
-	    
-	    //Hide apiKey
-	    projection.apiKey =0;
+		projection.apiKey=0;
 	    
 	    if(query.excludeData==='true'){
 	    	console.log("Excluding data");
@@ -30,6 +28,8 @@ module.exports = function(){
 	    if (query.mySensors === 'true'){
 	    	if(req.isAuthenticated()){    	
 	    		query.userId = req.user._id;
+	    		//show apikey for my sensors
+	    		delete projection.apiKey;
 	    	} 
 		    else{
 		    	res.json({error:'Not logged in'});

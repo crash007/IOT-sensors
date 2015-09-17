@@ -16,20 +16,16 @@ module.exports = function(passport){
 		 res.render('settings', { user : req.user });			
 	});
 		
-		
-//	router.get('/users/:name',  function(req, res){
-//	  
-//		if(req.isAuthenticated() && req.params.name === req.user.username){
-//		 res.render('profile', { user : req.user });
-//		}else{
-//			res.render('charts');
-//		}
-//	});
 	
 	router.get('/about',function(req, res){
-		res.render('about', { title: 'Express' , user : req.user});
+		res.render('about', {user : req.user});
 	});
-
+	
+	router.get('/actions',function(req, res){
+		res.render('actions/actions', {user : req.user});
+	});	
+	
+	
 	router.get('/logout', function(req, res) {
 	  var name = req.user.username;
 	  console.log("LOGGIN OUT " + req.user.username)

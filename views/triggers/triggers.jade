@@ -1,0 +1,19 @@
+extends ../layout
+
+
+	
+block content
+	.container.body
+		h3 Triggers 
+		p.lead Triggers actions when a threashold is reached.
+		
+		if(user)
+			h4 Twitter 
+			p My Twitter triggers 
+		
+			a(href="/triggers/twitter/add") Configure a new Twitter trigger
+		else
+			p 
+				a(href="/signin") Sign in 
+				| to see your triggers and create new ones.
+		

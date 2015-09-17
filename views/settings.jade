@@ -91,8 +91,9 @@ block content
 									label.col-sm-2.control-label About
 									.col-sm-10
 										textarea.form-control(rows='4', placeholder='Say something',name="about",value="#{user.about}") #{user.about}
-		
-			
+
+
+					
 	//Template is copied and appended to #sensors-container									
 	#sensor-template.collapse
 		
@@ -165,6 +166,7 @@ block content
 					//Alarm tab
 					.tab-pane(role="tabpanel").sensor-alarms-tab
 						h3 Alarms
+
 					//Sensor data tab	
 					.tab-pane(role="tabpanel").sensor-data-tab
 						.panel.panel-default.data-panel

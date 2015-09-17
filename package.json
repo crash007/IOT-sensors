@@ -11,7 +11,7 @@
     "express-handlebars": "*",
     "method-override": "~2.3.3",
     "express-session": "~1.11.3",
-    "passport": "*",
+    "passport": "~0.3.0",
     "passport-local": "*",
     "passport-twitter": "*",
     "passport-google": "*",
@@ -23,6 +23,7 @@
     "errorhandler": "~1.4.0",
     "body-parser": "~1.13.1",
     "multer": "*",
-    "gridfs-stream":"*"
+    "gridfs-stream": "*",
+    "twitter": "~1.2.5"
   }
 }
