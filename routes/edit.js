@@ -54,6 +54,7 @@ module.exports = function(){
 		sensor.userId= req.user._id;
 		sensor.username=req.user.username;
 		sensor.apiKey= new ObjectId();
+		sensor.triggers.twitter=[];
 		collection.insert(sensor, function(err, result){
 		    res.send(
 		        (err === null) ? { status: 'success' } : { status: 'error', message: err }

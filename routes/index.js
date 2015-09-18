@@ -65,9 +65,7 @@ module.exports = function(passport){
 	        	res.send(
 	    		        (err === null) ? { status: 'success', profile:req.user } : { status: 'error', message: err }
 	    		    );	        	
-	        });
-			
-			
+	        });			
 		});
 	});
 	
