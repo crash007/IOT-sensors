@@ -20,11 +20,11 @@ module.exports = function(){
 	});
 	
 	router.get('/authz-twitter-success',isAuthenticated,function(req, res){
-		res.render('authz-twitter-success', { user : req.user});
+		res.render('actions/auth/authz-twitter-success', { user : req.user});
 	});
 	
 	router.get('/authz-twitter-success',function(req, res){
-		res.render('authz-twitter-failure');
+		res.render('actions/auth/authz-twitter-failure');
 	});
 	
 	router.get('/tweet',isAuthenticated,function(req, res){

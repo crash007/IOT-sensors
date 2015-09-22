@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jsonResponseHandler = require('../modules/json-response-handler.js');
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
+var triggerEventHandler = require('../modules/triggerEventHandler.js').triggerEventHandler;
 var ObjectId = require('mongodb').ObjectID;
 
 function add(db,sensorId,apiKey,value,time,res){
@@ -29,7 +30,11 @@ function add(db,sensorId,apiKey,value,time,res){
 	console.log("Adding value to sensor: "+sensorId+", apiKey: "+apiKey+" , data: "+data.value+" "+data.time);
 	
 	collection.update({_id:sensorId,apiKey: new ObjectId(apiKey)},
-		{$push: { 'data':data } }, {w:1}, function(err, result) {			
+		{$push: { 'data':data }, "$set" : { "last_data" : data }  }, {w:1}, function(err, result) {	
+			//trigger event handler
+			if(result==1){
+				triggerEventHandler(db,sensorId,data);
+			}
 			jsonResponseHandler.sendResponse(res,err,result,"Failure when adding data.");						
 		}
 	);

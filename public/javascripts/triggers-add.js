@@ -25,7 +25,7 @@ $(document).ready(function(){
 	    $.ajax({
 	        type: 'POST',
 	        data: trigger,
-	        url: '/triggers/twitter/add',
+	        url: '/triggers/add',
 	        dataType: 'JSON'
 	    }).done(function( response ) {
 	
@@ -33,8 +33,6 @@ $(document).ready(function(){
 	        if (response.status === 'success') {
 	            // Update the table
 	           console.log("success");
-	          // sensorElem.find('.collapse').toggleClass('in'); 
-	           //sensorStaticMode(sensorElem);
 	
 	        }
 	        else {

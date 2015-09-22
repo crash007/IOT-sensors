@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
+var triggerEventHandler = require('../modules/triggerEventHandler.js').triggerEventHandler;
+
 
 module.exports = function(passport){
 
@@ -25,6 +27,24 @@ module.exports = function(passport){
 		res.render('actions/actions', {user : req.user});
 	});	
 	
+	router.get('/temp',function(req, res){
+		
+		var sensorId = req.query.sensorId;
+		var data ={time: new Date(), value:1};
+		
+		triggerEventHandler(req.db,sensorId,data);
+//		
+//		var collection = req.db.get('sensor-data');
+//		
+//		collection.findOne({_id:sensorId},{fields:{triggers:1,username:1}},function(e,data){
+//			
+//			console.log("sensor:");
+//			console.log(data.username);
+//			console.log(data);
+//			console.log(data.triggers);
+//			
+//		});
+	});	
 	
 	router.get('/logout', function(req, res) {
 	  var name = req.user.username;

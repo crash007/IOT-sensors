@@ -9,29 +9,14 @@ module.exports = function(){
 	
 	router.get('/',isAuthenticated, function(req, res){
 		var collection = req.db.get('sensor-data');
-		//get sensors with triggers for this user
-		collection.col.aggregate(
-	   		 // Start with a $match pipeline which can take advantage of an index and limit documents processed
-	   		  { $match : {
-	   		     "triggers.twitter.username":  req.user.username
-	   		  }},
-	   		  { $unwind : "$triggers.twitter" },	   		  
-	   		  { $match : {"triggers.twitter.username": req.user.username}
-	   		  },
-	   		  { $group:	{_id: '$_id', twitter: {$push: '$triggers.twitter'}, name: {$first: '$name'}}
-	   		  },
-	   		  
-	   		  ///Result contains sensor name and twitter array.
-	   		  function(err,result){
-	   			  console.log(result);
-
-	   			  res.render('triggers/triggers', {user : req.user, triggers:result});
-	   		  }
-	   );
+		collection.find({},{fields:{triggers:1,name:1}},function(e,result){
+			console.log(result);
+			res.render('triggers/triggers', {user : req.user, sensors:result});
+		});
 		
 	});	
 
-	router.get('/twitter/add',isAuthenticated,function(req, res){
+	router.get('/add',isAuthenticated,function(req, res){
 		
 	    var collection = req.db.get('sensor-data');
 	    var projection = {};		
@@ -39,26 +24,60 @@ module.exports = function(){
 	    
 		collection.find({} ,  {fields : projection, sort:'username'} , function(e,docs){
 			console.log(docs);
-			res.render('triggers/twitter-react-config', { user : req.user, sensors:docs});	
+			res.render('triggers/add', { user : req.user, sensors:docs});	
 	    });	    
 	});
 	
+	router.get('/twitter/edit/:name',isAuthenticated,function(req, res){
+		
+	    var collection = req.db.get('sensor-data');
+	    var projection = {};		
+	    projection.name=1;
+	    
+	    console.log("name: "+req.params.name);
+	    
+	    collection.col.aggregate(
+	   		 // Start with a $match pipeline which can take advantage of an index and limit documents processed
+	   		  { $match : {
+	   		     "triggers.username":  req.user.username,
+	   		     "triggers.name":  req.params.name,
+	   		  }},
+	   		  { $unwind : "$triggers" },	   		  
+	   		  { $match : {"triggers.name": req.params.name}
+	   		  },
+	   		  { $group:	{_id: '$_id', trigger: {$push: '$triggers'}, name: {$first: '$name'}}
+	   		  },
+	   		  
+	   		  ///Result contains sensor name and twitter array.
+	   		  function(err,result){
+	   			  console.log(result[0]);
+	   			  
+	   			  collection.find({} , {fields : projection, sort:'username'} , function(e,sensors){
+					console.log(sensors);
+					res.render('triggers/trigger-edit', { user : req.user, sensors:sensors, trigger:result[0].trigger[0]});	
+			    });
+	   			  
+	   			 // res.render('triggers/triggers', {user : req.user, triggers:result});
+	   		  }
+	    );
+	});
 	
-	router.post('/twitter/add',isAuthenticated,function(req, res){
+	
+	router.post('/add',isAuthenticated,function(req, res){
 		
 	    console.log(req.body);
 	    var trigger = req.body;
 		var collection = req.db.get('sensor-data');	
 		trigger.username = req.user.username;		
-		console.log("Adding twitter trigger to sensor: ");
-		
+		console.log("Adding or updating twitter trigger to sensor: ");
 		
 		var sensorId = trigger.sensorId;
 		delete trigger.sensorId;
+		trigger.triggered = false;
 		console.log(trigger);
 		//Try to update existing
 		collection.update({_id: sensorId, 
-				"triggers.twitter":{ $elemMatch: {name: trigger.name, 
+				"triggers":{ $elemMatch: {name: trigger.name, 
 						username: trigger.username
 						}} 
 				}
@@ -66,7 +85,7 @@ module.exports = function(){
 				{
 					$set: 
 					{
-						"triggers.twitter.$": trigger
+						"triggers.$": trigger
 					}
 				},
 				{w:1}, 
@@ -77,9 +96,12 @@ module.exports = function(){
 					//No match was found. 
 					if(result == 0){
 						console.log("No existing trigger with this settings. adding this one to array");
-						collection.update({_id: sensorId}, {$addToSet: {"triggers.twitter": trigger }}, {w:1}, function(err, result) {
-							jsonResponseHandler.sendResponse(res,err,result,"Problems adding twitter trigger.");
+						collection.update({_id: sensorId}, {$addToSet: {"triggers": trigger }}, {w:1}, function(err, result) {
+							jsonResponseHandler.sendResponse(res,err,result,"Problems adding trigger.");
 						});
+					}else{
+						console.log('Trigger was successfully updated');
+						jsonResponseHandler.sendResponse(res,err,result,"Problems adding trigger.");
 					}
 					//			
 				}
