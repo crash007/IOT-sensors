@@ -9,14 +9,14 @@ module.exports = function(){
 	
 	router.get('/',isAuthenticated, function(req, res){
 		var collection = req.db.get('sensor-data');
-		collection.find({},{fields:{triggers:1,name:1}},function(e,result){
+		collection.find({},{fields:{trigger_reactions:1,name:1}},function(e,result){
 			console.log(result);
 			res.render('triggers/triggers', {user : req.user, sensors:result});
 		});
 		
 	});	
 
-	router.get('/add',isAuthenticated,function(req, res){
+	router.get('/reaction/add',isAuthenticated,function(req, res){
 		
 	    var collection = req.db.get('sensor-data');
 	    var projection = {};		
@@ -24,11 +24,11 @@ module.exports = function(){
 	    
 		collection.find({} ,  {fields : projection, sort:'username'} , function(e,docs){
 			console.log(docs);
-			res.render('triggers/add', { user : req.user, sensors:docs});	
+			res.render('triggers/reactions/add', { user : req.user, sensors:docs});	
 	    });	    
 	});
 	
-	router.get('/twitter/edit/:name',isAuthenticated,function(req, res){
+	router.get('/reaction/edit/:name',isAuthenticated,function(req, res){
 		
 	    var collection = req.db.get('sensor-data');
 	    var projection = {};		
@@ -39,22 +39,22 @@ module.exports = function(){
 	    collection.col.aggregate(
 	   		 // Start with a $match pipeline which can take advantage of an index and limit documents processed
 	   		  { $match : {
-	   		     "triggers.username":  req.user.username,
-	   		     "triggers.name":  req.params.name,
+	   		     "trigger_reactions.username":  req.user.username,
+	   		     "trigger_reactions.name":  req.params.name,
 	   		  }},
-	   		  { $unwind : "$triggers" },	   		  
-	   		  { $match : {"triggers.name": req.params.name}
+	   		  { $unwind : "$trigger_reactions" },	   		  
+	   		  { $match : {"trigger_reactions.name": req.params.name}
 	   		  },
-	   		  { $group:	{_id: '$_id', trigger: {$push: '$triggers'}, name: {$first: '$name'}}
+	   		  { $group:	{_id: '$_id', trigger: {$push: '$trigger_reactions'}, name: {$first: '$name'}}
 	   		  },
 	   		  
 	   		  ///Result contains sensor name and twitter array.
 	   		  function(err,result){
-	   			  console.log(result[0]);
+	   			  console.log(result);
 	   			  
 	   			  collection.find({} , {fields : projection, sort:'username'} , function(e,sensors){
 					console.log(sensors);
-					res.render('triggers/trigger-edit', { user : req.user, sensors:sensors, trigger:result[0].trigger[0]});	
+					res.render('triggers/reactions/edit', { user : req.user, sensors:sensors, trigger:result[0].trigger[0]});	
 			    });
 	   			  
 	   			 // res.render('triggers/triggers', {user : req.user, triggers:result});
@@ -63,7 +63,7 @@ module.exports = function(){
 	});
 	
 	
-	router.post('/add',isAuthenticated,function(req, res){
+	router.post('/reaction/add',isAuthenticated,function(req, res){
 		
 	    console.log(req.body);
 	    var trigger = req.body;
@@ -74,10 +74,11 @@ module.exports = function(){
 		var sensorId = trigger.sensorId;
 		delete trigger.sensorId;
 		trigger.triggered = false;
+		trigger.value= parseFloat(trigger.value);
 		console.log(trigger);
 		//Try to update existing
 		collection.update({_id: sensorId, 
-				"triggers":{ $elemMatch: {name: trigger.name, 
+				"trigger_reactions":{ $elemMatch: {name: trigger.name, 
 						username: trigger.username
 						}} 
 				}
@@ -85,7 +86,7 @@ module.exports = function(){
 				{
 					$set: 
 					{
-						"triggers.$": trigger
+						"trigger_reactions.$": trigger
 					}
 				},
 				{w:1}, 
@@ -96,7 +97,7 @@ module.exports = function(){
 					//No match was found. 
 					if(result == 0){
 						console.log("No existing trigger with this settings. adding this one to array");
-						collection.update({_id: sensorId}, {$addToSet: {"triggers": trigger }}, {w:1}, function(err, result) {
+						collection.update({_id: sensorId}, {$addToSet: {"trigger_reactions": trigger }}, {w:1}, function(err, result) {
 							jsonResponseHandler.sendResponse(res,err,result,"Problems adding trigger.");
 						});
 					}else{

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
-var triggerEventHandler = require('../modules/triggerEventHandler.js').triggerEventHandler;
+var triggerReactionHandler = require('../modules/triggerReactionHandler.js').triggerReactionHandler;
 
 
 module.exports = function(passport){
@@ -32,7 +32,7 @@ module.exports = function(passport){
 		var sensorId = req.query.sensorId;
 		var data ={time: new Date(), value:1};
 		
-		triggerEventHandler(req.db,sensorId,data);
+		triggerReactionHandler(req.db,sensorId);
 //		
 //		var collection = req.db.get('sensor-data');
 //		

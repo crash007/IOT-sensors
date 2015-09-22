@@ -6,26 +6,27 @@ $(document).ready(function(){
 	
 	$('#trigger-submit-btn').click(function(e){
 		e.preventDefault();
-		var name =$( "#trigger-name" ).val();
-		var sensorId =$( "#sensor option:selected" ).val(); 
-		var condition = $( "#condition option:selected" ).val();
-		var option = $( "#option option:selected" ).val();
-		var value = $( "#condition-value" ).val();
+		console.log($('#trigger-form').serialize());
+//		var name =$( "#trigger-name" ).val();
+//		var sensorId =$( "#sensor option:selected" ).val(); 
+//		var condition = $( "#condition option:selected" ).val();
+//		var option = $( "#option option:selected" ).val();
+//		var value = $( "#condition-value" ).val();
+//		
 		
-		
-		var trigger = {};
-		trigger.name=name;
-		trigger.sensorId = sensorId;
-		trigger.condition= condition;
-		trigger.option = option;
-		trigger.value = parseFloat(value);
-		
+		var trigger = $('#triggerForm').serialize();
+//		trigger.name=name;
+//		trigger.sensorId = sensorId;
+//		trigger.condition= condition;
+//		trigger.option = option;
+//		trigger.value = parseFloat(value);
+//		
 		console.log(trigger);
 		
 	    $.ajax({
 	        type: 'POST',
 	        data: trigger,
-	        url: '/triggers/add',
+	        url: '/triggers/reaction/add',
 	        dataType: 'JSON'
 	    }).done(function( response ) {
 	
