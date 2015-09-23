@@ -59,7 +59,7 @@ module.exports = function(){
 		sensor.userId= req.user._id;
 		sensor.username=req.user.username;
 		sensor.apiKey= new ObjectId();
-		sensor.triggers.twitter=[];
+		sensor.trigger_reactions=[];
 		collection.insert(sensor, function(err, result){
 		    res.send(
 		        (err === null) ? { status: 'success' } : { status: 'error', message: err }
@@ -100,8 +100,7 @@ module.exports = function(){
 					
 					data: { $elemMatch: {value: prevValue, 
 						time: prevTime
-						}}
-					
+						}}					
 				}, 
 				{	$set: {
 							"data.$.value":value, 
@@ -111,7 +110,8 @@ module.exports = function(){
 				{w:1}, 
 				function(err, result) {
 					jsonResponseHandler.sendResponse(res,err,result,"Unable to update. No matching record found.");
-				});
+				}
+		);
 	});
 	
 	

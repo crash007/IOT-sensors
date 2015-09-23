@@ -101,7 +101,7 @@ module.exports = function(){
 		  	        if (err) {
 		  	            res.json(err);
 		  	        }
-		  	        console.log(files);
+		  	       // console.log(files);
 		  	        if (files.length > 0) {
 		  	            var mime = 'image/jpeg';
 		  	            res.set('Content-Type', mime);

@@ -9,12 +9,31 @@ module.exports = function(){
 	
 	router.get('/',isAuthenticated, function(req, res){
 		var collection = req.db.get('sensor-data');
-		collection.find({},{fields:{trigger_reactions:1,name:1}},function(e,result){
-			console.log(result);
-			res.render('triggers/triggers', {user : req.user, sensors:result});
-		});
+		collection.col.aggregate(
+	   		 // Start with a $match pipeline which can take advantage of an index and limit documents processed
+	   		  { $match : {
+	   		     "trigger_reactions.username":  req.user.username	   		     
+	   		  }},
+	   		  { $unwind : "$trigger_reactions" },	   		  
+	   		  { $match : {"trigger_reactions.username":  req.user.username}
+	   		  },
+	   		  { $group:	{_id: '$_id', trigger_reactions: {$push: '$trigger_reactions'}, name: {$first: '$name'}}
+	   		  },
+	   		  
+	   		  ///Result contains sensor name and twitter array.
+	   		  function(err,result){
+	   			  console.log(result);
+	   			  res.render('triggers/triggers', {user : req.user, sensors:result});
+			    });
+	   			  
+	   			 // res.render('triggers/triggers', {user : req.user, triggers:result});
+	   		  }
+	    );
+//		collection.find({},{fields:{trigger_reactions:1,name:1}},function(e,result){
+//			console.log(result);
+//			res.render('triggers/triggers', {user : req.user, sensors:result});
+//		});		
 		
-	});	
 
 	router.get('/reaction/add',isAuthenticated,function(req, res){
 		
@@ -50,14 +69,16 @@ module.exports = function(){
 	   		  
 	   		  ///Result contains sensor name and twitter array.
 	   		  function(err,result){
-	   			  console.log(result);
+	   			  console.log(result);	   			  
+	   			  var trigger=result[0].trigger[0]; 
+	   			  trigger.sensorId= result[0]._id;
+	   			  console.log(trigger);
 	   			  
 	   			  collection.find({} , {fields : projection, sort:'username'} , function(e,sensors){
 					console.log(sensors);
-					res.render('triggers/reactions/edit', { user : req.user, sensors:sensors, trigger:result[0].trigger[0]});	
+					res.render('triggers/reactions/edit', { user : req.user, sensors:sensors, trigger:trigger});	
 			    });
-	   			  
-	   			 // res.render('triggers/triggers', {user : req.user, triggers:result});
+
 	   		  }
 	    );
 	});

@@ -12,7 +12,7 @@ block content
 			form#triggerForm.col-md-4
 				.form-group
 					label.control-label(for='trigger-name') Trigger name:
-					input#trigger-name(type="hidden",value="#{trigger.name}",,name='name')
+					input#trigger-name(type="hidden",value="#{trigger.name}",name='name')
 					
 					p.form-control-static #{trigger.name}
 					//input.form-control(type='text')#trigger-name(value="#{trigger.name}")
@@ -20,7 +20,7 @@ block content
 					label(for='sensor') Sensor:
 					select#sensor.form-control(name='sensorId')
 						each s in sensors
-							if(JSON.stringify(s._id)==JSON.stringify(trigger._id))
+							if(JSON.stringify(s._id)==JSON.stringify(trigger.sensorId))
 								option(value='#{s._id}', selected="selected") #{s.name}								
 							else
 								option(value='#{s._id}') #{s.name}	
@@ -54,10 +54,9 @@ block content
 					label.control-label(for='action') Action					
 					select#action.form-control(name='action')
 						option(value='ACTION_TWITTER') Twitter
-						
 				.form-group
 					label(for='twitter-message') Twitter message:
-					input.form-control(type='text',name='twitter-message')#twitter-message				
+					input.form-control(type='text',name='twitterMessage', value="#{trigger.twitterMessage}")#twitter-message				
 				.form-group
 					input.btn.btn-primary.btn-default#trigger-submit-btn(type='submit', value='Save')
 				
