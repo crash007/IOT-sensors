@@ -52,7 +52,9 @@ function getCurrentLocation(){
 }
 
 function setInputCoords(cords){
-	$('#inputSensorLatLng').val(cords.G+','+cords.K);
+	console.log(cords);
+
+	$('#inputSensorLatLng').val(cords.H+','+cords.L);
 }
 
 
