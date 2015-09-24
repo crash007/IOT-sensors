@@ -21,6 +21,8 @@ $(document).ready(function(){
 	        if (response.status === 'success') {
 	            // Update the table
 	           console.log("success");
+	           $('#trigger-success-status').fadeIn(600);
+            	$('#trigger-success-status').fadeOut(3000);
 	
 	        }
 	        else {

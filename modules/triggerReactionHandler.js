@@ -45,7 +45,7 @@ function conditionIsFulfilled(lastValue,reaction){
 }
 
 function shouldTriggerAction(lastValue,reaction){
-
+	
 	if(reaction.enabled==='on' && (reaction.when === 'EVERY_TIME' || reaction.when === 'FIRST_TIME' && reaction.triggered === false)){
 	
 		return conditionIsFulfilled(lastValue,reaction);
@@ -94,7 +94,7 @@ function runTwitterAction(db,reaction){
 					//console.log(response);  // Raw response object.
 					
 					//Set triggered if 'when' is FIRST_TIME
-					if(reaction.enabled==='on' && reaction.when ==='FIRST_TIME'){
+					if(reaction.when ==='FIRST_TIME'){
 						setTriggeredStatus(collection,reaction,true)
 					}
 				}
