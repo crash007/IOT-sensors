@@ -77,14 +77,12 @@ module.exports = function(){
 	   				  trigger.sensorId= result[0]._id;
 	   			  }
 	   			  
-	   			  
 	   			  console.log(trigger);
 	   			  
 	   			  collection.find({} , {fields : projection, sort:'username'} , function(e,sensors){
 					console.log(sensors);
 					res.render('triggers/reactions/edit', { user : req.user, sensors:sensors, trigger:trigger});	
 			    });
-
 	   		  }
 	    );
 	});
