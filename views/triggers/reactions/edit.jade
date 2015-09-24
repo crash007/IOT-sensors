@@ -5,11 +5,9 @@ extends ../../layout
 block content
 	.container.body
 		h3 Edit trigger
-		//
-			script.
-				 trigger = !{JSON.stringify(trigger)}	
+			
 		.row
-			form#triggerForm.col-md-4
+			form#triggerForm.col-md-4.panel.panel-default.panel-body
 				.form-group
 					label.control-label(for='trigger-name') Trigger name:
 					input#trigger-name(type="hidden",value="#{trigger.name}",name='name')
@@ -56,10 +54,16 @@ block content
 						option(value='ACTION_TWITTER') Twitter
 				.form-group
 					label(for='twitter-message') Twitter message:
-					input.form-control(type='text',name='twitterMessage', value="#{trigger.twitterMessage}")#twitter-message				
+					input.form-control(type='text',name='twitterMessage', value="#{trigger.twitterMessage}")#twitter-message
+				
+				.checkbox
+					label
+						input(type="checkbox",  checked=(trigger.enabled==='on' ? "checked" : undefined),name="enabled")#enabled
+						|Enable
 				.form-group
 					input.btn.btn-primary.btn-default#trigger-submit-btn(type='submit', value='Save')
+				a.btn.btn-danger.remove(href="#")#trigger-remove-btn Remove
 				
 
 block scripts
-	script(src="/javascripts/triggers/reactions/add.js")
+	script(src="/javascripts/triggers/reactions/add-edit.js")

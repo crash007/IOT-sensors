@@ -33,7 +33,11 @@
 				
 		.form-group
 			label(for='twitter-message') Twitter message:
-			input.form-control(type='text',name='twitterMessage')#twitter-message						
+			input.form-control(type='text',name='twitterMessage')#twitter-message
+		.checkbox
+			label
+				input(type="checkbox", checked="checked",name="enabled")#enabled
+				|Enable				
 		
 		.form-group
 			input.btn.btn-primary.btn-default#trigger-submit-btn(type='submit', value='Save')

@@ -69,9 +69,15 @@ module.exports = function(){
 	   		  
 	   		  ///Result contains sensor name and twitter array.
 	   		  function(err,result){
-	   			  console.log(result);	   			  
-	   			  var trigger=result[0].trigger[0]; 
-	   			  trigger.sensorId= result[0]._id;
+	   			  console.log(result);	   
+	   			  var  trigger ={};
+	   			  
+	   			  if(result && result[0] && result[0].trigger[0]){
+	   				  trigger=result[0].trigger[0];
+	   				  trigger.sensorId= result[0]._id;
+	   			  }
+	   			  
+	   			  
 	   			  console.log(trigger);
 	   			  
 	   			  collection.find({} , {fields : projection, sort:'username'} , function(e,sensors){
@@ -128,6 +134,22 @@ module.exports = function(){
 					//			
 				}
 		);    
+	});
+	
+	router.post('/reaction/remove',isAuthenticated,function(req, res){
+		var triggerName = req.body.triggerName;
+		console.log(triggerName);
+		var collection = req.db.get('sensor-data');
+		collection.update(
+		    {"trigger_reactions.name" : triggerName}, 
+		    { $pull: { "trigger_reactions" : { name: triggerName, username: req.user.username} } },
+		    {w:1},
+		    function(err, result) {
+		    	console.log(err);
+		    	console.log(result);
+		    	jsonResponseHandler.sendResponse(res,err,result,"Unable to remove trigger. Wrong trigger name or username.");
+		    } 
+		);		
 	});
 			
 	return router;
