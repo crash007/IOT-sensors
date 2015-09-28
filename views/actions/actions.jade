@@ -5,10 +5,10 @@ extends ../layout
 block content
 	.container.body
 		h3 Actions 
-		p.lead Actions are used with triggers and they react to trigger events.
+			//p.lead Actions are used with triggers and they react to trigger events.
 		
-		h4 Twitter 
-		if (user && user.twitter)
-			p Twitter account #{user.twitter.username} is linked to IOT sensors
+		h4 Twitter 		
 		p
 			a.btn.btn-primary(href="/twitter/authz") Authorize Twitter
+		if (user && user.twitter)
+			p Twitter account #{user.twitter.username} is linked to IOT sensors
