@@ -73,7 +73,7 @@ block content
 							a(href='#', style="float:right")
 								span.glyphicon.glyphicon-ok(aria-hidden='true')
 						.panel-body
-							form.form-horizontal#local-reg(action='/update-profile', method='post')								
+							form.form-horizontal#local-reg(action='/update-profile', method='post')
 								.form-group
 									label.col-sm-2.control-label Email
 									.col-sm-10
@@ -121,7 +121,7 @@ block content
 				.tab-content
 					.tab-pane.active(role="tabpanel").sensor-info-tab
 						.col-xs-8.col-sm-6.col-md-5
-							.form-horizontal.sensor-info-form												
+							.form-horizontal.sensor-info-form
 								input(type="hidden",value="",name="sensor-id")
 								.form-group
 									label.col-sm-4.control-label Name
@@ -134,7 +134,7 @@ block content
 								.form-group
 									label.col-sm-4.control-label Api key
 									.col-sm-8
-										.form-control-static.sensor-api-key																				
+										.form-control-static.sensor-api-key
 								.form-group
 									label.col-sm-4.control-label Description
 									.col-sm-8
@@ -146,7 +146,7 @@ block content
 								.form-group
 										label.col-sm-4.control-label Value suffix (%)
 										.col-sm-8
-											.form-control-static.sensor-value-suffix													
+											.form-control-static.sensor-value-suffix
 								.form-group
 										label.col-sm-4.control-label Latitude,Longitude
 										.col-sm-8
@@ -161,7 +161,7 @@ block content
 													span.glyphicon.glyphicon-ok(title='Save', aria-hidden='true')
 			
 						.col-xs-12.col-sm-6.col-md-7
-							.map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")						
+							.map-canvas(style="height: 20em; margin: 0px; padding: 0px; ")
 					
 					//Alarm tab
 					.tab-pane(role="tabpanel").sensor-alarms-tab
@@ -174,7 +174,7 @@ block content
 								h3.panel-title Edit sensor data
 							.panel-body
 								.row
-									.col-md-4						
+									.col-md-4
 										h3 Add
 										.addSensorData
 											input.form-control(type='text', placeholder='Value', name='inputSensorValue')
