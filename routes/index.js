@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
 var triggerReactionHandler = require('../modules/triggerReactionHandler.js').triggerReactionHandler;
-
+var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function(passport){
 
@@ -27,24 +27,6 @@ module.exports = function(passport){
 		res.render('actions/actions', {user : req.user});
 	});	
 	
-	router.get('/temp',function(req, res){
-		
-		var sensorId = req.query.sensorId;
-		var data ={time: new Date(), value:1};
-		
-		triggerReactionHandler(req.db,sensorId);
-//		
-//		var collection = req.db.get('sensor-data');
-//		
-//		collection.findOne({_id:sensorId},{fields:{triggers:1,username:1}},function(e,data){
-//			
-//			console.log("sensor:");
-//			console.log(data.username);
-//			console.log(data);
-//			console.log(data.triggers);
-//			
-//		});
-	});	
 	
 	router.get('/logout', function(req, res) {
 	  var name = req.user.username;
@@ -55,11 +37,18 @@ module.exports = function(passport){
 	});
 	
 	router.post('/login', passport.authenticate('login', { 
-		  successRedirect: '/user',
+		  successRedirect: '/login',
 		  failureRedirect: '/signin',
 		  failureFlash: true
 		  })
-		);
+	);
+	
+	router.get('/login', isAuthenticated, function(req, res) {
+		var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+		delete req.session.redirect_to;
+		//is authenticated ?
+		res.redirect(redirect_to);
+	});
 
 	router.post('/local-reg', passport.authenticate('signup', {
 		successRedirect: '/user',

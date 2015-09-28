@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
 var jsonResponseHandler = require('../modules/json-response-handler.js');
-var ObjectId = require('mongodb').ObjectID;
+
 
 module.exports = function(){
 	
