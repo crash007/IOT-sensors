@@ -4,6 +4,7 @@ var router = express.Router();
 var Twitter = require('twitter');
 var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
 var env = require('../env.js');
+var jsonResponseHandler = require('../modules/json-response-handler.js');
 
 module.exports = function(){
 
@@ -53,6 +54,16 @@ module.exports = function(){
 		res.json({status:'success'});
 		
 		//return null;
+	});
+	
+	router.post('/remove',isAuthenticated,function(req, res){
+		console.log(req.body);
+		var twitterUsername = req.body.twitterUsername;
+		var collection = req.db.get('users');
+		//Removes twitter account. twitterUsername is not used. Multiple accounts may be possible in the future...	
+		collection.update({username: req.user.username},{ $unset: { twitter: "" }},function(err,result){
+			jsonResponseHandler.sendResponse(res,err,result,"Unable to remove twitter settings.");
+		});		
 	});
 	
 			

@@ -75,6 +75,7 @@ module.exports = function(){
 	   			  if(result && result[0] && result[0].trigger[0]){
 	   				  trigger=result[0].trigger[0];
 	   				  trigger.sensorId= result[0]._id;
+	   				  trigger.sensorName = result[0].name;
 	   			  }
 	   			  
 	   			  console.log(trigger);
@@ -102,36 +103,47 @@ module.exports = function(){
 		trigger.value= parseFloat(trigger.value);
 		console.log(trigger);
 		//Try to update existing
-		collection.update({_id: sensorId, 
-				"trigger_reactions":{ $elemMatch: {name: trigger.name, 
-						username: trigger.username
-						}} 
-				}
-				 ,
-				{
-					$set: 
+		collection.findOne({sensorId:{ $ne: sensorId} , "trigger_reactions":{ $elemMatch: {name: trigger.name } }},function(e,result){
+			console.log(result);
+			if(result){
+				console.log('Trigger with name '+trigger.name+' already exists.');
+				res.send({ status: 'error',message:'Trigger name exists'});
+				
+			}else{
+				collection.update({_id: sensorId, 
+					"trigger_reactions":{ $elemMatch: {name: trigger.name, 
+							username: trigger.username
+							}} 
+					}
+					 ,
 					{
-						"trigger_reactions.$": trigger
-					}
-				},
-				{w:1}, 
-				function(err, result) {
-					
-					console.log(err);
-					console.log(result);
-					//No match was found. 
-					if(result == 0){
-						console.log("No existing trigger with this settings. adding this one to array");
-						collection.update({_id: sensorId}, {$addToSet: {"trigger_reactions": trigger }}, {w:1}, function(err, result) {
+						$set: 
+						{
+							"trigger_reactions.$": trigger
+						}
+					},
+					{w:1}, 
+					function(err, result) {
+						
+						console.log(err);
+						console.log(result);
+						//No match was found. 
+						if(result == 0){
+							console.log("No existing trigger with this settings. adding this one to array");
+							collection.update({_id: sensorId}, {$addToSet: {"trigger_reactions": trigger }}, {w:1}, function(err, result) {
+								jsonResponseHandler.sendResponse(res,err,result,"Problems adding trigger.");
+							});
+						}else{
+							console.log('Trigger was successfully updated');
 							jsonResponseHandler.sendResponse(res,err,result,"Problems adding trigger.");
-						});
-					}else{
-						console.log('Trigger was successfully updated');
-						jsonResponseHandler.sendResponse(res,err,result,"Problems adding trigger.");
+						}
+						//			
 					}
-					//			
-				}
-		);    
+				);
+			}
+		});
+		
+		
 	});
 	
 	router.post('/reaction/remove',isAuthenticated,function(req, res){

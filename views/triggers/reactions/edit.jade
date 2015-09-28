@@ -16,12 +16,10 @@ block content
 					//input.form-control(type='text')#trigger-name(value="#{trigger.name}")
 				.form-group
 					label(for='sensor') Sensor:
-					select#sensor.form-control(name='sensorId')
-						each s in sensors
-							if(JSON.stringify(s._id)==JSON.stringify(trigger.sensorId))
-								option(value='#{s._id}', selected="selected") #{s.name}								
-							else
-								option(value='#{s._id}') #{s.name}	
+					p.form-control-static #{trigger.sensorName}
+					input#sensor(type="hidden",value="#{trigger.sensorId}",name='sensorId')
+					
+						
 				.form-group
 					label.control-label(for='condition') Condition					
 					select#condition.form-control(name='condition')
@@ -37,7 +35,7 @@ block content
 						+condition('GREATER_THAN','Is greater than')
 				.form-group
 						label(for='condition-value') Value:
-						input.form-control(type='text')#condition-value(value="#{trigger.value}",name='value')
+						input.form-control#condition-value(value="#{trigger.value}",name='value',type='text')
 				.form-group
 					label.control-label(for='when') Trigger on first or every value reaching threashold
 					select#option.form-control(name='when')

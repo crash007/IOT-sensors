@@ -4,11 +4,26 @@ extends ../layout
 	
 block content
 	.container.body
+	
+		
 		h3 Actions 
 			//p.lead Actions are used with triggers and they react to trigger events.
+		.row
+			.col-md-4.panel.panel-default.panel-body
+				h4 Twitter
+				if (user && user.twitter)					
+					table.table
+						thead
+							tr
+								th Twitter account
+								th Remove
+						tbody
+							tr
+								td.username #{user.twitter.username}								
+								td
+									a(href="#")#action-twitter-remove-btn.btn.btn-danger remove
 		
-		h4 Twitter 		
-		p
-			a.btn.btn-primary(href="/twitter/authz") Authorize Twitter
-		if (user && user.twitter)
-			p Twitter account #{user.twitter.username} is linked to IOT sensors
+				br
+				a.btn.btn-primary(href="/twitter/authz") Authorize new Twitter account
+block scripts
+	script(src="/javascripts/actions/actions.js")
