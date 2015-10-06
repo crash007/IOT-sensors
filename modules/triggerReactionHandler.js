@@ -107,12 +107,12 @@ function runTwitterAction(db,reaction){
 	
 }
 
-function triggerReactionHandler(db,sensorId){
+function triggerReactionHandler(db,apiKey){
 	
 		console.log('triggerEventHandler called');
 		var collection = db.get('sensor-data');
 		
-		collection.findOne({_id:sensorId},{fields:{trigger_reactions:1,last_data:1}},function(e,result){
+		collection.findOne({apiKey:apiKey},{fields:{trigger_reactions:1,last_data:1}},function(e,result){
 
 			if(result!=null && result.trigger_reactions!=null)
 			result.trigger_reactions.forEach(function(reaction){
@@ -130,8 +130,7 @@ function triggerReactionHandler(db,sensorId){
 				if(reaction.when ==='FIRST_TIME' && reaction.triggered===true && !conditionIsFulfilled(result.last_data.value,reaction)){
 					setTriggeredStatus(collection,reaction,false);
 				}
-			});
-			
+			});			
 		});			
 }
 

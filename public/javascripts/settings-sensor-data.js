@@ -110,7 +110,7 @@ function addSensorData(){
 		var date = form.find('input[name="inputSensorDate"]').val();
 		var tbody = $(this).parents('.sensor').find('.sensorDataList tbody');
 		
-		var data = {"sensorId": sensorId,				
+		var data = {
 				"time": date,
 				"value": value,
 				"apiKey":apiKey};

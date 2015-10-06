@@ -4,11 +4,11 @@
 var http = require('http');
 var url = require('url');
 
-function uploadSensor(uploadUrl,id,value){
+function uploadSensor(uploadUrl,apiKey,value){
 	
 	var u = url.parse(uploadUrl);
 	console.log(u);
-	var sensor = {"sensorId":id, "value":value};
+	var sensor = {"apiKey":apiKey, "value":value};
 	var sensorString = JSON.stringify(sensor);
 	
 	var headers = {
