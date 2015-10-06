@@ -20,8 +20,20 @@ $(document).ready(function() {
   	  	$(this).parents('.sensor').find('.'+tabName).addClass('active');
   	  	
   	  
-  });
+    });
     
+   $(document).on('click','.sensor-tabs a[name="sensor-photo-tab"]',function(e){
+	  console.log('click photo');
+	  initSensorPhotoTab($(this).parents('.sensor'));
+	  
+   });
+   
+   $(document).on('click','.sensor-tabs a[name="sensor-data-tab"]',function(e){
+	  console.log('click data tab');
+	  initSensorDataTab($(this).parents('.sensor'));
+	  
+   });
+   
    
     
     
@@ -74,8 +86,8 @@ function getSensorList(){
 	    	sensorElem.find('input[name="sensor-id"]').val(this._id);
 	    	
 	    	initialize(this.latLng,sensorElem.find('.map-canvas')[0]);
-	    	initSensorDataTab(sensorElem);
-	    	initSensorPhotoTab(sensorElem);
+	    	//initSensorDataTab(sensorElem);
+	    	//initSensorPhotoTab(sensorElem);
 	    	sensorElem.appendTo('#sensors-container');
 	    	      	        
 	    });		    

@@ -6,7 +6,7 @@ var isAuthenticated = require('../modules/isAuthenticated.js').isAuthenticated;
 var triggerReactionHandler = require('../modules/triggerReactionHandler.js').triggerReactionHandler;
 var ObjectId = require('mongodb').ObjectID;
 
-function add(db,sensorId,apiKey,value,time,res){
+function add(db,apiKey,value,time,res){
 	
 	var collection = db.get('sensor-data');
 	
@@ -27,13 +27,13 @@ function add(db,sensorId,apiKey,value,time,res){
 		return;
 	}
 	
-	console.log("Adding value to sensor: "+sensorId+", apiKey: "+apiKey+" , data: "+data.value+" "+data.time);
+	console.log("Adding value for apiKey: "+apiKey+" , data: "+data.value+" "+data.time);
 	
-	collection.update({_id:sensorId,apiKey: new ObjectId(apiKey)},
+	collection.update({apiKey: new ObjectId(apiKey)},
 		{$push: { 'data':data }, "$set" : { "last_data" : data }  }, {w:1}, function(err, result) {	
 			//trigger event handler
 			if(result==1){
-				triggerReactionHandler(db,sensorId);
+				triggerReactionHandler(db,apiKey);
 			}
 			jsonResponseHandler.sendResponse(res,err,result,"Failure when adding data.");						
 		}
@@ -43,11 +43,11 @@ function add(db,sensorId,apiKey,value,time,res){
 module.exports = function(){
 	
 	router.post('/add-data',  function(req, res){				
-		add(req.db, req.body.sensorId,req.body.apiKey, req.body.value, req.body.time, res);
+		add(req.db,req.body.apiKey, req.body.value, req.body.time, res);
 	});
 	
 	router.get('/add-data',  function(req, res){
-		add(req.db, req.query.sensorId, req.query.apiKey,req.query.value, req.query.time, res);
+		add(req.db, req.query.apiKey,req.query.value, req.query.time, res);
 	});
 	
 	

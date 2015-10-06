@@ -39,12 +39,8 @@ $(document).on('click','.sensorDataList .glyphicon-ok',function(e){
 $(document).on('click','.sensorDataList .glyphicon-remove',function(e){ 
 	e.preventDefault();
 	var tr = $(this).parents('tr');
-	var id = $(this).parents('.sensor').find('input[name="sensor-id"]').val();
-	var value = $(tr).find('.value').text();
-	var time = $(tr).find('.time').text()
-	var tbody = $(this).parents('tbody');
-	
-	delData(id,time,value,tbody);     	
+	var sensorId = $(this).parents('.sensor').find('input[name="sensor-id"]').val();	
+	delData(sensorId,tr);     	
 });
 
 // Functions =============================================================
@@ -110,7 +106,7 @@ function addSensorData(){
 		var date = form.find('input[name="inputSensorDate"]').val();
 		var tbody = $(this).parents('.sensor').find('.sensorDataList tbody');
 		
-		var data = {"sensorId": sensorId,				
+		var data = {
 				"time": date,
 				"value": value,
 				"apiKey":apiKey};
@@ -132,7 +128,8 @@ function addSensorData(){
             	form.find('input[name="inputSensorValue"]').val('');
 
                 // Update the table               
-                populateDataTable(sensorId,tbody);
+                //populateDataTable(sensorId,tbody);
+            	tbody.append('<tr><td class="time">'+new Date(date).toISOString()+'</td><td class="value">'+value+'</td><td> <a href="#"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> </td></tr>');
 
             }
             else {
@@ -178,7 +175,11 @@ function saveDataChange(sensorId,dataRow,tbody){
 }
 
 
-function delData(sensorId,time,value,tbody){
+function delData(sensorId,tr){
+	
+	var value = $(tr).find('.value').text();
+	var time = $(tr).find('.time').text()
+	
 	var data = {};
 	
 	data.id =sensorId;
@@ -200,7 +201,8 @@ function delData(sensorId,time,value,tbody){
         if (response.status === 'success') {
             // Update the table and dropdown
         	console.log($('input[name="sensor-id"][value="'+sensorId+'"]'));
-        	populateDataTable(sensorId, tbody);
+        	$(tr).remove();
+        	//populateDataTable(sensorId, tbody);
         }
         else {
             // If something goes wrong, alert the error message that our service returned

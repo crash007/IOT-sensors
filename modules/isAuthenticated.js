@@ -8,7 +8,8 @@ function isAuthenticated(req,res,next){
 		// request and response objects
 		if (req.isAuthenticated())
 			return next();
-		// if the user is not authenticated then redirect him to the login page
+		// if the user is not authenticated then redirect him to the login page		
+		req.session.redirect_to = req.originalUrl;
 		res.redirect('/signin');
 }
 
