@@ -103,7 +103,7 @@ module.exports = function(){
 		trigger.value= parseFloat(trigger.value);
 		console.log(trigger);
 		//Try to update existing
-		collection.findOne({sensorId:{ $ne: sensorId} , "trigger_reactions":{ $elemMatch: {name: trigger.name } }},function(e,result){
+		collection.findOne({username:{ $ne: trigger.username} , "trigger_reactions":{ $elemMatch: {name: trigger.name } }},function(e,result){
 			console.log(result);
 			if(result){
 				console.log('Trigger with name '+trigger.name+' already exists.');
