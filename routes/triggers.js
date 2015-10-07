@@ -47,16 +47,47 @@ module.exports = function(){
 	    });	    
 	});
 	
+	router.get('/reaction/json/:name',function(req, res){
+		var collection = req.db.get('sensor-data');
+			    collection.col.aggregate(	   	
+	   		  { $match : {   		     
+	   		     "trigger_reactions.name":  req.params.name,
+	   		  }},
+	   		  { $unwind : "$trigger_reactions" },	   		  
+	   		  { $match : {"trigger_reactions.name": req.params.name}
+	   		  },
+	   		  { $group:	{_id: '$_id', trigger: {$push: '$trigger_reactions'}, name: {$first: '$name'}}
+	   		  },
+	   		  
+	   		  ///Result contains sensor name and twitter array.
+	   		  function(err,result){
+	   			  if(err) {
+	   				  console.log("ERROR");
+	   			  }
+	   			  if(!err){
+	   				  if(result && result[0]){
+	   					  res.json({status:'success',data:result[0]});
+	   				  }else{
+	   					   res.json({status:'success',data:result});
+   					  }
+	   			  }else{v
+	   				  console.log('error')
+	   				  res.json({status:'error',message:'Error when getting trigger'});
+	   			  }
+	   			
+	   		  }
+	    );
+	});
+	
 	router.get('/reaction/edit/:name',isAuthenticated,function(req, res){
 		
 	    var collection = req.db.get('sensor-data');
 	    var projection = {};		
 	    projection.name=1;
 	    
-	    console.log("name: "+req.params.name);
+	    //console.log("name: "+req.params.name);
 	    
-	    collection.col.aggregate(
-	   		 // Start with a $match pipeline which can take advantage of an index and limit documents processed
+	    collection.col.aggregate(	   	
 	   		  { $match : {
 	   		     "trigger_reactions.username":  req.user.username,
 	   		     "trigger_reactions.name":  req.params.name,
@@ -69,7 +100,7 @@ module.exports = function(){
 	   		  
 	   		  ///Result contains sensor name and twitter array.
 	   		  function(err,result){
-	   			  console.log(result);	   
+	   			//  console.log(result);	   
 	   			  var  trigger ={};
 	   			  
 	   			  if(result && result[0] && result[0].trigger[0]){
@@ -91,7 +122,7 @@ module.exports = function(){
 	
 	router.post('/reaction/add',isAuthenticated,function(req, res){
 		
-	    console.log(req.body);
+	    //console.log(req.body);
 	    var trigger = req.body;
 		var collection = req.db.get('sensor-data');	
 		trigger.username = req.user.username;		
@@ -101,10 +132,10 @@ module.exports = function(){
 		delete trigger.sensorId;
 		trigger.triggered = false;
 		trigger.value= parseFloat(trigger.value);
-		console.log(trigger);
+		//console.log(trigger);
 		//Try to update existing
 		collection.findOne({username:{ $ne: trigger.username} , "trigger_reactions":{ $elemMatch: {name: trigger.name } }},function(e,result){
-			console.log(result);
+			//console.log(result);
 			if(result){
 				console.log('Trigger with name '+trigger.name+' already exists.');
 				res.send({ status: 'error',message:'Trigger name exists'});

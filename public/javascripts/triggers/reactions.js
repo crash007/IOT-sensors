@@ -4,6 +4,19 @@
 
 $(document).ready(function(){
 	
+	if($(this).val() =='ACTION_TWITTER'){			
+		$('#twitter-action-options').show();
+	}
+		
+	$("#action").change(function(a,b){
+		console.log("changed action");
+		console.log($(this).val());
+		$('.action-option').hide();
+		if($(this).val() =='ACTION_TWITTER'){
+			$('#twitter-action-options').show();
+		}		
+	});
+	
 	$('#trigger-submit-btn').click(function(e){
 		e.preventDefault();
 		console.log($('#trigger-form').serialize());		

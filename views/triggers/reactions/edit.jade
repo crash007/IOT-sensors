@@ -49,11 +49,13 @@ block content
 				.form-group
 					label.control-label(for='action') Action					
 					select#action.form-control(name='action')
-						option(value='ACTION_TWITTER') Twitter
-				.form-group
+						option(value='ACTION_NONE', selected = 'ACTION_NONE' == trigger.action) None
+						option(value='ACTION_TWITTER', selected = 'ACTION_TWITTER' == trigger.action) Twitter
+				
+				#twitter-action-options.action-option.form-group
 					label(for='twitter-message') Twitter message:
 					input.form-control(type='text',name='twitterMessage', value="#{trigger.twitterMessage}")#twitter-message
-				
+			
 				.checkbox
 					label
 						input(type="checkbox",  checked=(trigger.enabled==='on' ? "checked" : undefined),name="enabled")#enabled
@@ -66,4 +68,4 @@ block content
 				
 
 block scripts
-	script(src="/javascripts/triggers/reactions/add-edit.js")
+	script(src="/javascripts/triggers/reactions.js")

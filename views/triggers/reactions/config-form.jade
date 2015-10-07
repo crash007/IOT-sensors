@@ -27,13 +27,15 @@
 		.form-group
 			label.control-label(for='action') Action					
 			select#action.form-control(name='action')
+				option(value='ACTION_NONE') None
 				option(value='ACTION_TWITTER') Twitter
-			p Remember to authorize twitter under 
-						a(href="/actions") actions
+			
 				
-		.form-group
+		#twitter-action-options.action-option.form-group
 			label(for='twitter-message') Twitter message:
 			input.form-control(type='text',name='twitterMessage')#twitter-message
+			p Remember to authorize twitter under 
+				a(href="/actions") actions
 		.checkbox
 			label
 				input(type="checkbox", checked="checked",name="enabled")#enabled

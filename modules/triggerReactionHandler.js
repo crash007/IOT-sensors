@@ -3,7 +3,7 @@
  */
 var $ = require('jquery');
 var Twitter = require('twitter');
-
+var ObjectId = require('mongodb').ObjectID;
 
 function setTriggeredStatus(collection,reaction,status){
 	console.log('Updating triggered status for reaction: '+reaction.name+' , to status: '+status);
@@ -110,10 +110,12 @@ function runTwitterAction(db,reaction){
 function triggerReactionHandler(db,apiKey){
 	
 		console.log('triggerEventHandler called');
+		console.log('apiKey: '+apiKey);
 		var collection = db.get('sensor-data');
 		
-		collection.findOne({apiKey:apiKey},{fields:{trigger_reactions:1,last_data:1}},function(e,result){
-
+		collection.findOne({apiKey:new ObjectId(apiKey)},{fields:{trigger_reactions:1,last_data:1}},function(e,result){
+			console.log("Found the following triggers:");
+			console.log(result);
 			if(result!=null && result.trigger_reactions!=null)
 			result.trigger_reactions.forEach(function(reaction){
 
@@ -123,6 +125,10 @@ function triggerReactionHandler(db,apiKey){
 					
 					if(reaction.action ==='ACTION_TWITTER') {
 						runTwitterAction(db,reaction);
+					}
+					
+					if(reaction.action ==='ACTION_NONE') {
+						setTriggeredStatus(collection,reaction,true);
 					}
 				}
 				

@@ -9,7 +9,7 @@ block content
 		
 		if(user)
 			if(sensors)
-				.panel.panel-default.sensor-panel
+				.panel.panel-default
 					.panel-heading
 						h3.panel-title Reactions
 					.panel-body 
@@ -23,6 +23,8 @@ block content
 									th Condition
 									th Value
 									th When
+									th Triggered
+									th JSON
 									th Edit
 							tbody
 								each sensor in sensors
@@ -42,12 +44,56 @@ block content
 												td #{trigger.condition}
 												td #{trigger.value}
 												td #{trigger.when}
+												td #{trigger.triggered}
+												td
+													a(href="/triggers/reaction/json/#{trigger.name}") JSON
 												td
 													a(href="/triggers/reaction/edit/#{trigger.name}")
 														span(title="Edit", aria-hidden="true").glyphicon.glyphicon-edit
 										
 
-						a.btn.btn-primary(href="/triggers/reaction/add") Configure a new reaction trigger
+						a.btn.btn-primary(href="/triggers/reaction/add") Configure a new reaction
+				
+				.panel.panel-default
+					.panel-heading
+						h3.panel-title Timers
+					.panel-body 
+						table.table.table-striped
+							thead
+								tr
+									th Name
+									th Enable
+									th Action
+									th Sensor
+									th Trigger time									
+									th Triggered
+									th JSON
+									th Edit
+							tbody
+								each sensor in sensors
+									#{sensor.name}
+									if(sensor.trigger_reactions)
+										each trigger in sensor.trigger_reactions
+											tr
+												th #{trigger.name} 
+												if(trigger.enabled)
+													td On
+												else
+													td Off 
+												//th #{trigger.enabled}
+												td #{trigger.action}
+												td
+													a(href="/sensor/#{sensor.name}") #{sensor.name}
+												td #{trigger.triggerTime}												
+												td #{trigger.triggered}
+												td
+													a(href="/triggers/timer/json/#{trigger.name}") JSON
+												td
+													a(href="/triggers/timer/edit/#{trigger.name}")
+														span(title="Edit", aria-hidden="true").glyphicon.glyphicon-edit
+										
+
+						a.btn.btn-primary(href="/triggers/timer/add") Configure a new timer
 		else
 			p 
 				a(href="/signin") Sign in 
