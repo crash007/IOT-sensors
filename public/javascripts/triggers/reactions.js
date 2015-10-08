@@ -3,8 +3,8 @@
  */
 
 $(document).ready(function(){
-	
-	if($(this).val() =='ACTION_TWITTER'){			
+
+	if($('#action').val() =='ACTION_TWITTER'){			
 		$('#twitter-action-options').show();
 	}
 		
@@ -26,7 +26,7 @@ $(document).ready(function(){
 	    $.ajax({
 	        type: 'POST',
 	        data: trigger,
-	        url: '/triggers/reaction/add',
+	        url: '/triggers/add',
 	        dataType: 'JSON'
 	    }).done(function( response ) {
 	

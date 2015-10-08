@@ -63,35 +63,33 @@ block content
 								tr
 									th Name
 									th Enable
-									th Action
-									th Sensor
-									th Trigger time									
-									th Triggered
+									th Start action
+									th Stop action					
+									th Start date
+									th Stop date							
+									th Switch is on
 									th JSON
 									th Edit
 							tbody
-								each sensor in sensors
-									#{sensor.name}
-									if(sensor.trigger_reactions)
-										each trigger in sensor.trigger_reactions
-											tr
-												th #{trigger.name} 
-												if(trigger.enabled)
-													td On
-												else
-													td Off 
-												//th #{trigger.enabled}
-												td #{trigger.action}
-												td
-													a(href="/sensor/#{sensor.name}") #{sensor.name}
-												td #{trigger.triggerTime}												
-												td #{trigger.triggered}
-												td
-													a(href="/triggers/timer/json/#{trigger.name}") JSON
-												td
-													a(href="/triggers/timer/edit/#{trigger.name}")
-														span(title="Edit", aria-hidden="true").glyphicon.glyphicon-edit
-										
+								each timer in timers									
+									tr
+										th #{timer.name} 
+										if(timer.enabled)
+											td On
+										else
+											td Off 
+										//th #{trigger.enabled}
+										td #{timer.startAction}
+										td #{timer.stopAction}					
+										td #{timer.startDate}
+										td #{timer.stopDate}
+										td #{timer.switchIsOn}
+										td
+											a(href="/triggers/timer/json/#{timer.name}") JSON
+										td
+											a(href="/triggers/timer/edit/#{timer.name}")
+												span(title="Edit", aria-hidden="true").glyphicon.glyphicon-edit
+								
 
 						a.btn.btn-primary(href="/triggers/timer/add") Configure a new timer
 		else
