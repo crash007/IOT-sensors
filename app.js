@@ -26,7 +26,7 @@ var express = require('express')
   LocalStrategy = require('passport-local'),
   flash = require('connect-flash')
   , TwitterStrategy = require('passport-twitter').Strategy
-  , env = require('./env.js');
+  , env = require('../env.js');
 var isAuthenticated = require('./modules/isAuthenticated.js').isAuthenticated;
   
 //Database
