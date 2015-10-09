@@ -34,13 +34,10 @@ $(document).ready(function() {
 	  
    });
    
-   
-    
-    
+       
     $(document).on('click','.sensor-info-form .glyphicon-edit',function(e){ 
     	e.preventDefault();
-   	 	var sensor = $(this).parentsUntil('.sensor-info-tab');
-   	 	
+   	 	var sensor = $(this).parentsUntil('.sensor-info-tab');   	 	
    	 	sensorEditMode(sensor);
    	 	
     });
@@ -54,7 +51,6 @@ $(document).ready(function() {
 	 	saveSensor(sensorElem);
     });
     
-   
     
     $(document).on('click','.delete-sensor',function(e){   
     	e.preventDefault();

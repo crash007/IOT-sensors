@@ -1,0 +1,65 @@
+extends ../../layout
+
+block append head
+	link(href="/stylesheets/bootstrap-datetimepicker.min.css", rel="stylesheet")
+	
+block content
+	.container.body
+		h3 Add Timer
+		row
+			form#triggerForm.col-md-4.panel.panel-default.panel-body
+				input(type="hidden",name="type",value="TIMER")
+				.form-group
+					label(for='trigger-name') Timer name:
+					input.form-control(type='text',name='name')#timer-name
+				.form-group
+					label.control-label(for='startDate') Start date		
+					#startDate.input-group.date
+						input.form-control(type='text')
+						span.input-group-addon
+							span.glyphicon.glyphicon-calendar
+				.form-group
+					label.control-label(for='startDate') Stop date
+					#stopDate.input-group.date
+						input.form-control(type='text')
+						span.input-group-addon
+							span.glyphicon.glyphicon-calendar
+				
+				.form-group
+					label.control-label(for='startAction') Start action					
+					select#startAction.form-control(name='startAction')
+						option(value='ACTION_NONE') None
+						option(value='ACTION_TWITTER') Twitter
+				
+				#twitter-startAction-options.start-action-option.form-group
+					include ../action-options.jade
+				
+				.form-group
+					label.control-label(for='stopAction') Stop action					
+					select#stopAction.form-control(name='stopAction')
+						option(value='ACTION_NONE') None
+						option(value='ACTION_TWITTER') Twitter
+						
+				#twitter-stopAction-options.stop-action-option.form-group
+					include ../action-options.jade
+						
+				
+				
+				.checkbox
+					label
+						input(type="checkbox", checked="checked",name="enabled")#enabled
+						|Enable				
+				
+				.form-group
+					input.btn.btn-primary.btn-default#trigger-submit-btn(type='submit', value='Save')
+					
+			#trigger-success-status.alert.alert-success(role="alert", style="display:none;")
+				strong Added successfully
+		
+		
+
+block scripts
+	script(src="/javascripts/moment-with-locales.min.js")
+	script(src="/javascripts/bootstrap-datetimepicker.js")
+	script(src="/javascripts/triggers/triggers.js")
+	script(src="/javascripts/triggers/timers.js")

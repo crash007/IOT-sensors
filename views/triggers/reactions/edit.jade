@@ -8,6 +8,7 @@ block content
 			
 		.row
 			form#triggerForm.col-md-4.panel.panel-default.panel-body
+				input(type="hidden",name="type",value="REACTION")
 				.form-group
 					label.control-label(for='trigger-name') Trigger name:
 					input#trigger-name(type="hidden",value="#{trigger.name}",name='name')
@@ -49,11 +50,12 @@ block content
 				.form-group
 					label.control-label(for='action') Action					
 					select#action.form-control(name='action')
-						option(value='ACTION_TWITTER') Twitter
-				.form-group
-					label(for='twitter-message') Twitter message:
-					input.form-control(type='text',name='twitterMessage', value="#{trigger.twitterMessage}")#twitter-message
+						option(value='ACTION_NONE', selected = 'ACTION_NONE' == trigger.action) None
+						option(value='ACTION_TWITTER', selected = 'ACTION_TWITTER' == trigger.action) Twitter
 				
+				#twitter-action-options.action-option.form-group
+					include ../action-options.jade
+					
 				.checkbox
 					label
 						input(type="checkbox",  checked=(trigger.enabled==='on' ? "checked" : undefined),name="enabled")#enabled
@@ -64,6 +66,6 @@ block content
 				#trigger-success-status.alert.alert-success(role="alert", style="display:none;")
 					strong Saved successfully
 				
-
 block scripts
-	script(src="/javascripts/triggers/reactions/add-edit.js")
+	script(src="/javascripts/triggers/reactions.js")
+	script(src="/javascripts/triggers/triggers.js")
